@@ -1,0 +1,51 @@
+{
+  "name": "mapir-vector-style-editor",
+  "version": "0.1.0",
+  "description": "An editor for styling vector tiles with Mapbox style Spec.",
+  "main": "dist/index.ts",
+  "module": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup -c",
+    "dev": "rollup -c -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/map-ir/mapir-vector-style-editor.git"
+  },
+  "keywords": [
+    "mapbox",
+    "vector",
+    "style",
+    "style-editor",
+    "mapir"
+  ],
+  "author": "Reyhane Masumi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/map-ir/mapir-vector-style-editor/issues"
+  },
+  "homepage": "https://github.com/map-ir/mapir-vector-style-editor#readme",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "22.0.2",
+    "@rollup/plugin-inject": "4.0.4",
+    "@rollup/plugin-node-resolve": "14.1.0",
+    "rollup": "^2.79.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-terser": "^7.0.2",
+    "@rollup/plugin-typescript": "8.5.0",
+    "rollup-plugin-postcss": "4.0.2",
+    "rollup-plugin-visualizer": "5.8.2"
+  },
+  "peerDependencies": {
+    "@types/mapbox-gl": "^2.7.5",
+    "@types/react-dom": "18.0.6",
+    "@types/styled-components": "5.1.26",
+    "mapbox-gl": "1.13.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "styled-components": "^5.3.5",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.8.3"
+  }
+}
