@@ -1,5 +1,7 @@
+import React from 'react';
+
 const MapirStyleEditor = () => {
-  return 'HI';
+  return <div>Hi</div>;
 };
 
 export default MapirStyleEditor;
