@@ -19,32 +19,37 @@ export default {
     // ...getFiles('./src/hooks', extensions),
     // ...getFiles('./src/utils', extensions),
   ],
-  output: {
-    dir: 'dist',
-    format: 'esm',
-    preserveModules: true,
-    preserveModulesRoot: 'src',
-    sourcemap: true,
-  },
+  output: [
+    {
+      dir: 'dist',
+      format: 'esm',
+      preserveModules: true,
+      preserveModulesRoot: 'src',
+      sourcemap: true,
+    },
+  ],
   plugins: [
     peerDeps(),
-    resolve(),
-    commonjs(),
-    typescript({
-      tsconfig: './tsconfig.build.json',
-      declaration: true,
-      declarationDir: 'dist',
+    resolve({
+      browser: true,
+      resolveOnly: [/^(?!react$)/, /^(?!react-dom$)/],
     }),
+    commonjs(),
     babel({
       babelHelpers: 'runtime',
       exclude: '**/node_modules/**',
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
     }),
+    typescript({
+      tsconfig: './tsconfig.build.json',
+      declaration: true,
+      declarationDir: './dist',
+    }),
     postcss(),
     terser(),
-    visualizer({
-      filename: 'bundle-analysis.html',
-      open: true,
-    }),
+    // visualizer({
+    //   filename: 'bundle-analysis.html',
+    //   open: true,
+    // }),
   ],
 };
