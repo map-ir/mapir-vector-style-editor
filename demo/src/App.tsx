@@ -1,4 +1,4 @@
-import MapirStyleEditor from 'mapir-vector-style-editor';
+import MapirStyleEditor from 'mapir-vector-style-editor/dist';
 import './App.css';
 
 function App() {

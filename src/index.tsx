@@ -1,7 +1,3 @@
-import React from 'react';
-
-const MapirStyleEditor = () => {
-  return <div>Hi</div>;
-};
+import MapirStyleEditor from './components';
 
 export default MapirStyleEditor;

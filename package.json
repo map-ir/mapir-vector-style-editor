@@ -25,6 +25,9 @@
   "bugs": {
     "url": "https://github.com/map-ir/mapir-vector-style-editor/issues"
   },
+  "files": [
+    "dist"
+  ],
   "homepage": "https://github.com/map-ir/mapir-vector-style-editor#readme",
   "devDependencies": {
     "@rollup/plugin-commonjs": "22.0.2",

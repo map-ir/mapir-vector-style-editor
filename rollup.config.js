@@ -15,7 +15,7 @@ export default {
   input: [
     pkg.module,
     // ...getFiles('./src/common', extensions),
-    // ...getFiles('./src/components', extensions),
+    ...getFiles('./src/components', extensions),
     // ...getFiles('./src/hooks', extensions),
     // ...getFiles('./src/utils', extensions),
   ],
@@ -25,7 +25,7 @@ export default {
       format: 'esm',
       preserveModules: true,
       preserveModulesRoot: 'src',
-      sourcemap: true,
+      sourcemap: 'inline',
     },
   ],
   plugins: [
@@ -36,6 +36,7 @@ export default {
     }),
     commonjs(),
     babel({
+      babelrc: true,
       babelHelpers: 'runtime',
       exclude: '**/node_modules/**',
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
