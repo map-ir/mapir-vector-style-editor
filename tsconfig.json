@@ -2,7 +2,7 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "es5",
-    "lib": ["es6", "dom", "DOM.Iterable", "ScriptHost", "ES2016.Array.Include"],
+    "lib": ["es6", "dom", "DOM.Iterable"],
     "sourceMap": true,
     "jsx": "react",
     "moduleResolution": "node",
@@ -11,11 +11,13 @@
     "noImplicitThis": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
+    "strict": true,
     "esModuleInterop": true,
     "baseUrl": "src/",
     "paths": {
       "common/*": ["common/*"],
       "components/*": ["components/*"],
+      "atoms/*": ["atoms/*"],
       "hooks/*": ["hooks/*"],
       "utils/*": ["utils/*"],
       "styles/*": ["styles/*"]

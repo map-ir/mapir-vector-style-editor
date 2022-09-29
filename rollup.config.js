@@ -16,6 +16,7 @@ export default {
     pkg.module,
     // ...getFiles('./src/common', extensions),
     ...getFiles('./src/components', extensions),
+    ...getFiles('./src/atoms', extensions),
     // ...getFiles('./src/hooks', extensions),
     // ...getFiles('./src/utils', extensions),
   ],
@@ -30,10 +31,7 @@ export default {
   ],
   plugins: [
     peerDeps(),
-    resolve({
-      browser: true,
-      resolveOnly: [/^(?!react$)/, /^(?!react-dom$)/],
-    }),
+    resolve(),
     commonjs(),
     babel({
       babelrc: true,
