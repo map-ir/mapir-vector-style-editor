@@ -3,7 +3,7 @@ import { Provider, useSetAtom } from 'jotai';
 
 import Map from './map';
 
-import { mapPropsState } from 'atoms/map';
+import { mapPropsState } from '../atoms/map';
 
 import type { MapProps } from 'types/map';
 
@@ -12,9 +12,10 @@ interface IProps {
 }
 
 const MapirStyleEditor = ({ map }: IProps) => {
-  // const setMapProp = useSetAtom(mapPropsState);
+  console.log('🚀 ~ file: app.tsx ~ line 15 ~ MapirStyleEditor ~ map', map);
+  const setMapProp = useSetAtom(mapPropsState);
 
-  // setMapProp(map);
+  setMapProp(map);
 
   return (
     <Provider>

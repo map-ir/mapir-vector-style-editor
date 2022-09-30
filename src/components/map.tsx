@@ -3,12 +3,20 @@ import styled from 'styled-components/macro';
 import mapboxGl from 'mapbox-gl';
 import { useAtom, useSetAtom, useAtomValue } from 'jotai';
 
-import { mapState, isMapLoadedState, mapPropsState } from 'atoms/map';
+import { mapState, isMapLoadedState, mapPropsState } from '../atoms/map';
 
-export default () => {
+import type { ResourceType } from 'mapbox-gl';
+
+import 'mapbox-gl/dist/mapbox-gl.css';
+
+export default function Map() {
   const [map, setMap] = useAtom(mapState);
   const setIsMapLoaded = useSetAtom(isMapLoadedState);
   const mapProps = useAtomValue(mapPropsState);
+  console.log(
+    '🚀 ~ file: map.tsx ~ line 13 ~ Map ~ mapProps',
+    mapProps?.transformRequest
+  );
 
   const mapRef = useRef<HTMLDivElement | null>(null);
 
@@ -28,7 +36,8 @@ export default () => {
       ...mapProps,
       container: mapRef.current || '',
       style:
-        mapProps?.style ?? 'https://map.ir/styles/main/mapir-Dove-style.json',
+        mapProps?.style ??
+        'https://map.ir/vector/styles/main/mapir-Dove-style.json',
       center: mapProps?.center ?? [54.82, 31.77],
       zoom: mapProps?.zoom ?? 5,
       pitch: mapProps?.pitch ?? 0,
@@ -36,7 +45,8 @@ export default () => {
       attributionControl: true,
       customAttribution:
         (mapProps?.customAttribution ?? '') + '© Map.ir © Openstreetmap',
-      transformRequest: mapProps?.transformRequest,
+      transformRequest: (url: string, resourceType: ResourceType) =>
+        mapProps?.transformRequest(url, resourceType),
     });
 
     futureMap.on('load', () => {
@@ -54,7 +64,7 @@ export default () => {
       <div id="map" ref={mapRef}></div>
     </MapWrapper>
   );
-};
+}
 
 const MapWrapper = styled.div`
   position: relative;
