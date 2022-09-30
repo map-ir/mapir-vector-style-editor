@@ -1,3 +1,1 @@
-import MapirStyleEditor from './components';
-
-export default MapirStyleEditor;
+export { default } from './components';

@@ -17,11 +17,9 @@ const MapirStyleEditor = ({ map }: IProps) => {
   // setMapProp(map);
 
   return (
-    <div>
-      <Provider>
-        <Map />
-      </Provider>
-    </div>
+    <Provider>
+      <Map />
+    </Provider>
   );
 };
 
