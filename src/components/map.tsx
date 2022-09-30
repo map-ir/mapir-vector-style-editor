@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components/macro';
 import mapboxGl from 'mapbox-gl';
-import type { ResourceType } from 'mapbox-gl';
 import { useAtom, useSetAtom, useAtomValue } from 'jotai';
 
 import { mapState, isMapLoadedState, mapPropsState } from '../atoms/map';
+
+import type { ResourceType } from 'mapbox-gl';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
