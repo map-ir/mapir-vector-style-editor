@@ -2,12 +2,14 @@
   "name": "mapir-vector-style-editor",
   "version": "0.1.0",
   "description": "An editor for styling vector tiles with Mapbox style Spec.",
-  "main": "dist",
-  "module": "src/index.tsx",
+  "main": "dist/index.js",
+  "module": "src/index.module.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rollup -c",
-    "dev": "rollup -c -w"
+    "watch": "rollup -cw",
+    "dev": "parcel demo/index.html --dist-dir build",
+    "start": "npm-run-all --parallel watch dev"
   },
   "repository": {
     "type": "git",
@@ -43,6 +45,9 @@
     "babel-plugin-macros": "^3.1.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-import-resolver-typescript": "^3.5.1",
+    "npm-run-all": "^4.1.5",
+    "parcel": "^2.7.0",
+    "process": "^0.11.10",
     "rollup": "^2.79.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "4.0.2",

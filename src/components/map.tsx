@@ -3,9 +3,9 @@ import styled from 'styled-components/macro';
 import mapboxGl from 'mapbox-gl';
 import { useAtom, useSetAtom, useAtomValue } from 'jotai';
 
-import { mapState, isMapLoadedState, mapPropsState } from 'atoms/map';
+import { mapState, isMapLoadedState, mapPropsState } from '../atoms/map';
 
-export default () => {
+export default function Map() {
   const [map, setMap] = useAtom(mapState);
   const setIsMapLoaded = useSetAtom(isMapLoadedState);
   const mapProps = useAtomValue(mapPropsState);
@@ -54,7 +54,7 @@ export default () => {
       <div id="map" ref={mapRef}></div>
     </MapWrapper>
   );
-};
+}
 
 const MapWrapper = styled.div`
   position: relative;
