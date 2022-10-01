@@ -114,4 +114,5 @@ demo/.DS_store/
 demo/.vscode/
 
 .parcel_cache/
+.parcel-cache/
 build/
