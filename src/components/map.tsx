@@ -7,16 +7,14 @@ import { mapState, isMapLoadedState, mapPropsState } from '../atoms/map';
 
 import type { ResourceType } from 'mapbox-gl';
 
+import urlRTL from '../libs/mapbox-gl-rtl-text-v0.2.3.js';
+
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 export default function Map() {
   const [map, setMap] = useAtom(mapState);
   const setIsMapLoaded = useSetAtom(isMapLoadedState);
   const mapProps = useAtomValue(mapPropsState);
-  console.log(
-    '🚀 ~ file: map.tsx ~ line 13 ~ Map ~ mapProps',
-    mapProps?.transformRequest
-  );
 
   const mapRef = useRef<HTMLDivElement | null>(null);
 
@@ -25,7 +23,7 @@ export default function Map() {
 
     if (mapboxGl.getRTLTextPluginStatus() === 'unavailable')
       mapboxGl.setRTLTextPlugin(
-        './../libs/mapbox-gl-rtl-text-v0.2.3.js',
+        urlRTL,
         (err) => {
           err && console.error(err);
         },

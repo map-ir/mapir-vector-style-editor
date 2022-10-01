@@ -11,17 +11,13 @@ interface IProps {
   map: MapProps;
 }
 
-const MapirStyleEditor = ({ map }: IProps) => {
+const App = ({ map }: IProps) => {
   console.log('🚀 ~ file: app.tsx ~ line 15 ~ MapirStyleEditor ~ map', map);
   const setMapProp = useSetAtom(mapPropsState);
 
   setMapProp(map);
 
-  return (
-    <Provider>
-      <Map />
-    </Provider>
-  );
+  return <Map />;
 };
 
-export default memo(MapirStyleEditor);
+export default memo(App);

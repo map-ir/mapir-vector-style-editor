@@ -5,7 +5,13 @@ import MapirStyleEditor from '../src';
 
 function App() {
   return (
-    <div className="App">
+    <div
+      style={{
+        width: '95vw',
+        height: '95vh',
+        overflow: 'hidden',
+      }}
+    >
       <MapirStyleEditor
         map={{
           transformRequest: (url: string) => ({

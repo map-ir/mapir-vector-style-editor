@@ -6,14 +6,14 @@ import peerDeps from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
 import visualizer from 'rollup-plugin-visualizer';
 import { terser } from 'rollup-plugin-terser';
+import url from '@rollup/plugin-url';
 import { getFiles } from './scripts/buildUtils';
-import pkg from './package.json';
 
 const extensions = ['.js', '.ts', '.jsx', '.tsx'];
 
 export default {
   input: [
-    pkg.module,
+    './src/index.tsx',
     // ...getFiles('./src/common', extensions),
     ...getFiles('./src/components', extensions),
     ...getFiles('./src/atoms', extensions),
@@ -46,6 +46,7 @@ export default {
     }),
     postcss(),
     terser(),
+    url(),
     // visualizer({
     //   filename: 'bundle-analysis.html',
     //   open: true,
