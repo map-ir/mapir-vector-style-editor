@@ -12,7 +12,6 @@ interface IProps {
 }
 
 const App = ({ map }: IProps) => {
-  console.log('🚀 ~ file: app.tsx ~ line 15 ~ MapirStyleEditor ~ map', map);
   const setMapProp = useSetAtom(mapPropsState);
 
   setMapProp(map);

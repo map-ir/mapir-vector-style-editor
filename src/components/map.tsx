@@ -7,7 +7,7 @@ import { mapState, isMapLoadedState, mapPropsState } from '../atoms/map';
 
 import type { ResourceType } from 'mapbox-gl';
 
-import urlRTL from '../libs/mapbox-gl-rtl-text-v0.2.3.js';
+// import urlRTL from './../libs/mapbox-gl-rtl-text-v0.2.3.js';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -23,7 +23,7 @@ export default function Map() {
 
     if (mapboxGl.getRTLTextPluginStatus() === 'unavailable')
       mapboxGl.setRTLTextPlugin(
-        urlRTL,
+        'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js',
         (err) => {
           err && console.error(err);
         },

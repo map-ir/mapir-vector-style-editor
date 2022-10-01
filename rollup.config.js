@@ -17,6 +17,7 @@ export default {
     // ...getFiles('./src/common', extensions),
     ...getFiles('./src/components', extensions),
     ...getFiles('./src/atoms', extensions),
+    // ...getFiles('./src/libs', extensions),
     // ...getFiles('./src/hooks', extensions),
     // ...getFiles('./src/utils', extensions),
   ],
@@ -36,8 +37,8 @@ export default {
     babel({
       babelrc: true,
       babelHelpers: 'runtime',
-      exclude: '**/node_modules/**',
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      exclude: ['**/node_modules/**', '**/libs/**'],
+      extensions: extensions,
     }),
     typescript({
       tsconfig: './tsconfig.build.json',
@@ -46,7 +47,9 @@ export default {
     }),
     postcss(),
     terser(),
-    url(),
+    url({
+      include: ['./src/libs/**'],
+    }),
     // visualizer({
     //   filename: 'bundle-analysis.html',
     //   open: true,
