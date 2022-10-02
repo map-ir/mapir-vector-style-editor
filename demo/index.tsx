@@ -22,6 +22,7 @@ function App() {
             },
           }),
         }}
+        styleURL="https://my-dev.map.ir/share/d2093721-e89d-4549-a65d-db7039a0d60a/api/mym/styles/data/style_9bf66929-19c1-4b9e-81b5-7cf998b7b4b2_80125ac0-7c52-45b9-a671-f02b2f3e8f3e.json"
       />
     </div>
   );

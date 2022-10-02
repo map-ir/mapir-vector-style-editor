@@ -1,6 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components/macro';
-import mapboxGl from 'mapbox-gl';
+import {
+  Map as MapGL,
+  getRTLTextPluginStatus,
+  setRTLTextPlugin,
+} from 'mapbox-gl';
 import { useAtom, useSetAtom, useAtomValue } from 'jotai';
 
 import { mapState, isMapLoadedState, mapPropsState } from '../atoms/map';
@@ -21,8 +25,8 @@ export default function Map() {
   useEffect(() => {
     if (map) return;
 
-    if (mapboxGl.getRTLTextPluginStatus() === 'unavailable')
-      mapboxGl.setRTLTextPlugin(
+    if (getRTLTextPluginStatus() === 'unavailable')
+      setRTLTextPlugin(
         'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js',
         (err) => {
           err && console.error(err);
@@ -30,7 +34,7 @@ export default function Map() {
         true
       );
 
-    const futureMap = new mapboxGl.Map({
+    const futureMap = new MapGL({
       ...mapProps,
       container: mapRef.current || '',
       style:
@@ -67,7 +71,8 @@ export default function Map() {
 const MapWrapper = styled.div`
   position: relative;
   height: 100%;
-  width: 100%;
+  /* width: 60%; */
+  flex-grow: 2.5;
   overflow: hidden;
   border-radius: inherit;
 
