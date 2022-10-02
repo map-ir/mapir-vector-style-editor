@@ -5,9 +5,14 @@ import {
   getRTLTextPluginStatus,
   setRTLTextPlugin,
 } from 'mapbox-gl';
-import { useAtom, useSetAtom, useAtomValue } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 
-import { mapState, isMapLoadedState, mapPropsState } from '../atoms/map';
+import {
+  mapState,
+  isMapLoadedState,
+  mapPropsState,
+  styleObjState,
+} from '../atoms/map';
 
 import type { ResourceType } from 'mapbox-gl';
 
@@ -17,11 +22,13 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 export default function Map() {
   const [map, setMap] = useAtom(mapState);
-  const setIsMapLoaded = useSetAtom(isMapLoadedState);
+  const [isMapLoaded, setIsMapLoaded] = useAtom(isMapLoadedState);
   const mapProps = useAtomValue(mapPropsState);
+  const styleObj = useAtomValue(styleObjState);
 
   const mapRef = useRef<HTMLDivElement | null>(null);
 
+  // initialize the map
   useEffect(() => {
     if (map) return;
 
@@ -29,7 +36,7 @@ export default function Map() {
       setRTLTextPlugin(
         'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js',
         (err) => {
-          err && console.error(err);
+          if (err) console.error(err);
         },
         true
       );
@@ -45,8 +52,9 @@ export default function Map() {
       pitch: mapProps?.pitch ?? 0,
       hash: mapProps?.hash ?? true,
       attributionControl: true,
-      customAttribution:
-        (mapProps?.customAttribution ?? '') + '© Map.ir © Openstreetmap',
+      customAttribution: `${
+        (mapProps?.customAttribution ?? '') as string
+      } © Map.ir © Openstreetmap`,
       transformRequest: (url: string, resourceType: ResourceType) =>
         mapProps?.transformRequest(url, resourceType),
     });
@@ -57,9 +65,22 @@ export default function Map() {
     });
 
     setMap?.(futureMap);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map, setMap]);
+
+  // Show the layers on Map
+  useEffect(() => {
+    if (map && isMapLoaded && styleObj) {
+      const srcName = Object.keys(styleObj.sources)[0];
+      const srcData = styleObj.sources[Object.keys(styleObj.sources)[0]];
+      const layersStyle = styleObj.layers;
+      if (!map.getSource(srcName)) {
+        map.addSource(srcName, srcData);
+        for (const layerStyle of layersStyle) {
+          if (!map.getLayer(layerStyle.id)) map.addLayer(layerStyle);
+        }
+      }
+    }
+  }, [map, isMapLoaded, styleObj]);
 
   return (
     <MapWrapper>
@@ -71,7 +92,6 @@ export default function Map() {
 const MapWrapper = styled.div`
   position: relative;
   height: 100%;
-  /* width: 60%; */
   flex-grow: 2.5;
   overflow: hidden;
   border-radius: inherit;
@@ -81,8 +101,8 @@ const MapWrapper = styled.div`
     height: 100%;
     background-color: #eff0f0;
 
-    @media (prefers-color-scheme: dark) {
+    /* @media (prefers-color-scheme: dark) {
       background-color: #4a5768;
-    }
+    } */
   }
 `;

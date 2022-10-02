@@ -1,4 +1,5 @@
-/* eslint-disable import/prefer-default-export */
+/* eslint-disable */
+// @ts-ignore
 const fs = require('fs');
 
 export const getFiles = (entry, extensions = [], excludeExtensions = []) => {

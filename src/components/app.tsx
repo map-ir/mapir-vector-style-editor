@@ -16,9 +16,12 @@ const App = ({ map, locale, styleURL }: IProps) => {
   const setStyleObj = useSetAtom(styleObjState);
 
   setMapProp(map);
-  setStyleURL(styleURL);
 
-  const fetchStyle = (url: string): Promise<Style> => {
+  useEffect(() => {
+    void setStyleURL(styleURL);
+  }, [styleURL]);
+
+  const fetchStyle = (url: string) => {
     return fetch(url, {
       method: 'GET',
     })
@@ -27,8 +30,8 @@ const App = ({ map, locale, styleURL }: IProps) => {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    if (styleURLAtom) fetchStyle(styleURLAtom).then((res) => setStyleObj(res));
+    if (styleURLAtom)
+      void fetchStyle(styleURLAtom).then((res) => setStyleObj(res));
   }, [styleURLAtom, setStyleObj]);
 
   return (
