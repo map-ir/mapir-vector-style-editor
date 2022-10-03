@@ -4,6 +4,9 @@ interface IProps {
   map: MapProps;
   locale?: 'fa' | 'en';
   styleURL: string;
+  title?: string;
 }
 
-export type { IProps };
+type Renderable = JSX.Element | undefined | null | false;
+
+export type { IProps, Renderable };

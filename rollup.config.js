@@ -8,14 +8,16 @@ import postcss from 'rollup-plugin-postcss';
 import visualizer from 'rollup-plugin-visualizer';
 import { terser } from 'rollup-plugin-terser';
 import url from '@rollup/plugin-url';
+import svgr from '@svgr/rollup';
 import { getFiles } from './scripts/buildUtils';
 
-const extensions = ['.js', '.ts', '.jsx', '.tsx'];
+const extensions = ['.js', '.ts', '.jsx', '.tsx', '*.svg'];
 
 export default {
   input: [
     './src/index.tsx',
-    // ...getFiles('./src/common', extensions),
+    ...getFiles('./src/assets', extensions),
+    ...getFiles('./src/common', extensions),
     ...getFiles('./src/components', extensions),
     ...getFiles('./src/atoms', extensions),
     // ...getFiles('./src/libs', extensions),
@@ -41,19 +43,20 @@ export default {
       exclude: ['**/node_modules/**', '**/libs/**'],
       extensions: extensions,
     }),
-    typescript({
-      tsconfig: './tsconfig.build.json',
-      declaration: true,
-      declarationDir: './dist',
-    }),
     postcss(),
     terser(),
     url({
       include: ['./src/libs/**'],
     }),
+    svgr({ exportType: 'named', jsxRuntime: 'automatic' }),
     // visualizer({
     //   filename: 'bundle-analysis.html',
     //   open: true,
     // }),
+    typescript({
+      tsconfig: './tsconfig.build.json',
+      declaration: true,
+      declarationDir: './dist',
+    }),
   ],
 };

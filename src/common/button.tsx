@@ -81,7 +81,7 @@ const StyledButton = styled.button<{ off?: boolean }>`
   padding: 0.7em 1em;
   outline: none;
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius-8);
   box-shadow: ${styledMap`
     cancel: none;
     default: 0 3px 6px 0 var(--shadow-1);

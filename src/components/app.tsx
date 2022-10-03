@@ -2,24 +2,30 @@ import React, { memo, useEffect } from 'react';
 import { useAtom, useSetAtom } from 'jotai';
 import styled from 'styled-components/macro';
 
-import Map from './map';
+import Map from '../common/map';
 import Editor from './editor';
 
 import { mapPropsState, styleURLState, styleObjState } from '../atoms/map';
+import { titleState } from '../atoms/general';
 
 import type { IProps } from 'types/general';
 import type { Style } from 'mapbox-gl';
 
-const App = ({ map, locale, styleURL }: IProps) => {
+const App = ({ map, locale, styleURL, title }: IProps) => {
   const setMapProp = useSetAtom(mapPropsState);
   const [styleURLAtom, setStyleURL] = useAtom(styleURLState);
   const setStyleObj = useSetAtom(styleObjState);
+  const setTitle = useSetAtom(titleState);
 
   setMapProp(map);
 
   useEffect(() => {
     void setStyleURL(styleURL);
   }, [styleURL]);
+
+  useEffect(() => {
+    setTitle(title);
+  }, [title]);
 
   const fetchStyle = (url: string) => {
     return fetch(url, {

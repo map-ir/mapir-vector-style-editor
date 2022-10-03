@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import { FormattedMessage } from 'react-intl';
 
 import LayersStyle from './layers';
-import Button from './../button';
+import Button from '../../common/button';
 
 const Editor = () => {
   return (

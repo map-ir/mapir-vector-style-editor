@@ -26,6 +26,8 @@ const defaultColors = {
   light_1: '#ffffff',
   success_1: '#20A76E',
   fail_1: '#D10328',
+  border_radius_16: '16px',
+  border_radius_8: '8px',
 };
 
 const GlobalStyling = createGlobalStyle`
@@ -40,17 +42,19 @@ const GlobalStyling = createGlobalStyle`
     --light-1: ${defaultColors.light_1};
     --success-1: ${defaultColors.success_1};
     --fail-1: ${defaultColors.fail_1};
+    --radius-16: ${defaultColors.border_radius_16};
+    --radius-8: ${defaultColors.border_radius_8};
 
     --font-family: 'IRANSansWeb'
   }
 `;
 
-const MapirStyleEditor = ({ map, locale = 'fa', styleURL }: IProps) => {
+const MapirStyleEditor = ({ map, locale = 'fa', styleURL, title }: IProps) => {
   return (
     <IntlProvider locale={locale} key={locale} messages={messages[locale]}>
       <GlobalStyling />
       <Provider>
-        <App map={map} locale={locale} styleURL={styleURL} />
+        <App map={map} locale={locale} styleURL={styleURL} title={title} />
       </Provider>
     </IntlProvider>
   );
