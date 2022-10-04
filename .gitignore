@@ -105,12 +105,15 @@ dist
 
 .idea/
 .DS_store/
+.DS_store
+**/.DS_store
 .vscode/
 
 demo/node_modules/
 demo/build/
 demo/.idea/
 demo/.DS_store/
+demo/.DS_store
 demo/.vscode/
 
 .parcel-cache/
