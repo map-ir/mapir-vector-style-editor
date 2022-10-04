@@ -53,6 +53,7 @@ const LayersStyle = () => {
             >
               <ExpandBody>
                 <ZoomRange id={id} />
+                <SpecEditor />
               </ExpandBody>
             </Expandable>
           );
