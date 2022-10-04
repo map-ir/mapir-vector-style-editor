@@ -28,6 +28,7 @@ const defaultColors = {
   fail_1: '#D10328',
   border_radius_16: '16px',
   border_radius_8: '8px',
+  border_radius_4: '4px',
 };
 
 const GlobalStyling = createGlobalStyle`
@@ -44,6 +45,7 @@ const GlobalStyling = createGlobalStyle`
     --fail-1: ${defaultColors.fail_1};
     --radius-16: ${defaultColors.border_radius_16};
     --radius-8: ${defaultColors.border_radius_8};
+    --radius-4: ${defaultColors.border_radius_4};
 
     --font-family: 'IRANSansWeb'
   }

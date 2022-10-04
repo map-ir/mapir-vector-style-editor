@@ -6,10 +6,12 @@ import { titleState } from '../../atoms/general';
 import { styleObjState } from '../../atoms/map';
 
 import Expandable from '../../common/expandable';
-import GeoIcon from '../../common/geo_icon';
+import ZoomRange from '../zoom-range';
+import type { Layer } from 'mapbox-gl';
+// import GeoIcon from '../../common/geo_icon';
 
-import { ReactComponent as Plus } from '../../assets/icons/plus.svg';
-import { ReactComponent as Delete } from '../../assets/icons/delete.svg';
+// import { ReactComponent as Plus } from '../../assets/icons/plus.svg';
+// import { ReactComponent as Delete } from '../../assets/icons/delete.svg';
 
 const LayersStyle = () => {
   const title = useAtomValue(titleState);
@@ -30,7 +32,7 @@ const LayersStyle = () => {
         <Icon>{/* <Plus color={'var(--light-1)'} /> */}+</Icon>
       </Header>
       <LayersContainer>
-        {styleObj?.layers?.map((layer) => {
+        {styleObj?.layers?.map((layer: Layer) => {
           const { id, type } = layer;
           const open = openLayerID === id;
 
@@ -49,7 +51,9 @@ const LayersStyle = () => {
                 </ExpandHeader>
               )}
             >
-              <div>{type}</div>
+              <ExpandBody>
+                <ZoomRange id={id} />
+              </ExpandBody>
             </Expandable>
           );
         })}
@@ -104,3 +108,5 @@ const LayersContainer = styled.div`
   align-items: center;
   gap: 1em;
 `;
+
+const ExpandBody = styled(LayersContainer)``;

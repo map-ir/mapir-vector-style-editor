@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components/macro';
 import styledMap from 'styled-map';
 
-import { ReactComponent as ArrowDownIcon } from '../assets/icons/arrow-down.svg';
+// import { ReactComponent as ArrowDownIcon } from '../assets/icons/arrow-down.svg';
 
 import type { Renderable } from 'types/general';
 
