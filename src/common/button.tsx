@@ -89,17 +89,17 @@ const StyledButton = styled.button<{ off?: boolean }>`
   background-color: ${styledMap`
     error: var(--error);
     success: var(--success);
-    cancel: #e7e7e7;
-    deactive: var(--light-4);
+    cancel: var(--light-2);
+    deactive: var(--shade-4);
     secondary: var(--color-secondary);
     primary: var(--color-primary);
     tertiary: transparent;
-    default: var(--shade-3);
+    default: var(--shade-5);
   `};
   color: ${styledMap`
     tertiary: var(--shade-1);
     cancel: var(--light-4);
-    default: white;
+    default: var(--light-1);
   `};
   height: ${styledMap`
     large: 3em;

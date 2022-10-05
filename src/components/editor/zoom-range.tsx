@@ -3,10 +3,10 @@ import Styled from 'styled-components/macro';
 import { FormattedMessage } from 'react-intl';
 import { useAtomValue } from 'jotai';
 
-import RangeSlider from '../common/range-slider';
-import InputNumber from '../common/input-number';
+import RangeSlider from '../../common/range-slider';
+import InputNumber from '../../common/input-number';
 
-import { mapState } from '../atoms/map';
+import { mapState } from '../../atoms/map';
 
 import type { Layer } from 'mapbox-gl';
 
@@ -71,17 +71,24 @@ width: 100%;
     justify-content: space-between;
     align-items: center;
     padding: 1em 0;
+    gap: 1em;
 `;
 
 const Title = Styled.div`
-flex-grow: 1;
+/* flex-grow: 1; */
+width: 30%;
+text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: var(--shade-2);
 `;
 
 const Slider = Styled.div`
-flex-grow: 3;
+/* flex-grow: 3; */
+width: 70%;
 display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    gap: 1em;
+    gap: 0.5em;
 `;

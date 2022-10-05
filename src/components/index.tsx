@@ -19,11 +19,12 @@ const defaultColors = {
   primary: '#ea4c89',
   secondry: '#2e0767',
   shade_1: '#1c1c1c',
-  shade_2: '#949494',
-  shade_3: '#c2c2c2',
-  shade_4: '#f6f6f6',
-  shade_5: '#fafafa',
+  shade_2: '#808080',
+  shade_3: '#C2C2C2',
+  shade_4: '#E8E8E8',
+  shade_5: '#E0E0E0',
   light_1: '#ffffff',
+  light_2: '#FAFAFA',
   success_1: '#20A76E',
   fail_1: '#D10328',
   border_radius_16: '16px',
@@ -41,6 +42,7 @@ const GlobalStyling = createGlobalStyle`
     --shade-4: ${defaultColors.shade_4};
     --shade-5: ${defaultColors.shade_5};
     --light-1: ${defaultColors.light_1};
+    --light-2: ${defaultColors.light_2};
     --success-1: ${defaultColors.success_1};
     --fail-1: ${defaultColors.fail_1};
     --radius-16: ${defaultColors.border_radius_16};

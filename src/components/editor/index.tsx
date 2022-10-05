@@ -23,7 +23,8 @@ const Editor = () => {
 export default Editor;
 
 const Wrapper = styled.div`
-  flex-grow: 1;
+  /* flex-grow: 1; */
+  width: 35%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

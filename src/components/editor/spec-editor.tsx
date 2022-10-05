@@ -1,14 +1,20 @@
+import React, { memo } from 'react';
+import PointEditor from '../point';
+
+import type { LayerType } from '../../types/map';
 interface IProps {
-  type: string;
+  type: LayerType;
 }
 
 const SpecEditor = ({ type }: IProps) => {
   switch (type) {
     case 'symbol':
-      return <PointEditor />;
+      return <PointEditor type={type} />;
+    case 'circle':
+      return <PointEditor type={type} />;
     default:
       return null;
   }
 };
 
-export default SpecEditor;
+export default memo(SpecEditor);

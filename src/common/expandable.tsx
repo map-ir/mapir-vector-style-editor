@@ -85,7 +85,6 @@ const UnitOpen = styled.span<{ open: boolean }>`
   align-items: center;
   width: 1em;
   height: 1em;
-  color: #a6a6a6;
   margin-right: 0.5em;
   cursor: pointer;
   user-select: none;
@@ -99,7 +98,7 @@ const UnitOpen = styled.span<{ open: boolean }>`
 
 const Body = styled.div<{ open: boolean }>`
   width: 100%;
-  background-color: white;
+  background-color: var(--light-1);
   height: 0;
   overflow: hidden;
 
@@ -107,6 +106,6 @@ const Body = styled.div<{ open: boolean }>`
     props.open &&
     css`
       height: auto;
-      border-top: 1px solid var(--shade-3);
+      border-top: 1px solid var(--shade-5);
     `}
 `;

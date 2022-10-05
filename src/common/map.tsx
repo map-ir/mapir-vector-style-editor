@@ -92,9 +92,10 @@ export default function Map() {
 const MapWrapper = styled.div`
   position: relative;
   height: 100%;
-  flex-grow: 2.5;
+  /* flex-grow: 2.5; */
+  width: 65%;
   overflow: hidden;
-  border-radius: inherit;
+  border-radius: var(--radius-16);
 
   #map {
     width: 100%;

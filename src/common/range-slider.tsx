@@ -21,10 +21,10 @@ const StyledSlider = Styled(Root)`
     align-items: center;
     user-select: none;
     touch-action: none;
-    width: 200px;
+    width: calc(100% - 4em);
 
     &[data-orientation="horizontal"] {
-    height: 20px;
+    height: 100%;
     };
 
     &[data-orientation="vertical"] {
@@ -40,8 +40,8 @@ const StyledTrack = Styled(Track)`
     flex-grow: 1;
     border-radius: 9999px;
 
-    &[data-orientation="horizontal"] { height: 3px; };,
-    &[data-orientation="vertical"] { width: 3px; };
+    &[data-orientation="horizontal"] { height: 0.3em; };,
+    &[data-orientation="vertical"] { width: 0.3em; };
 `;
 
 const StyledRange = Styled(Range)`
@@ -54,11 +54,10 @@ const StyledRange = Styled(Range)`
 const StyledThumb = Styled(Thumb)`
     all: unset;
     display: block;
-    width: 1em;
-    height: 1em;
+    width: 0.6em;
+    height: 0.6em;
     background-color: var(--shade-1);
-    box-shadow: 0 2px 10px var(--shade-3);
     border-radius: 50%;
     z-index: 9999;
-    &:focus { box-shadow: 0 0 0 2px var(--shade-3); };
+    &:focus { box-shadow: 0 0 0 2px var(--shade-4); };
 `;

@@ -6,8 +6,11 @@ import { titleState } from '../../atoms/general';
 import { styleObjState } from '../../atoms/map';
 
 import Expandable from '../../common/expandable';
-import ZoomRange from '../zoom-range';
+import ZoomRange from './zoom-range';
+import SpecEditor from './spec-editor';
+
 import type { Layer } from 'mapbox-gl';
+import type { LayerType } from 'types/map';
 // import GeoIcon from '../../common/geo_icon';
 
 // import { ReactComponent as Plus } from '../../assets/icons/plus.svg';
@@ -47,13 +50,13 @@ const LayersStyle = () => {
                     {/* <GeoIcon data={type} color={'var(--color-primary)'} /> */}
                     {type}
                   </div>
-                  <div>{/* <Plus color={'var(--shade-3)'} /> */}delete</div>
+                  <div>{/* <Plus color={'var(--shade-4)'} /> */}delete</div>
                 </ExpandHeader>
               )}
             >
               <ExpandBody>
                 <ZoomRange id={id} />
-                <SpecEditor />
+                <SpecEditor type={type as LayerType} />
               </ExpandBody>
             </Expandable>
           );
@@ -72,7 +75,7 @@ const Wrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 1em;
-  border: 1px solid var(--shade-3);
+  border: 1px solid var(--shade-4);
   border-radius: var(--radius-16);
   padding: 1em;
   box-sizing: border-box;
@@ -110,4 +113,6 @@ const LayersContainer = styled.div`
   gap: 1em;
 `;
 
-const ExpandBody = styled(LayersContainer)``;
+const ExpandBody = styled(LayersContainer)`
+  gap: 0;
+`;
