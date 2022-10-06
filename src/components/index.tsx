@@ -30,6 +30,8 @@ const defaultColors = {
   border_radius_16: '16px',
   border_radius_8: '8px',
   border_radius_4: '4px',
+  font_family:
+    ' -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
 };
 
 const GlobalStyling = createGlobalStyle`
@@ -49,7 +51,7 @@ const GlobalStyling = createGlobalStyle`
     --radius-8: ${defaultColors.border_radius_8};
     --radius-4: ${defaultColors.border_radius_4};
 
-    --font-family: 'IRANSansWeb'
+    --font-family: ${defaultColors.font_family};
   }
 `;
 

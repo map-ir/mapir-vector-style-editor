@@ -58,4 +58,5 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: stretch;
   gap: 1em;
+  font-family: var(--font-family);
 `;

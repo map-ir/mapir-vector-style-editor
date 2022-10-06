@@ -79,6 +79,7 @@ const StyledButton = styled.button<{ off?: boolean }>`
   align-items: center;
   gap: 1em;
   padding: 0.7em 1em;
+  font-family: inherit;
   outline: none;
   border: none;
   border-radius: var(--radius-8);

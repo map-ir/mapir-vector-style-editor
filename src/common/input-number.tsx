@@ -83,4 +83,5 @@ const StyledInput = styled.input`
   text-align: center;
   border: 1px solid var(--shade-3);
   border-radius: var(--radius-4);
+  font-family: inherit;
 `;
