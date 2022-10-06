@@ -1,6 +1,6 @@
 import React from 'react';
 const CircleEditor = () => {
-  return <div>cluster</div>;
+  return <div>circle</div>;
 };
 
 export default CircleEditor;

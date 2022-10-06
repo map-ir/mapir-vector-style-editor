@@ -115,4 +115,5 @@ const LayersContainer = styled.div`
 
 const ExpandBody = styled(LayersContainer)`
   gap: 0;
+  padding-bottom: 1em;
 `;

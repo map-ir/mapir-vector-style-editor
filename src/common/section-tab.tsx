@@ -1,9 +1,9 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import styled, { css } from 'styled-components/macro';
 
 export interface ITab {
   id: string;
-  name: string;
   disabled?: boolean;
 }
 
@@ -27,7 +27,7 @@ const SectionTab = ({
   return (
     <Tabs className={className} align={align}>
       <TabNav horizental={horizental}>
-        {tabs.map(({ id, name, disabled }) => {
+        {tabs.map(({ id, disabled }) => {
           return (
             <TabItem
               key={id}
@@ -35,7 +35,7 @@ const SectionTab = ({
               $disabled={disabled}
               onClick={onTabChange?.bind(null, id)}
             >
-              {name}
+              <FormattedMessage id={id} />
             </TabItem>
           );
         })}
@@ -50,8 +50,7 @@ const Tabs = styled.nav<{ align: ITabs['align'] }>`
   display: flex;
   flex-direction: column;
   justify-content: ${(p) => p.align};
-  align-items: center;
-  gap: 2em;
+  align-items: stretch;
 `;
 
 const TabNav = styled.ul<{ horizental?: boolean }>`
@@ -59,25 +58,19 @@ const TabNav = styled.ul<{ horizental?: boolean }>`
   margin: 0;
   display: flex;
   flex-direction: ${(p) => (p.horizental ? 'column' : 'row')};
+  justify-content: space-between;
   align-items: center;
   list-style: none;
-  gap: 1em;
-  padding: 0.5em;
-  border-radius: 10px;
-  box-shadow: ${(p) =>
-    p.horizental ? 'unset' : '0 3px 6px 0 rgba(0, 0, 0, 0.16)'};
-  background-color: #fff;
 `;
 
 const TabItem = styled.li<{ active?: boolean; $disabled?: boolean }>`
   padding: 0.5em 1rem;
-  color: var(--color-primary);
+  color: var(--shade-1);
   box-shadow: none;
   outline: none;
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius-8) var(--radius-8) 0 0;
   cursor: pointer;
-  font-size: 1.2em;
   display: block;
   position: relative;
   font-family: inherit;
@@ -85,7 +78,7 @@ const TabItem = styled.li<{ active?: boolean; $disabled?: boolean }>`
   ${(p) =>
     p.active &&
     css`
-      background-color: #f0f5ff;
+      background-color: var(--light-2);
     `}
 
   ${(p) =>
