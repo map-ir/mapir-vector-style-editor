@@ -1,6 +1,9 @@
 import React from 'react';
-const CircleEditor = () => {
-  return <div>circle</div>;
+
+import InnerTabs from '../inner-tabs';
+
+const SymbolEditor = () => {
+  return <InnerTabs type="circle"></InnerTabs>;
 };
 
-export default CircleEditor;
+export default SymbolEditor;

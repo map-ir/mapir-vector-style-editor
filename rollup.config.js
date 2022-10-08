@@ -11,12 +11,12 @@ import url from '@rollup/plugin-url';
 import svgr from '@svgr/rollup';
 import { getFiles } from './scripts/buildUtils';
 
-const extensions = ['.js', '.ts', '.jsx', '.tsx', '*.svg'];
+const extensions = ['.js', '.ts', '.jsx', '.tsx'];
 
 export default {
   input: [
     './src/index.tsx',
-    ...getFiles('./src/assets', extensions),
+    // ...getFiles('./src/assets', extensions),
     ...getFiles('./src/common', extensions),
     ...getFiles('./src/components', extensions),
     ...getFiles('./src/atoms', extensions),
@@ -34,6 +34,10 @@ export default {
     },
   ],
   plugins: [
+    svgr({
+      exportType: 'named',
+      // icon: true,
+    }),
     peerDeps(),
     resolve(),
     commonjs(),
@@ -45,10 +49,9 @@ export default {
     }),
     postcss(),
     terser(),
-    url({
-      include: ['./src/libs/**'],
-    }),
-    svgr({ exportType: 'named', jsxRuntime: 'automatic' }),
+    // url({
+    //   include: ['./src/libs/**'],
+    // }),
     // visualizer({
     //   filename: 'bundle-analysis.html',
     //   open: true,

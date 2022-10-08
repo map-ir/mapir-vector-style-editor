@@ -6,6 +6,11 @@ import CircleEditor from './circle-editor';
 
 import type { PointLayer } from '../../types/map';
 
+import { ReactComponent as Circle } from '../../assets/icons/circle.svg';
+import { ReactComponent as Symbol } from '../../assets/icons/symbol.svg';
+import { ReactComponent as Heatmap } from '../../assets/icons/heatmap.svg';
+import { ReactComponent as Cluster } from '../../assets/icons/cluster.svg';
+
 interface IProps {
   type: PointLayer;
 }
@@ -24,10 +29,28 @@ const PointEditor = ({ type }: IProps) => {
   return (
     <Wrapper>
       <LayerType>
-        <div onClick={() => setLayerType('symbol')}>symbol</div>
-        <div onClick={() => setLayerType('circle')}>circle</div>
-        <div>heatmap</div>
-        <div>cluster</div>
+        <Symbol
+          onClick={() => setLayerType('symbol')}
+          color={
+            layerType === 'symbol' ? 'var(--color-primary)' : 'var(--shade-4)'
+          }
+        />
+        <Circle
+          onClick={() => setLayerType('circle')}
+          color={
+            layerType === 'circle' ? 'var(--color-primary)' : 'var(--shade-4)'
+          }
+        />
+        <Heatmap
+          color={
+            layerType === 'heatmap' ? 'var(--color-primary)' : 'var(--shade-4)'
+          }
+        />
+        <Cluster
+          color={
+            layerType === 'cluster' ? 'var(--color-primary)' : 'var(--shade-4)'
+          }
+        />
       </LayerType>
       <EditorType />
     </Wrapper>

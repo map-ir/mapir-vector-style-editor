@@ -3,6 +3,8 @@ export default {
   cancel: 'Cancel',
   zoom_range: 'Zoom Range',
   symbol: 'Symbol',
+  circle: 'Circle',
+  outline: 'Outline',
   other: 'Other',
   title: 'Title',
 };

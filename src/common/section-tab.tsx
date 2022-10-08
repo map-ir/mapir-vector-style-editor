@@ -50,7 +50,7 @@ const Tabs = styled.nav<{ align: ITabs['align'] }>`
   display: flex;
   flex-direction: column;
   justify-content: ${(p) => p.align};
-  align-items: stretch;
+  align-items: flex-start;
 `;
 
 const TabNav = styled.ul<{ horizental?: boolean }>`
@@ -64,7 +64,7 @@ const TabNav = styled.ul<{ horizental?: boolean }>`
 `;
 
 const TabItem = styled.li<{ active?: boolean; $disabled?: boolean }>`
-  padding: 0.5em 1rem;
+  padding: 0.5em 2rem;
   color: var(--shade-1);
   box-shadow: none;
   outline: none;

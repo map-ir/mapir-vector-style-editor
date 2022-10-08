@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components/macro';
 import styledMap from 'styled-map';
 
-// import { ReactComponent as ArrowDownIcon } from '../assets/icons/arrow-down.svg';
+import { ReactComponent as ArrowDownIcon } from '../assets/icons/arrow-down.svg';
 
 import type { Renderable } from 'types/general';
 
@@ -30,7 +30,7 @@ function Expandable({
         {isExpandable && (
           <HeaderAction>
             <UnitOpen onClick={onOpen} open={open}>
-              {/* <ArrowDownIcon /> */}
+              <ArrowDownIcon color={'var(--shade-3)'} />
             </UnitOpen>
           </HeaderAction>
         )}
@@ -85,7 +85,6 @@ const UnitOpen = styled.span<{ open: boolean }>`
   align-items: center;
   width: 1em;
   height: 1em;
-  margin-right: 0.5em;
   cursor: pointer;
   user-select: none;
   transform: rotate(

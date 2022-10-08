@@ -10,11 +10,11 @@ import ZoomRange from './zoom-range';
 import SpecEditor from './spec-editor';
 
 import type { Layer } from 'mapbox-gl';
-import type { LayerType } from 'types/map';
-// import GeoIcon from '../../common/geo_icon';
+import type { LayerType } from '../../types/map';
+import GeoIcon from '../../common/geo-icon';
 
-// import { ReactComponent as Plus } from '../../assets/icons/plus.svg';
-// import { ReactComponent as Delete } from '../../assets/icons/delete.svg';
+import { ReactComponent as Plus } from '../../assets/icons/plus.svg';
+import { ReactComponent as Delete } from '../../assets/icons/delete.svg';
 
 const LayersStyle = () => {
   const title = useAtomValue(titleState);
@@ -32,7 +32,9 @@ const LayersStyle = () => {
     <Wrapper>
       <Header>
         <div>{title}</div>
-        <Icon>{/* <Plus color={'var(--light-1)'} /> */}+</Icon>
+        <Icon>
+          <Plus color={'var(--light-1)'} />
+        </Icon>
       </Header>
       <LayersContainer>
         {styleObj?.layers?.map((layer: Layer) => {
@@ -47,10 +49,11 @@ const LayersStyle = () => {
               HeaderRenderer={() => (
                 <ExpandHeader>
                   <div>
-                    {/* <GeoIcon data={type} color={'var(--color-primary)'} /> */}
-                    {type}
+                    <GeoIcon data={type} color={'var(--color-primary)'} />
                   </div>
-                  <div>{/* <Plus color={'var(--shade-4)'} /> */}delete</div>
+                  <div>
+                    <Delete color={'var(--shade-3)'} />
+                  </div>
                 </ExpandHeader>
               )}
             >
