@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useAtomValue } from 'jotai';
+import React from 'react';
+import { useAtom, useAtomValue } from 'jotai';
 import styled from 'styled-components/macro';
 
 import { titleState } from '../../atoms/general';
-import { styleObjState } from '../../atoms/map';
+import { styleObjState, selectedLayerIDState } from '../../atoms/map';
 
 import Expandable from '../../common/expandable';
 import ZoomRange from './zoom-range';
@@ -20,10 +20,10 @@ const LayersStyle = () => {
   const title = useAtomValue(titleState);
   const styleObj = useAtomValue(styleObjState);
 
-  const [openLayerID, setOpenLayerID] = useState<string>();
+  const [openLayerID, setOpenLayerID] = useAtom(selectedLayerIDState);
 
   const toggleExpand = (layerID?: string) => {
-    setOpenLayerID((currentid) =>
+    setOpenLayerID((currentid: string | undefined) =>
       currentid !== layerID ? layerID : undefined
     );
   };

@@ -1,8 +1,13 @@
 import React from 'react';
 
+export interface ITab<T> {
+  id: T;
+  disabled?: boolean;
+}
+
 const symbolPageIds = ['symbol', 'other', 'title'] as const;
 export type SymbolPageIdsType = typeof symbolPageIds[number];
-export const symbolTabs = [
+export const symbolTabs: ITab<SymbolPageIdsType>[] = [
   {
     id: 'symbol',
   },
@@ -16,9 +21,9 @@ export const symbolTabs = [
   },
 ];
 
-const circlePageIds = ['cirle', 'outline', 'title', 'other'] as const;
+const circlePageIds = ['circle', 'outline', 'title', 'other'] as const;
 export type CirclePageIdsType = typeof circlePageIds[number];
-export const circleTabs = [
+export const circleTabs: ITab<CirclePageIdsType>[] = [
   {
     id: 'circle',
   },

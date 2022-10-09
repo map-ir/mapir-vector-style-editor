@@ -10,6 +10,7 @@ const mapPropsState = atom<MapProps>({
 });
 const styleURLState = atom<string>('');
 const styleObjState = atom<Style | null>(null);
+const selectedLayerIDState = atom<string | undefined>(undefined);
 
 export {
   mapState,
@@ -17,4 +18,5 @@ export {
   mapPropsState,
   styleURLState,
   styleObjState,
+  selectedLayerIDState,
 };

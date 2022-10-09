@@ -1,11 +1,11 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 
 import SectionTab from '../common/section-tab';
 import { PageSwitch, Page } from '../common/page-switch';
 import { LayerComponent, EditorWrapper } from '../common/styles';
 import { symbolTabs, circleTabs, components } from './constans';
+import type { ITab } from './constans';
 
-import type { SymbolPageIdsType as PageIds } from './constans';
 import type { LayerType } from '../types/map';
 
 interface IProps {
@@ -24,18 +24,28 @@ const InnerTabs = ({ type }: IProps) => {
     }[type];
   }, [type]);
 
+  const currTab = tabs.map((t) => t.id);
+  type PageIds = typeof currTab[number];
+
   const [activePageId, setActivePageId] = useState<PageIds>(
-    () => tabs.filter((i) => !i.disabled).slice(0)[0].id as PageIds
+    (tabs.filter((i: ITab<PageIds>) => !i.disabled) as ITab<PageIds>[])[0].id
   );
 
   const changeTab = useCallback(
     (id: string) => {
-      return !tabs.find((i) => i.id === id)?.disabled
+      return !(tabs.find((i: ITab<PageIds>) => i.id === id) as ITab<PageIds>)
+        ?.disabled
         ? setActivePageId(id as PageIds)
         : undefined;
     },
     [tabs]
   );
+
+  useEffect(() => {
+    setActivePageId(
+      (tabs.filter((i: ITab<PageIds>) => !i.disabled) as ITab<PageIds>[])[0].id
+    );
+  }, [type]);
 
   return (
     <LayerComponent>

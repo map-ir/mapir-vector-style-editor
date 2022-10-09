@@ -1,8 +1,7 @@
-import React, { memo, useMemo, useState } from 'react';
+import React, { memo, useState } from 'react';
 import styled from 'styled-components/macro';
 
-import SymbolEditor from './symbol-editor';
-import CircleEditor from './circle-editor';
+import InnerTabs from '../inner-tabs';
 
 import type { PointLayer } from '../../types/map';
 
@@ -16,15 +15,6 @@ interface IProps {
 }
 const PointEditor = ({ type }: IProps) => {
   const [layerType, setLayerType] = useState(type);
-
-  const EditorType = useMemo(() => {
-    return {
-      symbol: SymbolEditor,
-      circle: CircleEditor,
-      heatmap: () => <></>,
-      cluster: () => <></>,
-    }[layerType];
-  }, [layerType]);
 
   return (
     <Wrapper>
@@ -52,7 +42,7 @@ const PointEditor = ({ type }: IProps) => {
           }
         />
       </LayerType>
-      <EditorType />
+      <InnerTabs type={layerType} />
     </Wrapper>
   );
 };
