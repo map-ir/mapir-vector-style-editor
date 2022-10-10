@@ -9,6 +9,7 @@ const mapPropsState = atom<MapProps>({
   transformRequest: (url: string) => ({ url }),
 });
 const styleURLState = atom<string>('');
+const spriteState = atom<string | undefined>(undefined);
 const styleObjState = atom<Style | null>(null);
 const selectedLayerIDState = atom<string | undefined>(undefined);
 
@@ -17,6 +18,7 @@ export {
   isMapLoadedState,
   mapPropsState,
   styleURLState,
+  spriteState,
   styleObjState,
   selectedLayerIDState,
 };

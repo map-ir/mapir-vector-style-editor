@@ -4,6 +4,7 @@ interface IProps {
   map: MapProps;
   locale?: 'fa' | 'en';
   styleURL: string;
+  sprite?: string;
   title?: string;
 }
 

@@ -55,12 +55,24 @@ const GlobalStyling = createGlobalStyle`
   }
 `;
 
-const MapirStyleEditor = ({ map, locale = 'fa', styleURL, title }: IProps) => {
+const MapirStyleEditor = ({
+  map,
+  locale = 'fa',
+  styleURL,
+  sprite,
+  title,
+}: IProps) => {
   return (
     <IntlProvider locale={locale} key={locale} messages={messages[locale]}>
       <GlobalStyling />
       <Provider>
-        <App map={map} locale={locale} styleURL={styleURL} title={title} />
+        <App
+          map={map}
+          locale={locale}
+          styleURL={styleURL}
+          title={title}
+          sprite={sprite}
+        />
       </Provider>
     </IntlProvider>
   );

@@ -5,23 +5,33 @@ import styled from 'styled-components/macro';
 import Map from '../common/map';
 import Editor from './editor';
 
-import { mapPropsState, styleURLState, styleObjState } from '../atoms/map';
+import {
+  mapPropsState,
+  styleURLState,
+  styleObjState,
+  spriteState,
+} from '../atoms/map';
 import { titleState } from '../atoms/general';
 
 import type { IProps } from 'types/general';
 import type { Style } from 'mapbox-gl';
 
-const App = ({ map, locale, styleURL, title }: IProps) => {
+const App = ({ map, locale, styleURL, sprite, title }: IProps) => {
   const setMapProp = useSetAtom(mapPropsState);
   const [styleURLAtom, setStyleURL] = useAtom(styleURLState);
   const setStyleObj = useSetAtom(styleObjState);
   const setTitle = useSetAtom(titleState);
+  const setSprite = useSetAtom(spriteState);
 
   setMapProp(map);
 
   useEffect(() => {
     void setStyleURL(styleURL);
   }, [styleURL]);
+
+  useEffect(() => {
+    setSprite(sprite);
+  }, [sprite]);
 
   useEffect(() => {
     setTitle(title);

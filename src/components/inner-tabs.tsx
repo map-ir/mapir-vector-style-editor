@@ -12,16 +12,18 @@ interface IProps {
   type: LayerType;
 }
 
+const tabsComponent = {
+  symbol: symbolTabs,
+  circle: circleTabs,
+  heatmap: symbolTabs,
+  cluster: symbolTabs,
+  line: symbolTabs,
+  fill: symbolTabs,
+};
+
 const InnerTabs = ({ type }: IProps) => {
   const tabs = useMemo(() => {
-    return {
-      symbol: symbolTabs,
-      circle: circleTabs,
-      heatmap: symbolTabs,
-      cluster: symbolTabs,
-      line: symbolTabs,
-      fill: symbolTabs,
-    }[type];
+    return tabsComponent[type];
   }, [type]);
 
   const currTab = tabs.map((t) => t.id);
