@@ -6,6 +6,14 @@ interface MapProps extends Partial<MapboxOptions> {
 type PointLayer = 'circle' | 'symbol' | 'cluster' | 'heatmap';
 type LayerType = PointLayer | 'line' | 'fill';
 
-type Icon = Record<string, {}>;
+type Icon = Record<
+  string,
+  {
+    width: number;
+    height: number;
+    x: number;
+    y: number;
+  }
+>;
 
-export type { MapProps, PointLayer, LayerType };
+export type { MapProps, PointLayer, LayerType, Icon };

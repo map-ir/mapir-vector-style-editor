@@ -1,5 +1,7 @@
 import React from 'react';
 
+import SetIcon from './point/symbol-icon';
+
 export interface ITab<T> {
   id: T;
   disabled?: boolean;
@@ -42,7 +44,7 @@ export const circleTabs: ITab<CirclePageIdsType>[] = [
 ];
 
 export const components: Record<string, JSX.Element> = {
-  symbol: <div>icon</div>,
+  symbol: <SetIcon />,
   circle: <div>circle</div>,
   outline: <div>outline</div>,
   other: <div>other</div>,

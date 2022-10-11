@@ -7,4 +7,5 @@ export default {
   outline: 'Outline',
   other: 'Other',
   title: 'Title',
+  symbol_type: 'SymbolType',
 };

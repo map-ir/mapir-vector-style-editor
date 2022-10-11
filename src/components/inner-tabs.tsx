@@ -30,11 +30,13 @@ const InnerTabs = ({ type }: IProps) => {
   type PageIds = typeof currTab[number];
 
   const [activePageId, setActivePageId] = useState<PageIds>(
+    // @ts-ignore line
     (tabs.filter((i: ITab<PageIds>) => !i.disabled) as ITab<PageIds>[])[0].id
   );
 
   const changeTab = useCallback(
     (id: string) => {
+      // @ts-ignore line
       return !(tabs.find((i: ITab<PageIds>) => i.id === id) as ITab<PageIds>)
         ?.disabled
         ? setActivePageId(id as PageIds)
@@ -45,6 +47,7 @@ const InnerTabs = ({ type }: IProps) => {
 
   useEffect(() => {
     setActivePageId(
+      // @ts-ignore line
       (tabs.filter((i: ITab<PageIds>) => !i.disabled) as ITab<PageIds>[])[0].id
     );
   }, [type]);

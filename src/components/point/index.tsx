@@ -1,7 +1,9 @@
 import React, { memo, useState } from 'react';
 import styled from 'styled-components/macro';
+import { useAtomValue } from 'jotai';
 
 import InnerTabs from '../inner-tabs';
+import { spriteState } from 'atoms/map';
 
 import type { PointLayer } from '../../types/map';
 
@@ -14,17 +16,21 @@ interface IProps {
   type: PointLayer;
 }
 const PointEditor = ({ type }: IProps) => {
+  const sprite = useAtomValue(spriteState);
+
   const [layerType, setLayerType] = useState(type);
 
   return (
     <Wrapper>
       <LayerType>
-        <Symbol
-          onClick={() => setLayerType('symbol')}
-          color={
-            layerType === 'symbol' ? 'var(--color-primary)' : 'var(--shade-4)'
-          }
-        />
+        {sprite && (
+          <Symbol
+            onClick={() => setLayerType('symbol')}
+            color={
+              layerType === 'symbol' ? 'var(--color-primary)' : 'var(--shade-4)'
+            }
+          />
+        )}
         <Circle
           onClick={() => setLayerType('circle')}
           color={

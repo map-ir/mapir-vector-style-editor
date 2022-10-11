@@ -11,11 +11,14 @@ interface IProps {
   onClick?:
     | (MouseEventHandler<HTMLDivElement> & Dispatch<SetStateAction<boolean>>)
     | undefined;
+  title?: string;
   color?: string;
   border?: string;
   img?: string;
-  x?: string;
-  y?: string;
+  x?: number;
+  y?: number;
+  width?: number;
+  height?: number;
 }
 
 const Sample = (props: IProps, ref: ForwardedRef<HTMLDivElement> | null) => {
@@ -38,10 +41,12 @@ export const Container = styled.div<IProps>`
   ${(p) =>
     p.img &&
     css`
-      background: url(${p.img}) ${p.x} ${p.y};
-      background-position: center;
+      background-image: url(${p.img});
+      background-position: -${p.x}px -${p.y}px;
       background-repeat: no-repeat;
-      background-size: contain;
+      background-size: unset;
+      width: ${p.width}px;
+      height: ${p.height}px;
     `};
 
   ${(p) =>

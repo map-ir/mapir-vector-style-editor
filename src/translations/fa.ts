@@ -7,4 +7,5 @@ export default {
   outline: 'حاشیه',
   other: 'سایر',
   title: 'عنوان',
+  symbol_type: 'نوع آیکون',
 };
