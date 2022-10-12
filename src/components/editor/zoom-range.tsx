@@ -1,32 +1,31 @@
 import React, { useState } from 'react';
 import Styled from 'styled-components/macro';
 import { FormattedMessage } from 'react-intl';
-import { useAtomValue } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 
-import RangeSlider from '../../common/range-slider';
-import InputNumber from '../../common/input-number';
+import RangeSlider from 'common/range-slider';
+import InputNumber from 'common/input-number';
+import UpdateStyle from 'common/utils/update-style';
+import useGetSelectedLayer from 'hooks/useGetSelectedLayer';
 
-import { mapState } from '../../atoms/map';
+import { mapState, selectedLayerIDState, styleObjState } from 'atoms/map';
 
 import type { Layer } from 'mapbox-gl';
 
-interface IProps {
-  id: string;
-}
-
-const ZoomrRange = ({ id }: IProps) => {
+const ZoomrRange = () => {
   const map = useAtomValue(mapState);
+  const openLayerID = useAtomValue(selectedLayerIDState);
+  const setStyleObj = useSetAtom(styleObjState);
 
-  const [zoom, setZoom] = useState<number[]>([
-    (map?.getLayer(id) as Layer)?.minzoom ?? 1,
-    (map?.getLayer(id) as Layer)?.maxzoom ?? 20,
-  ]);
+  const { layer } = useGetSelectedLayer();
 
   const zoomChange = (value: number[]) => {
-    if (map) {
-      map?.setLayerZoomRange(id, value[0], value[1]);
-      setZoom(value);
-    }
+    if (!openLayerID || !map) return;
+    console.log(
+      '🚀 ~ file: zoom-range.tsx ~ line 23 ~ zoomChange ~ value',
+      value
+    );
+    UpdateStyle(openLayerID, map, 'zoom', value[0], value[1], setStyleObj);
   };
 
   return (
@@ -38,12 +37,17 @@ const ZoomrRange = ({ id }: IProps) => {
         <InputNumber
           min={1}
           max={20}
-          value={zoom[1]}
-          onChange={(number) => zoomChange([zoom[0], number])}
+          value={(layer as Layer)?.maxzoom ?? 20}
+          onChange={(number) =>
+            zoomChange([(layer as Layer)?.minzoom ?? 1, number])
+          }
         />
         <RangeSlider
           // defaultValue={[zoom[0], zoom[1]]}
-          value={[zoom[0], zoom[1]]}
+          value={[
+            (layer as Layer)?.minzoom ?? 1,
+            (layer as Layer)?.maxzoom ?? 20,
+          ]}
           min={1}
           max={20}
           step={1}
@@ -54,8 +58,10 @@ const ZoomrRange = ({ id }: IProps) => {
         <InputNumber
           min={1}
           max={20}
-          value={zoom[0]}
-          onChange={(number) => zoomChange([number, zoom[1]])}
+          value={(layer as Layer)?.minzoom ?? 1}
+          onChange={(number) =>
+            zoomChange([number, (layer as Layer)?.maxzoom ?? 20])
+          }
         />
       </Slider>
     </Wrapper>

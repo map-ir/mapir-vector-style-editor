@@ -21,7 +21,7 @@ export default {
     ...getFiles('./src/components', extensions),
     ...getFiles('./src/atoms', extensions),
     // ...getFiles('./src/libs', extensions),
-    // ...getFiles('./src/hooks', extensions),
+    ...getFiles('./src/hooks', extensions),
     // ...getFiles('./src/utils', extensions),
   ],
   output: [

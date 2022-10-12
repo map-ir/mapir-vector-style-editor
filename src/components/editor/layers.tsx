@@ -58,7 +58,7 @@ const LayersStyle = () => {
               )}
             >
               <ExpandBody>
-                <ZoomRange id={id} />
+                <ZoomRange />
                 <SpecEditor type={type as LayerType} />
               </ExpandBody>
             </Expandable>

@@ -1,29 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import { useAtomValue } from 'jotai';
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import React, { useEffect, useMemo, useState } from 'react';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { usePopper } from 'react-popper';
 import styled from 'styled-components/macro';
 import { FormattedMessage } from 'react-intl';
 
 import Sample from 'common/sample';
 import Portal from 'common/portal';
+import useOutsideClickHandler from 'hooks/useOutsideClickHandler';
+import useGetSelectedLayer from 'hooks/useGetSelectedLayer';
+import updateStyle from 'common/utils/update-style';
 
 import {
   selectedLayerIDState,
   spriteState,
-  styleObjState,
   mapState,
+  styleObjState,
 } from 'atoms/map';
 
 import type { SymbolLayer } from 'mapbox-gl';
 import type { Icon } from 'types/map';
 
+let iconName: string;
 const SetIcon = () => {
-  const styleObj = useAtomValue(styleObjState);
   const map = useAtomValue(mapState);
   const openLayerID = useAtomValue(selectedLayerIDState);
   const sprite = useAtomValue(spriteState);
+  const setStyleObj = useSetAtom(styleObjState);
 
-  const [layer, setLayer] = useState<SymbolLayer | undefined>(undefined);
   const [iconRef, setIconRef] = useState<HTMLDivElement | null>(null);
   const [iconWrapperRef, setIconWrapperRef] = useState<HTMLDivElement | null>(
     null
@@ -44,8 +51,8 @@ const SetIcon = () => {
     ],
   });
 
-  const getIcons = () => {
-    void fetch(`${sprite}.json`, {
+  const getIcons = (spriteURL: string) => {
+    void fetch(`${spriteURL}.json`, {
       method: 'GET',
     })
       .then((res) => res.json())
@@ -53,17 +60,26 @@ const SetIcon = () => {
   };
 
   useEffect(() => {
-    if (sprite) getIcons();
+    if (sprite) getIcons(sprite);
   }, [sprite]);
 
-  useEffect(() => {
-    if (openLayerID)
-      setLayer(
-        styleObj?.layers?.find((l) => l.id === openLayerID) as SymbolLayer
-      );
-  }, [openLayerID]);
+  const { layer } = useGetSelectedLayer();
 
-  const iconName = (layer?.layout?.['icon-image'] ?? 'empty-e71566') as string;
+  useEffect(() => {
+    iconName = ((layer as SymbolLayer)?.layout?.['icon-image'] ??
+      'empty-e71566') as string;
+    console.log(
+      '🚀 ~ file: symbol-icon.tsx ~ line 70 ~ useEffect ~ iconName',
+      iconName
+    );
+  }, [layer]);
+
+  useOutsideClickHandler(
+    useMemo(() => ({ current: iconWrapperRef }), [iconWrapperRef]),
+    (e: MouseEvent) => {
+      if (!iconRef?.contains(e.target as Node)) setIconsOpen(false);
+    }
+  );
 
   return (
     <Row>
@@ -78,7 +94,7 @@ const SetIcon = () => {
         width={icons?.[iconName]?.width}
         height={icons?.[iconName]?.height}
       />
-      {isIconsOpen && (
+      {icons && isIconsOpen && (
         <Portal>
           <IconWrapper
             ref={(el) => {
@@ -87,7 +103,7 @@ const SetIcon = () => {
             style={styles.popper}
             {...attributes.popper}
           >
-            {Object.entries(icons ?? {})?.map(([key, icon]) => (
+            {Object.entries(icons)?.map(([key, icon]) => (
               <Sample
                 key={key}
                 img={`${sprite}.png`}
@@ -99,7 +115,14 @@ const SetIcon = () => {
                 onClick={() =>
                   openLayerID &&
                   map &&
-                  map?.setLayoutProperty(openLayerID, 'icon-image', `${key}`)
+                  updateStyle(
+                    openLayerID,
+                    map,
+                    'layout',
+                    'icon-image',
+                    `${key}`,
+                    setStyleObj
+                  )
                 }
               />
             ))}
@@ -126,4 +149,8 @@ const IconWrapper = styled.div`
   height: 10em;
   overflow-y: auto;
   background-color: var(--light-1);
+  border: 1px solid var(--shade-4);
+  border-radius: var(--radius-8);
+  padding: 0.5em;
+  box-shadow: 0 0 5px 0 var(--shade-4);
 `;
