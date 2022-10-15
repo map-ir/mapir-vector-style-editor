@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components/macro';
 import { useAtomValue, useSetAtom } from 'jotai';
@@ -16,7 +16,15 @@ const SetSize = () => {
 
   const { layer } = useGetSelectedLayer();
 
-  useEffect(() => {}, [layer]);
+  const [property, setProperty] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    switch (layer?.type) {
+      case 'symbol':
+        setProperty('icon-size');
+        break;
+    }
+  }, [layer]);
 
   return (
     <Row>
@@ -31,16 +39,10 @@ const SetSize = () => {
         max={20}
         value="12"
         onChange={(number) =>
+          property &&
           openLayerID &&
           map &&
-          updateStyle(
-            openLayerID,
-            map,
-            'layout',
-            'icon-size',
-            number,
-            setStyleObj
-          )
+          updateStyle(openLayerID, map, 'layout', property, number, setStyleObj)
         }
       />
     </Row>

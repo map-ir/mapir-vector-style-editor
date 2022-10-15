@@ -34,7 +34,7 @@ export default {
     },
   ],
   plugins: [
-    url(),
+    // url(),
     svgr({
       exportType: 'named',
       jsxRuntime: 'automatic',
