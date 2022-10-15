@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import type { AnyLayer, Map, Style } from 'mapbox-gl';
+import type { Map, Style } from 'mapbox-gl';
 
 const updateStyle = (
   layer_id: string,
@@ -9,6 +9,7 @@ const updateStyle = (
   value: string | number,
   setStyle: Dispatch<SetStateAction<Style | null>>
 ) => {
+  console.log('🚀 ~ file: update-style.ts ~ line 12 ~ key', key);
   if (!layer_id || !map) return;
 
   switch (type) {

@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 
-import * as Arrow from '../assets/icons/arrow-down.svg';
-console.log('🚀 ~ file: styles.tsx ~ line 4 ~ Arrow', Arrow);
+// import Arrow from '../assets/icons/arrow-down.svg';
+// console.log('🚀 ~ file: styles.tsx ~ line 4 ~ Arrow', Arrow);
 
 export const LayerComponent = styled.div`
   display: flex;

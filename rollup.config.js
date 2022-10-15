@@ -37,7 +37,7 @@ export default {
     // url(),
     svgr({
       exportType: 'named',
-      jsxRuntime: 'automatic',
+      // jsxRuntime: 'automatic',
       // icon: true,
     }),
     peerDeps(),
