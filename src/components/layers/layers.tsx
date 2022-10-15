@@ -6,7 +6,7 @@ import { titleState } from '../../atoms/general';
 import { styleObjState, selectedLayerIDState } from '../../atoms/map';
 
 import Expandable from '../../common/expandable';
-import ZoomRange from './zoom-range';
+import ZoomRange from '../editor/zoom-range';
 import SpecEditor from './spec-editor';
 
 import type { Layer } from 'mapbox-gl';

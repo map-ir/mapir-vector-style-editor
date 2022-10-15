@@ -68,10 +68,6 @@ const SetIcon = () => {
   useEffect(() => {
     iconName = ((layer as SymbolLayer)?.layout?.['icon-image'] ??
       'empty-e71566') as string;
-    console.log(
-      '🚀 ~ file: symbol-icon.tsx ~ line 70 ~ useEffect ~ iconName',
-      iconName
-    );
   }, [layer]);
 
   useOutsideClickHandler(

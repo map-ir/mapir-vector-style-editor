@@ -8,4 +8,5 @@ export default {
   other: 'سایر',
   title: 'عنوان',
   symbol_type: 'نوع آیکون',
+  size_base_on: 'اندازه براساس',
 };

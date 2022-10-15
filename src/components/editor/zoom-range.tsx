@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Styled from 'styled-components/macro';
 import { FormattedMessage } from 'react-intl';
 import { useAtomValue, useSetAtom } from 'jotai';
@@ -21,10 +21,6 @@ const ZoomrRange = () => {
 
   const zoomChange = (value: number[]) => {
     if (!openLayerID || !map) return;
-    console.log(
-      '🚀 ~ file: zoom-range.tsx ~ line 23 ~ zoomChange ~ value',
-      value
-    );
     UpdateStyle(openLayerID, map, 'zoom', value[0], value[1], setStyleObj);
   };
 

@@ -3,7 +3,7 @@ import { useAtom, useSetAtom } from 'jotai';
 import styled from 'styled-components/macro';
 
 import Map from '../common/map';
-import Editor from './editor';
+import Editor from './layers';
 
 import {
   mapPropsState,

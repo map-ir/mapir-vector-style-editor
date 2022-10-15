@@ -5,10 +5,10 @@ import type { SliderProps } from '@radix-ui/react-slider';
 
 const RangeSlider = (props: SliderProps) => (
   <StyledSlider {...props}>
-    <StyledThumb />
     <StyledTrack>
       <StyledRange />
     </StyledTrack>
+    <StyledThumb />
     <StyledThumb />
   </StyledSlider>
 );

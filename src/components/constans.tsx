@@ -1,6 +1,7 @@
 import React from 'react';
 
 import SetIcon from './point/symbol-icon';
+import SetSize from './editor/size';
 
 export interface ITab<T> {
   id: T;
@@ -44,8 +45,13 @@ export const circleTabs: ITab<CirclePageIdsType>[] = [
 ];
 
 export const components: Record<string, JSX.Element> = {
-  symbol: <SetIcon />,
-  circle: <div>circle</div>,
+  symbol: (
+    <>
+      <SetIcon />
+      <SetSize />
+    </>
+  ),
+  circle: <SetSize />,
   outline: <div>outline</div>,
   other: <div>other</div>,
   title: <div>title</div>,

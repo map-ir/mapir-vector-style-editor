@@ -8,4 +8,5 @@ export default {
   other: 'Other',
   title: 'Title',
   symbol_type: 'SymbolType',
+  size_base_on: 'Size Base on',
 };

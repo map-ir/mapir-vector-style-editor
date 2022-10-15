@@ -34,8 +34,10 @@ export default {
     },
   ],
   plugins: [
+    url(),
     svgr({
       exportType: 'named',
+      jsxRuntime: 'automatic',
       // icon: true,
     }),
     peerDeps(),
@@ -49,9 +51,6 @@ export default {
     }),
     postcss(),
     terser(),
-    // url({
-    //   include: ['./src/libs/**'],
-    // }),
     // visualizer({
     //   filename: 'bundle-analysis.html',
     //   open: true,
