@@ -32,7 +32,7 @@ function NumberInput(
       // const correctValue = Value < Min ? Min : Value > Max ? Max : Value;
       onChange?.(Value);
     },
-    [min, max]
+    [min, max, onChange]
   );
 
   const onKeyPress = useCallback(

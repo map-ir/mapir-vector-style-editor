@@ -13,7 +13,10 @@ const useGetSelectedLayer = () => {
 
   useEffect(() => {
     if (openLayerID)
-      setLayer(styleObj?.layers?.find((l) => l.id === openLayerID));
+      setLayer({
+        ...styleObj?.layers?.find((l) => l.id === openLayerID),
+      } as AnyLayer);
+    else setLayer(undefined);
   }, [openLayerID, styleObj]);
 
   return { layer };

@@ -13,6 +13,7 @@ import Portal from 'common/portal';
 import useOutsideClickHandler from 'hooks/useOutsideClickHandler';
 import useGetSelectedLayer from 'hooks/useGetSelectedLayer';
 import updateStyle from 'common/utils/update-style';
+import { Row } from 'common/styles';
 
 import {
   selectedLayerIDState,
@@ -130,13 +131,6 @@ const SetIcon = () => {
 };
 
 export default SetIcon;
-
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
 
 const IconWrapper = styled.div`
   display: grid;

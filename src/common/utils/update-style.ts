@@ -32,9 +32,6 @@ const updateStyle = (
         ...curr_style.layers.filter((l) => l.id !== layer_id),
         ...[selectedLayer],
       ],
-      // [
-      //   ...new Set([...curr_style.layers, ...[selectedLayer]]),
-      // ] as AnyLayer[],
     };
   });
 };

@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components/macro';
 import { useAtomValue, useSetAtom } from 'jotai';
@@ -8,10 +9,21 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import InputNumber from 'common/input-number';
 import useGetSelectedLayer from 'hooks/useGetSelectedLayer';
 import updateStyle from 'common/utils/update-style';
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectIcon,
+  SelectContent,
+  SelectViewport,
+  SelectItem,
+  SelectItemText,
+  SelectItemIndicator,
+} from 'common/select';
 
 import { mapState, selectedLayerIDState, styleObjState } from 'atoms/map';
 
-import { Select } from 'common/styles';
+import { Row } from 'common/styles';
 
 const SetSize = () => {
   const map = useAtomValue(mapState);
@@ -21,9 +33,10 @@ const SetSize = () => {
   const { layer } = useGetSelectedLayer();
 
   const [property, setProperty] = useState<string | undefined>(undefined);
+  // @ts-ignore line
+  const [size, setSize] = useState<number>(layer?.layout?.[property] ?? 1);
 
   useEffect(() => {
-    console.log('🚀 ~ file: size.tsx ~ line 20 ~ SetSize ~ layer', layer);
     switch (layer?.type) {
       case 'symbol':
         setProperty('icon-size');
@@ -37,37 +50,43 @@ const SetSize = () => {
     }
   }, [layer]);
 
-  useEffect(() => {
-    console.log('🚀 ~ file: size.tsx ~ line 43 ~ SetSize ~ property', property);
-  }, [property]);
-
-  const func = useCallback(
-    (number: number) => {
-      console.log(
-        '🚀 ~ file: size.tsx ~ line 47 ~ SetSize ~ property',
-        property
-      );
-      if (property && openLayerID && map)
-        updateStyle(openLayerID, map, 'layout', property, number, setStyleObj);
-    },
-    [property, openLayerID, map]
-  );
-
   return (
     <Row>
       <Selector>
         <FormattedMessage id="size_base_on" />
-        <Select>
+        {/* <Select>
           <option>مقدار ثابت</option>
+        </Select> */}
+        <Select>
+          <SelectTrigger aria-label="Food">
+            <SelectValue placeholder="Select a fruit…" />
+            <SelectIcon></SelectIcon>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectViewport>
+              <SelectItem value="static">
+                <SelectItemText>مقدار ثابت</SelectItemText>
+                <SelectItemIndicator></SelectItemIndicator>
+              </SelectItem>
+            </SelectViewport>
+          </SelectContent>
         </Select>
       </Selector>
       <InputNumber
         min={1}
         max={5}
-        // @ts-ignore line
-        defaultValue={layer?.layout?.[property]}
-        onChange={(number) => {
-          func(number);
+        value={size}
+        onChange={(number: number) => {
+          setSize(number);
+          if (property && openLayerID && map)
+            updateStyle(
+              openLayerID,
+              map,
+              'layout',
+              property,
+              number,
+              setStyleObj
+            );
         }}
       />
     </Row>
@@ -76,14 +95,8 @@ const SetSize = () => {
 
 export default SetSize;
 
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
-
 const Selector = styled(Row)`
   justify-content: start;
   gap: 1em;
+  padding: 0;
 `;
