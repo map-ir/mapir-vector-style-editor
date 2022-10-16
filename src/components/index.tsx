@@ -5,8 +5,8 @@ import { createGlobalStyle } from 'styled-components/macro';
 
 import App from './app';
 
-import messages_en from '../translations/en';
-import messages_fa from '../translations/fa';
+import messages_en from 'translations/en';
+import messages_fa from 'translations/fa';
 
 import type { IProps } from 'types/general';
 

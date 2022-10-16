@@ -76,13 +76,14 @@ width: 100%;
     gap: 1em;
 `;
 
-const Title = Styled.div`
-/* flex-grow: 1; */
-width: 30%;
-text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    color: var(--shade-2);
+const Title = Styled.span`
+  flex-shrink: 0;
+  width: max-content;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: var(--shade-2);
+  font-size: 0.8em;
 `;
 
 const Slider = Styled.div`

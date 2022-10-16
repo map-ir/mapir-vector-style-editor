@@ -89,8 +89,8 @@ const UnitOpen = styled.span<{ open: boolean }>`
   user-select: none;
   transform: rotate(
     ${styledMap`
-      open: 180;
-      default: 0;
+      open: 0;
+      default: 180;
     `}deg
   );
 `;

@@ -2,10 +2,11 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { FormattedMessage } from 'react-intl';
 
-import LayersStyle from './layers';
-import Button from '../../common/button';
+import Button from 'common/button';
 
-const Editor = () => {
+import LayersStyle from './layers';
+
+export default function Editor() {
   return (
     <Wrapper>
       <LayersStyle />
@@ -19,11 +20,9 @@ const Editor = () => {
       </ButtonWrapper>
     </Wrapper>
   );
-};
-export default Editor;
+}
 
 const Wrapper = styled.div`
-  /* flex-grow: 1; */
   width: 35%;
   display: flex;
   flex-direction: column;

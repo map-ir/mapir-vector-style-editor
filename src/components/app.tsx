@@ -13,6 +13,8 @@ import {
 } from '../atoms/map';
 import { titleState } from '../atoms/general';
 
+import '../main.css';
+
 import type { IProps } from 'types/general';
 import type { Style } from 'mapbox-gl';
 

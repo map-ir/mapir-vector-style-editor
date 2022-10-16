@@ -31,7 +31,7 @@ const LayersStyle = () => {
   return (
     <Wrapper>
       <Header>
-        <div>{title}</div>
+        <Title>{title}</Title>
         <Icon>
           <Plus color={'var(--light-1)'} />
         </Icon>
@@ -48,12 +48,8 @@ const LayersStyle = () => {
               onOpen={toggleExpand.bind(null, id)}
               HeaderRenderer={() => (
                 <ExpandHeader>
-                  <div>
-                    <GeoIcon data={type} color={'var(--color-primary)'} />
-                  </div>
-                  <div>
-                    <Delete color={'var(--shade-3)'} />
-                  </div>
+                  <GeoIcon data={type} color={'var(--color-primary)'} />
+                  <Delete color={'var(--shade-3)'} />
                 </ExpandHeader>
               )}
             >
@@ -94,6 +90,10 @@ const Header = styled.div`
 `;
 
 const ExpandHeader = styled(Header)``;
+
+const Title = styled.h2`
+  margin: 0;
+`;
 
 const Icon = styled.div`
   cursor: pointer;

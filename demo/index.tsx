@@ -5,10 +5,11 @@ import MapirStyleEditor from '../dist';
 
 function App() {
   return (
-    <div
+    <main
       style={{
-        width: '95vw',
-        height: '95vh',
+        width: '100vw',
+        height: '100vh',
+        padding: '1em',
         overflow: 'hidden',
       }}
     >
@@ -40,13 +41,14 @@ function App() {
         sprite="https://map.ir/vector/styles/main/sprite"
         title="تنظیمات استایل"
       />
-    </div>
+    </main>
   );
 }
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <App />
