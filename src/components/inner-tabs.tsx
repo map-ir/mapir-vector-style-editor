@@ -1,12 +1,12 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 
-import SectionTab from '../common/section-tab';
-import { PageSwitch, Page } from '../common/page-switch';
-import { LayerComponent, EditorWrapper } from '../common/styles';
+import SectionTab from 'common/section-tab';
+import { PageSwitch, Page } from 'common/page-switch';
+import { LayerComponent, EditorWrapper } from 'common/styles';
 
 import { symbolTabs, circleTabs, components } from './constants';
 
-import type { LayerType } from '../types/map';
+import type { LayerType } from 'types/map';
 import type { ITab } from './constants';
 
 interface IProps {

@@ -14,6 +14,7 @@ interface ITabs {
   onTabChange?: (id: ITab['id']) => void;
   align?: 'center' | 'start' | 'end';
   horizental?: boolean;
+  secondry?: boolean;
 }
 
 const SectionTab = ({
@@ -23,6 +24,7 @@ const SectionTab = ({
   onTabChange,
   align = 'start',
   horizental = false,
+  secondry = false,
 }: ITabs) => {
   return (
     <Tabs className={className} align={align}>
@@ -31,6 +33,7 @@ const SectionTab = ({
           return (
             <TabItem
               key={id}
+              secondry={secondry}
               active={id === activeTabId}
               $disabled={disabled}
               onClick={onTabChange?.bind(null, id)}
@@ -63,7 +66,11 @@ const TabNav = styled.ul<{ horizental?: boolean }>`
   list-style: none;
 `;
 
-const TabItem = styled.li<{ active?: boolean; $disabled?: boolean }>`
+const TabItem = styled.li<{
+  active?: boolean;
+  $disabled?: boolean;
+  secondry?: boolean;
+}>`
   padding: 0.5em 2rem;
   color: var(--shade-1);
   box-shadow: none;
@@ -76,10 +83,22 @@ const TabItem = styled.li<{ active?: boolean; $disabled?: boolean }>`
   font-family: inherit;
 
   ${(p) =>
-    p.active &&
+    p.secondry &&
     css`
-      background-color: var(--light-2);
+      color: var(--shade-2);
+      border-radius: var(--radius-8);
     `}
+
+  ${(p) =>
+    p.active &&
+    (p.secondry
+      ? css`
+          background-color: var(--shade-4);
+          color: var(--shade-1);
+        `
+      : css`
+          background-color: var(--light-2);
+        `)}
 
   ${(p) =>
     p.$disabled &&

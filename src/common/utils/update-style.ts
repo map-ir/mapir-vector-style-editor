@@ -6,10 +6,9 @@ const updateStyle = (
   map: Map,
   type: 'layout' | 'paint' | 'zoom',
   key: string | number,
-  value: string | number,
+  value: string | number | string[],
   setStyle: Dispatch<SetStateAction<Style | null>>
 ) => {
-  console.log('🚀 ~ file: update-style.ts ~ line 12 ~ key', key);
   if (!layer_id || !map) return;
 
   switch (type) {

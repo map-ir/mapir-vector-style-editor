@@ -11,18 +11,17 @@ import {
   styleObjState,
   spriteState,
 } from '../atoms/map';
-import { titleState } from '../atoms/general';
-
-import '../main.css';
+import { titleState, columnsState } from '../atoms/general';
 
 import type { IProps } from 'types/general';
 import type { Style } from 'mapbox-gl';
 
-const App = ({ map, locale, styleURL, sprite, title }: IProps) => {
+const App = ({ map, locale, styleURL, sprite, title, columns }: IProps) => {
   const setMapProp = useSetAtom(mapPropsState);
   const [styleURLAtom, setStyleURL] = useAtom(styleURLState);
   const setStyleObj = useSetAtom(styleObjState);
   const setTitle = useSetAtom(titleState);
+  const setColumns = useSetAtom(columnsState);
   const setSprite = useSetAtom(spriteState);
 
   setMapProp(map);
@@ -38,6 +37,10 @@ const App = ({ map, locale, styleURL, sprite, title }: IProps) => {
   useEffect(() => {
     setTitle(title);
   }, [title]);
+
+  useEffect(() => {
+    setColumns(columns);
+  }, [columns]);
 
   const fetchStyle = (url: string) => {
     return fetch(url, {

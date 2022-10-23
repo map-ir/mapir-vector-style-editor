@@ -78,8 +78,8 @@ function NumberInput(
 export default forwardRef(NumberInput);
 
 const StyledInput = styled.input`
-  width: 1.5em;
-  height: 1.5em;
+  width: 2em;
+  height: 2em;
   text-align: center;
   border: 1px solid var(--shade-3);
   border-radius: var(--radius-4);

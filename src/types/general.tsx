@@ -6,6 +6,7 @@ interface IProps {
   styleURL: string;
   sprite?: string;
   title?: string;
+  columns?: string[];
 }
 
 type Renderable = JSX.Element | undefined | null | false;

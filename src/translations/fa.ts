@@ -9,4 +9,13 @@ export default {
   title: 'عنوان',
   symbol_type: 'نوع آیکون',
   size_base_on: 'اندازه براساس',
+  static: 'مقدار ثابت',
+  dynamic: 'مقدار متغیر',
+  zoom: 'بزرگنمایی',
+  conditional: 'مقدار شرطی',
+  selection: 'انتخاب نمایید...',
+  value_title: 'عنوان مقدار',
+  linear: 'خطی',
+  exponential: 'نمایی',
+  cubic: 'مکعبی',
 };

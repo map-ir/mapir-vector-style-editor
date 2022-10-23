@@ -17,6 +17,7 @@ const messages: Record<string, Record<string, string>> = {
 
 const defaultColors = {
   primary: '#ea4c89',
+  primary_20: '#ea4c8920',
   secondry: '#2e0767',
   shade_1: '#1c1c1c',
   shade_2: '#808080',
@@ -31,12 +32,13 @@ const defaultColors = {
   border_radius_8: '8px',
   border_radius_4: '4px',
   font_family:
-    ' -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
+    '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
 };
 
 const GlobalStyling = createGlobalStyle`
   :root {
     --color-primary: ${defaultColors.primary};
+    --color-primary-20: ${defaultColors.primary_20};
     --color-secondry: ${defaultColors.secondry};
     --shade-1: ${defaultColors.shade_1};
     --shade-2: ${defaultColors.shade_2};
@@ -61,6 +63,7 @@ const MapirStyleEditor = ({
   styleURL,
   sprite,
   title,
+  columns,
 }: IProps) => {
   return (
     <IntlProvider locale={locale} key={locale} messages={messages[locale]}>
@@ -72,6 +75,7 @@ const MapirStyleEditor = ({
           styleURL={styleURL}
           title={title}
           sprite={sprite}
+          columns={columns}
         />
       </Provider>
     </IntlProvider>
