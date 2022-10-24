@@ -69,6 +69,8 @@ export default LayersStyle;
 
 const Wrapper = styled.div`
   width: 100%;
+  max-height: 92%;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

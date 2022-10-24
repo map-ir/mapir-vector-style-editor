@@ -33,3 +33,11 @@ export const toEnDigits = function (input: string | number) {
     return persian.indexOf(chr).toString();
   });
 };
+
+export function splitArray(flatArray: (string | number)[], numCols: number) {
+  const newArray = [] as (string | number)[][];
+  for (let i = 0; i < flatArray.length / numCols; i++) {
+    newArray.push(flatArray.slice(numCols * i, numCols * i + numCols));
+  }
+  return newArray;
+}

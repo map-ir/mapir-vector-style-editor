@@ -9,6 +9,7 @@ export default {
   title: 'Title',
   symbol_type: 'SymbolType',
   size_base_on: 'Size Base on',
+  color_base_on: 'Color Base on',
   static: 'Static',
   dynamic: 'Dynamic',
   zoom: 'Zoom',
@@ -17,5 +18,8 @@ export default {
   value_title: 'Value Title',
   linear: 'Linear',
   exponential: 'Exponential',
-  cubic: 'Cubic',
+  'cubic-bezier': 'Cubic',
+  expo_desc: '',
+  expo_power: '',
+  cubic_desc: '',
 };

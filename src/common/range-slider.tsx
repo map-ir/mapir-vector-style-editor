@@ -35,7 +35,7 @@ const StyledSlider = Styled(Root)`
 `;
 
 const StyledTrack = Styled(Track)`
-    background-Color: var(--shade-3);
+    background-color: var(--shade-3);
     position: relative;
     flex-grow: 1;
     border-radius: 9999px;

@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/indent */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 import { useAtomValue, useSetAtom } from 'jotai';
@@ -10,6 +11,7 @@ import useGetSelectedLayer from 'hooks/useGetSelectedLayer';
 import updateStyle from 'common/utils/update-style';
 import ZoomBase from './zoom-base';
 import InputNumber from 'common/input-number';
+import Sample from 'common/sample';
 import {
   Select,
   SelectTrigger,
@@ -33,7 +35,11 @@ import { ReactComponent as Check } from '../../assets/icons/tick.svg';
 const options = ['static', 'dynamic', 'zoom', 'conditional'] as const;
 type OptionsType = typeof options[number];
 
-const SetSize = () => {
+interface IProps {
+  type: 'size' | 'color' | 'stroke';
+}
+
+const BaseOn = ({ type }: IProps) => {
   const intl = useIntl();
   const map = useAtomValue(mapState);
   const openLayerID = useAtomValue(selectedLayerIDState);
@@ -42,46 +48,93 @@ const SetSize = () => {
 
   const { layer } = useGetSelectedLayer();
 
-  const [property, setProperty] = useState<string | undefined>(undefined);
+  const [property, setProperty] = useState<
+    | 'icon-size'
+    | 'circle-radius'
+    | 'line-width'
+    | 'stroke-width'
+    | 'fill-color'
+    | 'circle-color'
+    | 'line-color'
+  >('icon-size');
+
+  const styleKey = [
+    'icon-size',
+    'circle-radius',
+    'line-width',
+    'stroke-width',
+  ].includes(property)
+    ? 'layout'
+    : 'paint';
+
   // @ts-ignore line
   const [size, setSize] = useState<number>(layer?.layout?.[property] ?? 1);
+  const [color, setColor] = useState<string>(
+    // @ts-ignore line
+    layer?.paint?.[property] ?? 'blue'
+  );
   const [method, setMethod] = useState<OptionsType>(options[0]);
 
   useEffect(() => {
-    switch (layer?.type) {
-      case 'symbol':
-        setProperty('icon-size');
-        break;
-      case 'circle':
-        setProperty('circle-radius');
-        break;
-      case 'line':
-        setProperty('line-width');
-        break;
+    if (type === 'stroke') {
+      switch (layer?.type) {
+        case 'circle':
+          setProperty('stroke-width');
+          break;
+      }
+    }
+    if (type === 'size') {
+      switch (layer?.type) {
+        case 'symbol':
+          setProperty('icon-size');
+          break;
+        case 'circle':
+          setProperty('circle-radius');
+          break;
+        case 'line':
+          setProperty('line-width');
+          break;
+      }
+    }
+    if (type === 'color') {
+      switch (layer?.type) {
+        case 'fill':
+          setProperty('fill-color');
+          break;
+        case 'circle':
+          setProperty('circle-color');
+          break;
+        case 'line':
+          setProperty('line-color');
+          break;
+      }
     }
   }, [layer]);
 
   const component = useMemo(() => {
     return {
-      static: (
-        <InputNumber
-          min={1}
-          max={5}
-          value={size}
-          onChange={(number: number) => {
-            setSize(number);
-            if (property && openLayerID && map)
-              updateStyle(
-                openLayerID,
-                map,
-                'layout',
-                property,
-                number,
-                setStyleObj
-              );
-          }}
-        />
-      ),
+      static:
+        type === 'color' ? (
+          <Sample color={color} />
+        ) : (
+          <InputNumber
+            min={1}
+            max={5}
+            value={size}
+            onChange={(number: number) => {
+              setSize(number);
+              if (property && openLayerID && map)
+                updateStyle(
+                  openLayerID,
+                  map,
+                  styleKey,
+                  property,
+                  number,
+                  setStyleObj
+                );
+            }}
+          />
+        ),
       dynamic: (
         <Selector>
           <Label>
@@ -94,7 +147,7 @@ const SetSize = () => {
                 updateStyle(
                   openLayerID,
                   map,
-                  'layout',
+                  styleKey,
                   property,
                   ['get', value],
                   setStyleObj
@@ -126,17 +179,19 @@ const SetSize = () => {
           </Select>
         </Selector>
       ),
-      zoom: <ZoomBase type="value" />,
+      zoom: property && <ZoomBase type={type} property={property} />,
       conditional: <></>,
     }[method];
-  }, [method, size, columns]);
+  }, [method, size, columns, property]);
 
   return (
     <Column>
       <Row>
         <Selector>
           <Label>
-            <FormattedMessage id="size_base_on" />
+            <FormattedMessage
+              id={type === 'color' ? 'color_base_on' : 'size_base_on'}
+            />
           </Label>
           <Select
             defaultValue={options[0]}
@@ -146,7 +201,9 @@ const SetSize = () => {
             }}
           >
             <SelectTrigger
-              aria-label={intl.formatMessage({ id: 'size_base_on' })}
+              aria-label={intl.formatMessage({
+                id: type === 'color' ? 'color_base_on' : 'size_base_on',
+              })}
             >
               <SelectValue
                 placeholder={intl.formatMessage({ id: 'selection' })}
@@ -184,7 +241,7 @@ const SetSize = () => {
   );
 };
 
-export default SetSize;
+export default memo(BaseOn);
 
 const Selector = styled(Row)`
   justify-content: start;

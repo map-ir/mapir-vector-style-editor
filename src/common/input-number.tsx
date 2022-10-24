@@ -26,11 +26,11 @@ function NumberInput(
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const _onChange = useCallback(
     (v: number) => {
-      // const Min = min ?? -Infinity;
-      // const Max = max ?? Infinity;
+      const Min = min ?? -Infinity;
+      const Max = max ?? Infinity;
       const Value = v ? v : 0;
-      // const correctValue = Value < Min ? Min : Value > Max ? Max : Value;
-      onChange?.(Value);
+      const correctValue = Value < Min ? Min : Value > Max ? Max : Value;
+      onChange?.(correctValue);
     },
     [min, max, onChange]
   );

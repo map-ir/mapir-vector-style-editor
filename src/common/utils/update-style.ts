@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction } from 'react';
-import type { Map, Style } from 'mapbox-gl';
+import type { Expression, Map, Style, StyleFunction } from 'mapbox-gl';
 
 const updateStyle = (
   layer_id: string,
   map: Map,
   type: 'layout' | 'paint' | 'zoom',
   key: string | number,
-  value: string | number | string[],
+  value: number | Expression | StyleFunction | string,
   setStyle: Dispatch<SetStateAction<Style | null>>
 ) => {
   if (!layer_id || !map) return;

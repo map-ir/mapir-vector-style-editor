@@ -1,7 +1,7 @@
 import React from 'react';
 
 import SetIcon from './point/symbol-icon';
-import SetSize from './editor/size';
+import BaseOn from './editor/base-on';
 
 export interface ITab<T> {
   id: T;
@@ -48,11 +48,28 @@ export const components: Record<string, JSX.Element> = {
   symbol: (
     <>
       <SetIcon />
-      <SetSize />
+      <BaseOn type="size" />
     </>
   ),
-  circle: <SetSize />,
-  outline: <div>outline</div>,
+  circle: (
+    <>
+      <BaseOn type="size" />
+      <BaseOn type="color" />
+    </>
+  ),
+  line: (
+    <>
+      <BaseOn type="size" />
+      <BaseOn type="color" />
+    </>
+  ),
+  fill: <BaseOn type="color" />,
+  outline: (
+    <>
+      <BaseOn type="stroke" />
+      <BaseOn type="color" />
+    </>
+  ),
   other: <div>other</div>,
   title: <div>title</div>,
 };

@@ -3,19 +3,19 @@ import { useAtomValue } from 'jotai';
 
 import { selectedLayerIDState, styleObjState } from 'atoms/map';
 
-import type { AnyLayer } from 'mapbox-gl';
+import type { Layer } from 'mapbox-gl';
 
 const useGetSelectedLayer = () => {
   const openLayerID = useAtomValue(selectedLayerIDState);
   const styleObj = useAtomValue(styleObjState);
 
-  const [layer, setLayer] = useState<AnyLayer | undefined>(undefined);
+  const [layer, setLayer] = useState<Layer | undefined>(undefined);
 
   useEffect(() => {
     if (openLayerID)
       setLayer({
         ...styleObj?.layers?.find((l) => l.id === openLayerID),
-      } as AnyLayer);
+      } as Layer);
     else setLayer(undefined);
   }, [openLayerID, styleObj]);
 
