@@ -1,4 +1,9 @@
 export default {
+  point: 'Point',
+  line: 'Line',
+  linestring: 'Line',
+  polygon: 'Polygon',
+  fill: 'Polygon',
   save: 'Save',
   cancel: 'Cancel',
   zoom_range: 'Zoom Range',

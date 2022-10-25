@@ -2,12 +2,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { memo, useEffect, useMemo, useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 import { useAtomValue, useSetAtom } from 'jotai';
 
 import useGetSelectedLayer from 'hooks/useGetSelectedLayer';
+import useGetStyleKey from 'hooks/useGetStyleKey';
 import updateStyle from 'common/utils/update-style';
 import ZoomBase from './zoom-base';
 import InputNumber from 'common/input-number';
@@ -47,26 +48,7 @@ const BaseOn = ({ type }: IProps) => {
   const columns = useAtomValue(columnsState);
 
   const { layer } = useGetSelectedLayer();
-
-  const [property, setProperty] = useState<
-    | 'icon-size'
-    | 'circle-radius'
-    | 'line-width'
-    | 'stroke-width'
-    | 'fill-color'
-    | 'circle-color'
-    | 'line-color'
-  >('icon-size');
-
-  const styleKey = [
-    'icon-size',
-    'circle-radius',
-    'line-width',
-    'stroke-width',
-  ].includes(property)
-    ? 'layout'
-    : 'paint';
-
+  const { styleKey, property } = useGetStyleKey(type);
   // @ts-ignore line
   const [size, setSize] = useState<number>(layer?.layout?.[property] ?? 1);
   const [color, setColor] = useState<string>(
@@ -74,42 +56,6 @@ const BaseOn = ({ type }: IProps) => {
     layer?.paint?.[property] ?? 'blue'
   );
   const [method, setMethod] = useState<OptionsType>(options[0]);
-
-  useEffect(() => {
-    if (type === 'stroke') {
-      switch (layer?.type) {
-        case 'circle':
-          setProperty('stroke-width');
-          break;
-      }
-    }
-    if (type === 'size') {
-      switch (layer?.type) {
-        case 'symbol':
-          setProperty('icon-size');
-          break;
-        case 'circle':
-          setProperty('circle-radius');
-          break;
-        case 'line':
-          setProperty('line-width');
-          break;
-      }
-    }
-    if (type === 'color') {
-      switch (layer?.type) {
-        case 'fill':
-          setProperty('fill-color');
-          break;
-        case 'circle':
-          setProperty('circle-color');
-          break;
-        case 'line':
-          setProperty('line-color');
-          break;
-      }
-    }
-  }, [layer]);
 
   const component = useMemo(() => {
     return {
@@ -123,7 +69,7 @@ const BaseOn = ({ type }: IProps) => {
             value={size}
             onChange={(number: number) => {
               setSize(number);
-              if (property && openLayerID && map)
+              if (property && styleKey && openLayerID && map)
                 updateStyle(
                   openLayerID,
                   map,
@@ -143,7 +89,7 @@ const BaseOn = ({ type }: IProps) => {
           <Select
             dir={intl.locale === 'fa' ? 'rtl' : 'ltr'}
             onValueChange={(value) => {
-              if (property && openLayerID && map)
+              if (property && styleKey && openLayerID && map)
                 updateStyle(
                   openLayerID,
                   map,
@@ -179,7 +125,7 @@ const BaseOn = ({ type }: IProps) => {
           </Select>
         </Selector>
       ),
-      zoom: property && <ZoomBase type={type} property={property} />,
+      zoom: property && <ZoomBase type={type} />,
       conditional: <></>,
     }[method];
   }, [method, size, columns, property]);
@@ -215,12 +161,12 @@ const BaseOn = ({ type }: IProps) => {
             <SelectContent>
               <SelectViewport>
                 {options
-                  .filter((o) => {
+                  ?.filter((o) => {
                     if (!columns)
                       return !['dynamic', 'conditional'].includes(o);
                     else return true;
                   })
-                  .map((option) => (
+                  ?.map((option) => (
                     <SelectItem key={option} value={option}>
                       <SelectItemText>
                         <FormattedMessage id={option} />

@@ -25,7 +25,6 @@ import {
 import type { SymbolLayer } from 'mapbox-gl';
 import type { Icon } from 'types/map';
 
-let iconName: string;
 const SetIcon = () => {
   const map = useAtomValue(mapState);
   const openLayerID = useAtomValue(selectedLayerIDState);
@@ -39,6 +38,7 @@ const SetIcon = () => {
 
   const [isIconsOpen, setIconsOpen] = useState(false);
   const [icons, setIcons] = useState<Icon>();
+  const [iconName, setIconName] = useState<string>();
 
   const { styles, attributes } = usePopper(iconRef, iconWrapperRef, {
     placement: 'bottom-start',
@@ -67,8 +67,10 @@ const SetIcon = () => {
   const { layer } = useGetSelectedLayer();
 
   useEffect(() => {
-    iconName = ((layer as SymbolLayer)?.layout?.['icon-image'] ??
-      'empty-e71566') as string;
+    setIconName(
+      ((layer as SymbolLayer)?.layout?.['icon-image'] ??
+        'empty-e71566') as string
+    );
   }, [layer]);
 
   useOutsideClickHandler(
@@ -81,16 +83,18 @@ const SetIcon = () => {
   return (
     <Row>
       <FormattedMessage id="symbol_type" />
-      <Sample
-        title={iconName}
-        ref={(el) => setIconRef(el)}
-        onClick={setIconsOpen.bind(null, !isIconsOpen)}
-        img={`${sprite}.png`}
-        x={icons?.[iconName]?.x}
-        y={icons?.[iconName]?.y}
-        width={icons?.[iconName]?.width}
-        height={icons?.[iconName]?.height}
-      />
+      {iconName && (
+        <Sample
+          title={iconName}
+          ref={(el) => setIconRef(el)}
+          onClick={setIconsOpen.bind(null, !isIconsOpen)}
+          img={`${sprite}.png`}
+          x={icons?.[iconName]?.x}
+          y={icons?.[iconName]?.y}
+          width={icons?.[iconName]?.width}
+          height={icons?.[iconName]?.height}
+        />
+      )}
       {icons && isIconsOpen && (
         <Portal>
           <IconWrapper
@@ -109,18 +113,18 @@ const SetIcon = () => {
                 width={icon.width}
                 height={icon.height}
                 title={key}
-                onClick={() =>
-                  openLayerID &&
-                  map &&
-                  updateStyle(
-                    openLayerID,
-                    map,
-                    'layout',
-                    'icon-image',
-                    `${key}`,
-                    setStyleObj
-                  )
-                }
+                onClick={() => {
+                  setIconName(key);
+                  if (openLayerID && map)
+                    updateStyle(
+                      openLayerID,
+                      map,
+                      'layout',
+                      'icon-image',
+                      `${key}`,
+                      setStyleObj
+                    );
+                }}
               />
             ))}
           </IconWrapper>

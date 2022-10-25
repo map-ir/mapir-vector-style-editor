@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import PointEditor from '../point';
+import InnerTabs from 'components/inner-tabs';
 
 import type { LayerType } from '../../types/map';
 interface IProps {
@@ -13,7 +14,7 @@ const SpecEditor = ({ type }: IProps) => {
     case 'circle':
       return <PointEditor type={type} />;
     default:
-      return null;
+      return <InnerTabs type={type} />;
   }
 };
 

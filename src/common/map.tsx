@@ -93,7 +93,7 @@ const MapWrapper = styled.div`
   position: relative;
   height: 100%;
   /* flex-grow: 2.5; */
-  width: 65%;
+  width: 70%;
   overflow: hidden;
   border-radius: var(--radius-16);
 

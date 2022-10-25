@@ -29,7 +29,7 @@ const SectionTab = ({
   return (
     <Tabs className={className} align={align}>
       <TabNav horizental={horizental}>
-        {tabs.map(({ id, disabled }) => {
+        {tabs?.map(({ id, disabled }) => {
           return (
             <TabItem
               key={id}

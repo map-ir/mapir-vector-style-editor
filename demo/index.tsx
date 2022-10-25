@@ -29,7 +29,7 @@ function App() {
                 url,
                 headers: {
                   token:
-                    'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjhmNjRkYzk4MmI3ZjRiOWI1MzMyMGUwYjFiZWNlMmQwMWI2YjdlYzA2ZThlNDMyMTY1MGUzM2FjZGU2MGMzODZjMTdlNjNjY2U1NGYxYjliIn0.eyJhdWQiOiIxIiwianRpIjoiOGY2NGRjOTgyYjdmNGI5YjUzMzIwZTBiMWJlY2UyZDAxYjZiN2VjMDZlOGU0MzIxNjUwZTMzYWNkZTYwYzM4NmMxN2U2M2NjZTU0ZjFiOWIiLCJpYXQiOjE2NjY2Mjc0MjIsIm5iZiI6MTY2NjYyNzQyMiwiZXhwIjoxNjY2NjMxMDIyLCJzdWIiOiI5YmY2NjkyOS0xOWMxLTRiOWUtODFiNS03Y2Y5OThiN2I0YjIiLCJzY29wZXMiOlsiYmFzaWMiLCJteTphZG1pbiJdfQ.pCw6Ll6aldRrlRILe324TL6AjoPBhKh54sbrHW9ntLhR3yHPAsohlTq2vOf-FH1mX7cT85nWgHyRRjCGdn_5U_pgirGyoq0CZZtPUN4vEDQg0DtFu-mtMFHumwCx_axBuJ7-s4_uUscDd2-nFFo6GSl-o-o42kgwWeumYEbfPeTQ5dIvwvy62QJbgwDIVOsnS1zcVPyzivjMs6ZtgPeJOzJ0FO15csmIEZLu8MSijLOy4oLUFPXnqG1-dxlVhKCcB7QSj1HquYaAJ7biTlqmCqQmNkpVl9Hq_aRxGYEfJbYL3_jLdRJmN2a6TxSq9bMMq26QVv9nHvDDeHdz84RPBA',
+                    'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImI4ODcxMTQzNWUzZDFjYjQ1MWVmZWE2NDMzOTUxYWFkOGY0MTRlOThjYTMxOTEzMzJhMjk0ZWM4MmI5YWIyMTRiZmZhMDAyNzg4YTRiMTYzIn0.eyJhdWQiOiIxIiwianRpIjoiYjg4NzExNDM1ZTNkMWNiNDUxZWZlYTY0MzM5NTFhYWQ4ZjQxNGU5OGNhMzE5MTMzMmEyOTRlYzgyYjlhYjIxNGJmZmEwMDI3ODhhNGIxNjMiLCJpYXQiOjE2NjY3MDcwMDEsIm5iZiI6MTY2NjcwNzAwMSwiZXhwIjoxNjY2NzEwNjAxLCJzdWIiOiI5YmY2NjkyOS0xOWMxLTRiOWUtODFiNS03Y2Y5OThiN2I0YjIiLCJzY29wZXMiOlsiYmFzaWMiLCJteTphZG1pbiJdfQ.Hcxi_7vhlVfJijhFr2ZbDGND9oHy3J__WtZDeGXl4sn5GMzigGiqotgBPWezmvrf87k92YAqifeWFli-i8QwvvGNyUIyvPqDLfAe60DUCyMeNZJ3f_fYZo7S3fwZ0HSmldVd8u9-HVnN3kg3iZxm1fpys67G7D51fWt_plMiJvizfxDEBjw6aTW0qS_vQ5ekH9eFkdnw7MEcQxrzfv_zZGBd-FlTBAsqrNVPAJthhE5dSfxF_VVzXdNd8Za4waECSXskQiqzwTOblEk0wkQ5ZaqLZ12FWCg75gEg8tRJ9E64AWS0XZ8e91CZXeBMNL-NhjglMQ4TIp2WXjb3rteQ2A',
                   'x-api-key':
                     'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijc4ZGQ1MTRmMjNkYTk2NmUxZWQ4MmU3ZGFhNDU3NmU0OGIyNTA5Y2QyN2VlNWY3YTcyNGE1MDhhYTE0MDliYmI3YmU3ZTRlYjE4MTRiOTdlIn0.eyJhdWQiOiIxNDkiLCJqdGkiOiI3OGRkNTE0ZjIzZGE5NjZlMWVkODJlN2RhYTQ1NzZlNDhiMjUwOWNkMjdlZTVmN2E3MjRhNTA4YWExNDA5YmJiN2JlN2U0ZWIxODE0Yjk3ZSIsImlhdCI6MTYxNDY5MTAyMiwibmJmIjoxNjE0NjkxMDIyLCJleHAiOjE2MTcxOTMwMjIsInN1YiI6IiIsInNjb3BlcyI6WyJiYXNpYyJdfQ.nUJZ6yinVoYvi9ryiXwhgKsSBXoNiiSR_aR_z2-x0UMoVbdQhwJZFP7G4Kxu36qAlgypdDvuu0FBgig_m_N45f7P6APRfpfWgo1BUUzqCUCr0O47GsPz4TZw5UHtRtlEVTbVi7D3286i7uiG1xz7DhdgEQYUwexTY1XnTZEsZB2u6tTBQm9IYTsROyGUF_aMfZQdWAuxArhpGYTqAZdCed8m5mY1JtGX7W92yeFWDni08DmpWESmDB83b4I6yND_eNoaYZFQheXE3uI2XrHeWNnQX5Hctp8hY94y7xZmKajw1iV_GQbI4cSgmDm4g5f31-_wdIKkLQiTIgljlVYbSg',
                 },
@@ -38,10 +38,10 @@ function App() {
           },
         }}
         // locale="en"
-        styleURL="https://my-dev.map.ir/share/d2093721-e89d-4549-a65d-db7039a0d60a/api/mym/styles/data/style_9bf66929-19c1-4b9e-81b5-7cf998b7b4b2_80125ac0-7c52-45b9-a671-f02b2f3e8f3e.json"
+        styleURL="https://my-dev.map.ir/share/6de632e8-631d-4bc1-83c0-0fc69f9f2515/api/mym/styles/data/style_9bf66929-19c1-4b9e-81b5-7cf998b7b4b2_8a79fbcd-0076-48be-a82f-ca9a84fb85c3.json"
         sprite="https://map.ir/vector/styles/main/sprite"
         title="تنظیمات استایل"
-        columns={['نام استانا', 'random']}
+        columns={['city']}
       />
     </main>
   );

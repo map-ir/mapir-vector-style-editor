@@ -9,7 +9,7 @@ interface IProps extends SliderProps {
 
 const Gradiant = ({ pairs, ...props }: IProps) => {
   const bgColor = `linear-gradient(to right, ${pairs
-    .map(
+    ?.map(
       (p) =>
         `${p?.[1]} ${
           ((p?.[0] as number) * 100) / ((props?.max ?? 20) - (props?.min ?? 1))
@@ -17,7 +17,7 @@ const Gradiant = ({ pairs, ...props }: IProps) => {
     )
     .join(', ')})`;
   return (
-    <StyledSlider {...props} value={pairs.map((p) => p?.[0] as number)}>
+    <StyledSlider {...props} value={pairs?.map((p) => p?.[0] as number)}>
       <StyledTrack>
         <StyledRange color={bgColor} />
       </StyledTrack>

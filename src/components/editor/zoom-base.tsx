@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/indent */
-import React, { useState, useCallback, useMemo, useEffect, memo } from 'react';
+import React, { useState, useCallback, useEffect, memo, useMemo } from 'react';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { FormattedMessage, useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
@@ -13,6 +13,7 @@ import Gradiant from 'common/gradiant';
 import { splitArray, toFaDigits } from 'common/utils';
 import updateStyle from 'common/utils/update-style';
 import useGetSelectedLayer from 'hooks/useGetSelectedLayer';
+import useGetStyleKey from 'hooks/useGetStyleKey';
 
 import { mapState, selectedLayerIDState, styleObjState } from 'atoms/map';
 
@@ -23,14 +24,6 @@ import type { Expression, StyleFunction } from 'mapbox-gl';
 
 interface IProps {
   type: 'size' | 'color' | 'stroke';
-  property:
-    | 'icon-size'
-    | 'circle-radius'
-    | 'line-width'
-    | 'stroke-width'
-    | 'fill-color'
-    | 'circle-color'
-    | 'line-color';
 }
 
 const pageIds = ['linear', 'exponential', 'cubic-bezier'] as const;
@@ -50,21 +43,13 @@ const tabs = [
   },
 ];
 
-const ZoomBase = ({ type, property }: IProps) => {
+const ZoomBase = ({ type }: IProps) => {
   const intl = useIntl();
   const map = useAtomValue(mapState);
   const openLayerID = useAtomValue(selectedLayerIDState);
   const setStyleObj = useSetAtom(styleObjState);
   const { layer } = useGetSelectedLayer();
-
-  const styleKey = [
-    'icon-size',
-    'circle-radius',
-    'line-width',
-    'stroke-width',
-  ].includes(property)
-    ? 'layout'
-    : 'paint';
+  const { styleKey, property } = useGetStyleKey(type);
 
   const [pairs, setPairs] = useState<(number | string)[][]>([]); // Pairs of zoom/value or zoom/color
   const [expoPower, setexpoPower] = useState<number>(0.5);
@@ -72,9 +57,10 @@ const ZoomBase = ({ type, property }: IProps) => {
     [1, 1],
     [1, 1],
   ]);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const [activePageId, setActivePageId] = useState<PageIds>(
-    () => tabs.filter((i) => !i.disabled).slice(0)[0].id as PageIds
+    () => tabs?.filter((i) => !i.disabled).slice(0)[0].id as PageIds
   );
   const changeTab = useCallback(
     (id: string) => {
@@ -88,7 +74,7 @@ const ZoomBase = ({ type, property }: IProps) => {
 
   useEffect(() => {
     // @ts-ignore line
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     const expression = layer?.[styleKey]?.[property];
     const minzoom = layer?.minzoom ?? 1;
     const maxzoom = layer?.maxzoom ?? 20;
@@ -111,25 +97,39 @@ const ZoomBase = ({ type, property }: IProps) => {
     }
   }, [layer]);
 
+  const styleValue: number | Expression | StyleFunction = useMemo(
+    () => [
+      'interpolate',
+      activePageId === 'cubic-bezier'
+        ? ([activePageId] as (number | string)[]).concat(cubicPoints.flat())
+        : activePageId === 'exponential'
+        ? ([activePageId] as (number | string)[]).concat([expoPower])
+        : [activePageId],
+      ['zoom'],
+      ...pairs.flat(),
+    ],
+    [activePageId, cubicPoints, expoPower, pairs]
+  );
+
   const applyStyles = useCallback(() => {
-    if (openLayerID && map) {
-      const value: number | Expression | StyleFunction = [
-        'interpolate',
-        activePageId === 'cubic-bezier'
-          ? ([activePageId] as (number | string)[]).concat(cubicPoints.flat())
-          : activePageId === 'exponential'
-          ? ([activePageId] as (number | string)[]).concat([expoPower])
-          : [activePageId],
-        ['zoom'],
-        ...pairs.flat(),
-      ];
-      console.log(
-        '🚀 ~ file: zoom-base.tsx ~ line 104 ~ useEffect ~ value',
-        value
+    if (openLayerID && map && property && styleKey && pairs.length > 0) {
+      updateStyle(
+        openLayerID,
+        map,
+        styleKey,
+        property,
+        styleValue,
+        setStyleObj
       );
-      //   updateStyle(openLayerID, map, 'layout', property, value, setStyleObj);
     }
-  }, [openLayerID, map, pairs, activePageId, property]);
+  }, [openLayerID, map, styleValue, styleKey, property]);
+
+  useEffect(() => {
+    if (isUpdating) {
+      applyStyles();
+      setIsUpdating(false);
+    }
+  }, [isUpdating]);
 
   return (
     <Column style={{ width: '100%' }}>
@@ -160,7 +160,10 @@ const ZoomBase = ({ type, property }: IProps) => {
                   min={0}
                   max={2}
                   value={expoPower}
-                  onChange={(value) => setexpoPower(value)}
+                  onChange={(value) => {
+                    setexpoPower(value);
+                    setIsUpdating(true);
+                  }}
                 />
               </PairsWrap>
             </Description>
@@ -179,18 +182,20 @@ const ZoomBase = ({ type, property }: IProps) => {
                   min={0}
                   max={1}
                   value={cubicPoints[0][0]}
-                  onChange={(value) =>
-                    setCubicPoints((curr) => [[value, curr[0][1]], curr[1]])
-                  }
+                  onChange={(value) => {
+                    setCubicPoints((curr) => [[value, curr[0][1]], curr[1]]);
+                    setIsUpdating(true);
+                  }}
                 />
                 Y1:{' '}
                 <InputNumber
                   min={0}
                   max={1}
                   value={cubicPoints[0][1]}
-                  onChange={(value) =>
-                    setCubicPoints((curr) => [[curr[0][0], value], curr[1]])
-                  }
+                  onChange={(value) => {
+                    setCubicPoints((curr) => [[curr[0][0], value], curr[1]]);
+                    setIsUpdating(true);
+                  }}
                 />
               </PairsWrap>
               <PairsWrap>
@@ -199,18 +204,20 @@ const ZoomBase = ({ type, property }: IProps) => {
                   min={0}
                   max={1}
                   value={cubicPoints[1][0]}
-                  onChange={(value) =>
-                    setCubicPoints((curr) => [curr[0], [value, curr[1][1]]])
-                  }
+                  onChange={(value) => {
+                    setCubicPoints((curr) => [curr[0], [value, curr[1][1]]]);
+                    setIsUpdating(true);
+                  }}
                 />
                 Y2:{' '}
                 <InputNumber
                   min={0}
                   max={1}
                   value={cubicPoints[1][1]}
-                  onChange={(value) =>
-                    setCubicPoints((curr) => [curr[0], [curr[1][0], value]])
-                  }
+                  onChange={(value) => {
+                    setCubicPoints((curr) => [curr[0], [curr[1][0], value]]);
+                    setIsUpdating(true);
+                  }}
                 />
               </PairsWrap>
             </Row>
@@ -245,7 +252,7 @@ const ZoomBase = ({ type, property }: IProps) => {
                 ]);
                 return temp.sort((a, b) => (a[0] as number) - (b[0] as number));
               });
-              applyStyles();
+              setIsUpdating(true);
             }}
           />
         </StyledRow>
@@ -258,14 +265,12 @@ const ZoomBase = ({ type, property }: IProps) => {
                 <InputNumber
                   value={pair?.[1] as number}
                   onChange={(value) => {
-                    setTimeout(() => {
-                      setPairs((curr) => {
-                        const temp = [...curr];
-                        temp[index] = [temp[index][0], value];
-                        return temp;
-                      });
-                    }, 100);
-                    applyStyles();
+                    setPairs((curr) => {
+                      const temp = [...curr];
+                      temp[index] = [temp[index][0], value];
+                      return temp;
+                    });
+                    setIsUpdating(true);
                   }}
                 />
               )}{' '}
@@ -281,7 +286,7 @@ const ZoomBase = ({ type, property }: IProps) => {
                     temp[index] = [value, temp[index][1]];
                     return temp;
                   });
-                  applyStyles();
+                  setIsUpdating(true);
                 }}
               />{' '}
               {/* zoom */}
@@ -291,9 +296,9 @@ const ZoomBase = ({ type, property }: IProps) => {
               color={'var(--color-primary)'}
               onClick={() => {
                 setPairs((curr) =>
-                  curr.filter((c, index2) => index !== index2)
+                  curr?.filter((c, index2) => index !== index2)
                 );
-                applyStyles();
+                setIsUpdating(true);
               }}
             />
           </StyledRow>

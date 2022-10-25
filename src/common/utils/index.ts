@@ -9,10 +9,10 @@ export const toNumber = (s: string | number) =>
 /** Removes anything other than numbers from a string. useful for number inputs */
 export const toNumberString = (str: string) =>
   str
-    .split('')
-    .map((c) => parseFloat(c))
-    .filter((i) => !Number.isNaN(i))
-    .join('');
+    ?.split('')
+    ?.map((c) => parseFloat(c))
+    ?.filter((i) => !Number.isNaN(i))
+    ?.join('');
 
 /** Converts numbers in a string to Farsi (persian) numebrs */
 export const toFaDigits = function (input: string | number) {

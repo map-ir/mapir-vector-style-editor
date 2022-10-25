@@ -1,26 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
-import styled from 'styled-components/macro';
+import { useIntl } from 'react-intl';
+import styled, { css } from 'styled-components/macro';
 
-import { titleState } from '../../atoms/general';
-import { styleObjState, selectedLayerIDState } from '../../atoms/map';
+import { titleState } from 'atoms/general';
+import { styleObjState, selectedLayerIDState } from 'atoms/map';
 
-import Expandable from '../../common/expandable';
+import GeoIcon from 'common/geo-icon';
+import Expandable from 'common/expandable';
+import { Row } from 'common/styles';
 import ZoomRange from '../editor/zoom-range';
 import SpecEditor from './spec-editor';
+import { addNewLayer } from 'common/utils/add-new-layer';
 
 import type { Layer } from 'mapbox-gl';
-import type { LayerType } from '../../types/map';
-import GeoIcon from '../../common/geo-icon';
+import type { LayerType } from 'types/map';
 
 import { ReactComponent as Plus } from '../../assets/icons/plus.svg';
 import { ReactComponent as Delete } from '../../assets/icons/delete.svg';
+import { ReactComponent as Point } from '../../assets/icons/point.svg';
+import { ReactComponent as Line } from '../../assets/icons/line.svg';
+import { ReactComponent as Polygon } from '../../assets/icons/polygon.svg';
 
 const LayersStyle = () => {
+  const intl = useIntl();
   const title = useAtomValue(titleState);
-  const styleObj = useAtomValue(styleObjState);
-
+  const [styleObj, setStyleObj] = useAtom(styleObjState);
   const [openLayerID, setOpenLayerID] = useAtom(selectedLayerIDState);
+
+  const [addLayer, isAdding] = useState(false);
 
   const toggleExpand = (layerID?: string) => {
     setOpenLayerID((currentid: string | undefined) =>
@@ -29,12 +37,47 @@ const LayersStyle = () => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper onClick={isAdding.bind(null, false)}>
       <Header>
         <Title>{title}</Title>
-        <Icon>
-          <Plus color={'var(--light-1)'} />
-        </Icon>
+        {!addLayer && (
+          <Icon
+            onClick={(e) => {
+              e.stopPropagation();
+              isAdding(true);
+            }}
+          >
+            <Plus color={'var(--light-1)'} />
+          </Icon>
+        )}
+        {addLayer && (
+          <StyledRow>
+            <Icon
+              title={intl.formatMessage({ id: 'point' })}
+              bg={'var(--light-2)'}
+              hover={'var(--color-primary-20)'}
+              onClick={addNewLayer.bind(null, 'point', setStyleObj)}
+            >
+              <Point color={'var(--color-primary)'} />
+            </Icon>
+            <Icon
+              title={intl.formatMessage({ id: 'line' })}
+              bg={'var(--light-2)'}
+              hover={'var(--color-primary-20)'}
+              onClick={addNewLayer.bind(null, 'line', setStyleObj)}
+            >
+              <Line color={'var(--color-primary)'} />
+            </Icon>
+            <Icon
+              title={intl.formatMessage({ id: 'polygon' })}
+              bg={'var(--light-2)'}
+              hover={'var(--color-primary-20)'}
+              onClick={addNewLayer.bind(null, 'fill', setStyleObj)}
+            >
+              <Polygon color={'var(--color-primary)'} />
+            </Icon>
+          </StyledRow>
+        )}
       </Header>
       <LayersContainer>
         {styleObj?.layers?.map((layer: Layer) => {
@@ -48,7 +91,11 @@ const LayersStyle = () => {
               onOpen={toggleExpand.bind(null, id)}
               HeaderRenderer={() => (
                 <ExpandHeader>
-                  <GeoIcon data={type} color={'var(--color-primary)'} />
+                  <GeoIcon
+                    // title={intl.formatMessage({ id: type })}
+                    data={type}
+                    color={'var(--color-primary)'}
+                  />
                   <Delete color={'var(--shade-3)'} />
                 </ExpandHeader>
               )}
@@ -76,9 +123,6 @@ const Wrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 1em;
-  border: 1px solid var(--shade-4);
-  border-radius: var(--radius-16);
-  padding: 1em;
   box-sizing: border-box;
 `;
 
@@ -97,7 +141,7 @@ const Title = styled.h2`
   margin: 0;
 `;
 
-const Icon = styled.div`
+const Icon = styled.div<{ bg?: string; hover?: string }>`
   cursor: pointer;
   display: flex;
   flex-direction: row;
@@ -105,8 +149,15 @@ const Icon = styled.div`
   align-items: center;
   width: 2em;
   height: 2em;
-  background-color: var(--color-primary);
+  background-color: ${(p) => (p.bg ? p.bg : 'var(--color-primary)')};
   border-radius: var(--radius-8);
+  ${(p) =>
+    p.hover &&
+    css`
+      &:hover {
+        background-color: ${p.hover};
+      }
+    `}
 `;
 
 const LayersContainer = styled.div`
@@ -121,4 +172,9 @@ const LayersContainer = styled.div`
 const ExpandBody = styled(LayersContainer)`
   gap: 0;
   padding-bottom: 1em;
+`;
+
+const StyledRow = styled(Row)`
+  padding: 0;
+  gap: 1em;
 `;

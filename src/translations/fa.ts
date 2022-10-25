@@ -1,4 +1,9 @@
 export default {
+  point: 'نقطه',
+  line: 'خط',
+  linestring: 'خط',
+  polygon: 'چندضلعی',
+  fill: 'چندضلعی',
   save: 'ذخیره',
   cancel: 'انصراف',
   zoom_range: 'محدوده‌ی نمایش',

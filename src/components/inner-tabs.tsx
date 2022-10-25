@@ -4,7 +4,13 @@ import SectionTab from 'common/section-tab';
 import { PageSwitch, Page } from 'common/page-switch';
 import { LayerComponent, EditorWrapper } from 'common/styles';
 
-import { symbolTabs, circleTabs, components } from './constants';
+import {
+  symbolTabs,
+  circleTabs,
+  lineTabs,
+  fillTabs,
+  components,
+} from './constants';
 
 import type { LayerType } from 'types/map';
 import type { ITab } from './constants';
@@ -18,8 +24,8 @@ const tabsComponent = {
   circle: circleTabs,
   heatmap: symbolTabs,
   cluster: symbolTabs,
-  line: symbolTabs,
-  fill: symbolTabs,
+  line: lineTabs,
+  fill: fillTabs,
 };
 
 const InnerTabs = ({ type }: IProps) => {
@@ -27,12 +33,13 @@ const InnerTabs = ({ type }: IProps) => {
     return tabsComponent[type];
   }, [type]);
 
-  const currTab = tabs.map((t) => t.id);
+  const currTab = tabs?.map((t) => t.id);
   type PageIds = typeof currTab[number];
 
   const [activePageId, setActivePageId] = useState<PageIds>(
     // @ts-ignore line
-    (tabs.filter((i: ITab<PageIds>) => !i.disabled) as ITab<PageIds>[])[0].id
+    (tabs?.filter((i: ITab<PageIds>) => !i.disabled) as ITab<PageIds>[])?.[0]
+      ?.id
   );
 
   const changeTab = useCallback(
@@ -49,7 +56,8 @@ const InnerTabs = ({ type }: IProps) => {
   useEffect(() => {
     setActivePageId(
       // @ts-ignore line
-      (tabs.filter((i: ITab<PageIds>) => !i.disabled) as ITab<PageIds>[])[0].id
+      (tabs?.filter((i: ITab<PageIds>) => !i.disabled) as ITab<PageIds>[])?.[0]
+        ?.id
     );
   }, [type]);
 
@@ -64,7 +72,7 @@ const InnerTabs = ({ type }: IProps) => {
       />
 
       <PageSwitch pageId={activePageId}>
-        {tabs.map((tab) => (
+        {tabs?.map((tab) => (
           <Page key={tab?.id} id={tab?.id}>
             <EditorWrapper>{components?.[tab?.id]}</EditorWrapper>
           </Page>
