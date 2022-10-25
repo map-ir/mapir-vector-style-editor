@@ -9,10 +9,13 @@ const useGetStyleKey = (type: string) => {
     | 'icon-size'
     | 'circle-radius'
     | 'line-width'
-    | 'stroke-width'
     | 'fill-color'
-    | 'circle-color'
+    | 'fill-outline-color'
     | 'line-color'
+    | 'circle-radius'
+    | 'circle-color'
+    | 'circle-stroke-width'
+    | 'circle-stroke-color'
   >();
 
   const [styleKey, setStyleKey] = useState<'layout' | 'zoom' | 'paint'>();
@@ -20,8 +23,11 @@ const useGetStyleKey = (type: string) => {
   useEffect(() => {
     if (type === 'stroke') {
       switch (layer?.type) {
+        case 'fill':
+          setProperty('fill-outline-color');
+          break;
         case 'circle':
-          setProperty('stroke-width');
+          setProperty('circle-stroke-width');
           break;
       }
     }
@@ -54,18 +60,8 @@ const useGetStyleKey = (type: string) => {
   }, [layer]);
 
   useEffect(() => {
-    console.log(
-      '🚀 ~ file: useGetStyleKey.ts ~ line 67 ~ useGetStyleKey ~ property',
-      property
-    );
     if (property)
-      setStyleKey(
-        ['icon-size', 'circle-radius', 'line-width', 'stroke-width'].includes(
-          property
-        )
-          ? 'layout'
-          : 'paint'
-      );
+      setStyleKey(['icon-size'].includes(property) ? 'layout' : 'paint');
   }, [property]);
 
   return { styleKey, property };

@@ -8,7 +8,7 @@ import SectionTab from 'common/section-tab';
 import InputNumber from 'common/input-number';
 import { PageSwitch, Page } from 'common/page-switch';
 import { Column, Row } from 'common/styles';
-import Sample from 'common/sample';
+import ColorPicker from 'common/color-picker';
 import Gradiant from 'common/gradiant';
 import { splitArray, toFaDigits } from 'common/utils';
 import updateStyle from 'common/utils/update-style';
@@ -91,8 +91,8 @@ const ZoomBase = ({ type }: IProps) => {
       setPairs(splitArray((expression as string[])?.slice(3), 2));
     } else {
       setPairs([
-        [minzoom, type === 'color' ? 'blue' : 1],
-        [maxzoom, type === 'color' ? 'red' : 1],
+        [minzoom, expression ?? (type === 'color' ? '#7BA6CD' : 1)],
+        [maxzoom, expression ?? (type === 'color' ? '#C11010' : 1)],
       ]);
     }
   }, [layer]);
@@ -248,7 +248,7 @@ const ZoomBase = ({ type }: IProps) => {
                   Math.floor(
                     ((temp[0][0] as number) + (temp[1][0] as number)) / 2
                   ),
-                  type === 'color' ? 'yellow' : 1,
+                  type === 'color' ? '#FFB800' : 1,
                 ]);
                 return temp.sort((a, b) => (a[0] as number) - (b[0] as number));
               });
@@ -260,7 +260,21 @@ const ZoomBase = ({ type }: IProps) => {
           <StyledRow key={index}>
             <PairsWrap>
               {type === 'color' ? (
-                <Sample color={pair?.[1] as string} />
+                // <Sample color={pair?.[1] as string} />
+                <ColorPicker
+                  value={pair?.[1]}
+                  onChange={(e) => {
+                    setPairs((curr) => {
+                      const temp = [...curr];
+                      temp[index] = [
+                        temp[index][0],
+                        e.target.value.toUpperCase(),
+                      ];
+                      return temp;
+                    });
+                    setIsUpdating(true);
+                  }}
+                />
               ) : (
                 <InputNumber
                   value={pair?.[1] as number}

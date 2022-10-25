@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { memo, useMemo, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
 import { useAtomValue, useSetAtom } from 'jotai';
@@ -12,7 +12,7 @@ import useGetStyleKey from 'hooks/useGetStyleKey';
 import updateStyle from 'common/utils/update-style';
 import ZoomBase from './zoom-base';
 import InputNumber from 'common/input-number';
-import Sample from 'common/sample';
+import ColorPicker from 'common/color-picker';
 import {
   Select,
   SelectTrigger,
@@ -53,22 +53,44 @@ const BaseOn = ({ type }: IProps) => {
   const [size, setSize] = useState<number>(layer?.layout?.[property] ?? 1);
   const [color, setColor] = useState<string>(
     // @ts-ignore line
-    layer?.paint?.[property] ?? 'blue'
+    layer?.paint?.[property] ?? '#C11010'
   );
   const [method, setMethod] = useState<OptionsType>(options[0]);
+
+  useEffect(() => {
+    setColor(
+      // @ts-ignore line
+      layer?.[styleKey]?.[property] ?? '#C11010'
+    );
+    // @ts-ignore line
+    setSize(layer?.[styleKey]?.[property] ?? 1);
+  }, [layer]);
 
   const component = useMemo(() => {
     return {
       static:
         type === 'color' ? (
-          <Sample color={color} />
+          // <Sample color={color} />
+          <ColorPicker
+            value={color}
+            onChange={(e) => {
+              if (property && styleKey && openLayerID && map)
+                updateStyle(
+                  openLayerID,
+                  map,
+                  styleKey,
+                  property,
+                  e.target.value,
+                  setStyleObj
+                );
+            }}
+          />
         ) : (
           <InputNumber
             min={1}
             max={5}
             value={size}
             onChange={(number: number) => {
-              setSize(number);
               if (property && styleKey && openLayerID && map)
                 updateStyle(
                   openLayerID,
@@ -128,7 +150,7 @@ const BaseOn = ({ type }: IProps) => {
       zoom: property && <ZoomBase type={type} />,
       conditional: <></>,
     }[method];
-  }, [method, size, columns, property]);
+  }, [method, size, columns, property, styleKey, color]);
 
   return (
     <Column>
