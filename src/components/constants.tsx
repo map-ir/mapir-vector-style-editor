@@ -2,6 +2,10 @@ import React from 'react';
 
 import SetIcon from './point/symbol-icon';
 import BaseOn from './editor/base-on';
+import SetOpacity from './editor/opacity';
+import SetLineType from './editor/line-type';
+import SetTitle from './editor/title';
+
 import type { CircleLayer, FillLayer, LineLayer, SymbolLayer } from 'mapbox-gl';
 
 export interface ITab<T> {
@@ -45,11 +49,15 @@ export const circleTabs: ITab<CirclePageIdsType>[] = [
   },
 ];
 
-const linePageIds = ['line', 'outline', 'title', 'other'] as const;
+const linePageIds = ['line', 'line-type', 'title', 'other'] as const;
 export type LinePageIdsType = typeof linePageIds[number];
 export const lineTabs: ITab<LinePageIdsType>[] = [
   {
     id: 'line',
+  },
+  {
+    id: 'line-type',
+    disabled: false,
   },
   {
     id: 'title',
@@ -107,8 +115,9 @@ export const components: Record<string, JSX.Element> = {
       <BaseOn type="color" />
     </>
   ),
-  other: <div>other</div>,
-  title: <div>title</div>,
+  other: <SetOpacity />,
+  title: <SetTitle />,
+  'line-type': <SetLineType />,
 };
 
 export const DefaultSymbolLayer: Partial<SymbolLayer> = {
@@ -122,6 +131,21 @@ export const DefaultSymbolLayer: Partial<SymbolLayer> = {
     'icon-ignore-placement': false,
     'text-field': '',
     'text-size': 10,
+    'text-font': ['IranSans-Noto'],
+    'text-anchor': 'top',
+    'text-allow-overlap': false,
+    'text-ignore-placement': false,
+    'text-max-width': 30,
+  },
+};
+
+export const DefaultTextLayer: Partial<SymbolLayer> = {
+  type: 'symbol',
+  layout: {
+    'symbol-placement': 'point',
+    'symbol-spacing': 800,
+    'text-field': '',
+    'text-size': 16,
     'text-font': ['IranSans-Noto'],
     'text-anchor': 'top',
     'text-allow-overlap': false,

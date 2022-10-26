@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
 import { useIntl } from 'react-intl';
-import styled, { css } from 'styled-components/macro';
+import styled from 'styled-components/macro';
 
 import { titleState } from 'atoms/general';
-import { styleObjState, selectedLayerIDState } from 'atoms/map';
+import { styleObjState, selectedLayerIDState, mapState } from 'atoms/map';
 
 import GeoIcon from 'common/geo-icon';
 import Expandable from 'common/expandable';
-import { Row } from 'common/styles';
+import { Row, Icon } from 'common/styles';
 import ZoomRange from '../editor/zoom-range';
 import SpecEditor from './spec-editor';
 import { addNewLayer } from 'common/utils/add-new-layer';
+import deleteLayer from 'common/utils/delete-layer';
 
 import type { Layer } from 'mapbox-gl';
 import type { LayerType } from 'types/map';
@@ -24,6 +25,7 @@ import { ReactComponent as Polygon } from '../../assets/icons/polygon.svg';
 
 const LayersStyle = () => {
   const intl = useIntl();
+  const map = useAtomValue(mapState);
   const title = useAtomValue(titleState);
   const [styleObj, setStyleObj] = useAtom(styleObjState);
   const [openLayerID, setOpenLayerID] = useAtom(selectedLayerIDState);
@@ -56,7 +58,7 @@ const LayersStyle = () => {
               title={intl.formatMessage({ id: 'point' })}
               bg={'var(--light-2)'}
               hover={'var(--color-primary-20)'}
-              onClick={addNewLayer.bind(null, 'point', setStyleObj)}
+              onClick={() => addNewLayer('point', setStyleObj)}
             >
               <Point color={'var(--color-primary)'} />
             </Icon>
@@ -64,7 +66,7 @@ const LayersStyle = () => {
               title={intl.formatMessage({ id: 'line' })}
               bg={'var(--light-2)'}
               hover={'var(--color-primary-20)'}
-              onClick={addNewLayer.bind(null, 'line', setStyleObj)}
+              onClick={() => addNewLayer('line', setStyleObj)}
             >
               <Line color={'var(--color-primary)'} />
             </Icon>
@@ -72,7 +74,7 @@ const LayersStyle = () => {
               title={intl.formatMessage({ id: 'polygon' })}
               bg={'var(--light-2)'}
               hover={'var(--color-primary-20)'}
-              onClick={addNewLayer.bind(null, 'fill', setStyleObj)}
+              onClick={() => addNewLayer('fill', setStyleObj)}
             >
               <Polygon color={'var(--color-primary)'} />
             </Icon>
@@ -80,33 +82,39 @@ const LayersStyle = () => {
         )}
       </Header>
       <LayersContainer>
-        {styleObj?.layers?.map((layer: Layer) => {
-          const { id, type } = layer;
-          const open = openLayerID === id;
+        {styleObj?.layers
+          ?.filter((layer: Layer) => !layer?.id?.endsWith('-text-layer'))
+          ?.map((layer: Layer) => {
+            const { id, type } = layer;
+            const open = openLayerID === id;
 
-          return (
-            <Expandable
-              key={id}
-              open={open}
-              onOpen={toggleExpand.bind(null, id)}
-              HeaderRenderer={() => (
-                <ExpandHeader>
-                  <GeoIcon
-                    // title={intl.formatMessage({ id: type })}
-                    data={type}
-                    color={'var(--color-primary)'}
-                  />
-                  <Delete color={'var(--shade-3)'} />
-                </ExpandHeader>
-              )}
-            >
-              <ExpandBody>
-                <ZoomRange />
-                <SpecEditor type={type as LayerType} />
-              </ExpandBody>
-            </Expandable>
-          );
-        })}
+            return (
+              <Expandable
+                key={id}
+                open={open}
+                onOpen={toggleExpand.bind(null, id)}
+                HeaderRenderer={() => (
+                  <ExpandHeader>
+                    <GeoIcon
+                      // title={intl.formatMessage({ id: type })}
+                      data={type}
+                      color={'var(--color-primary)'}
+                    />
+                    <Delete
+                      style={{ cursor: 'pointer' }}
+                      color={'var(--shade-3)'}
+                      onClick={() => map && deleteLayer(id, map, setStyleObj)}
+                    />
+                  </ExpandHeader>
+                )}
+              >
+                <ExpandBody>
+                  <ZoomRange />
+                  <SpecEditor type={type as LayerType} />
+                </ExpandBody>
+              </Expandable>
+            );
+          })}
       </LayersContainer>
     </Wrapper>
   );
@@ -139,25 +147,6 @@ const ExpandHeader = styled(Header)``;
 
 const Title = styled.h2`
   margin: 0;
-`;
-
-const Icon = styled.div<{ bg?: string; hover?: string }>`
-  cursor: pointer;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 2em;
-  height: 2em;
-  background-color: ${(p) => (p.bg ? p.bg : 'var(--color-primary)')};
-  border-radius: var(--radius-8);
-  ${(p) =>
-    p.hover &&
-    css`
-      &:hover {
-        background-color: ${p.hover};
-      }
-    `}
 `;
 
 const LayersContainer = styled.div`

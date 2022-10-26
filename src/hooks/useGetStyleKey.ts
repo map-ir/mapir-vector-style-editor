@@ -7,20 +7,41 @@ const useGetStyleKey = (type: string) => {
 
   const [property, setProperty] = useState<
     | 'icon-size'
-    | 'circle-radius'
+    | 'icon-opacity'
+    | 'line-color'
     | 'line-width'
+    | 'line-opacity'
     | 'fill-color'
     | 'fill-outline-color'
-    | 'line-color'
+    | 'fill-opacity'
     | 'circle-radius'
     | 'circle-color'
+    | 'circle-opacity'
     | 'circle-stroke-width'
     | 'circle-stroke-color'
+    | 'circle-stroke-opacity'
   >();
 
   const [styleKey, setStyleKey] = useState<'layout' | 'zoom' | 'paint'>();
 
   useEffect(() => {
+    // TODO: circle-stroke-opacity and circle-stroke-color
+    if (type === 'opacity') {
+      switch (layer?.type) {
+        case 'symbol':
+          setProperty('icon-opacity');
+          break;
+        case 'circle':
+          setProperty('circle-opacity');
+          break;
+        case 'line':
+          setProperty('line-opacity');
+          break;
+        case 'fill':
+          setProperty('fill-opacity');
+          break;
+      }
+    }
     if (type === 'stroke') {
       switch (layer?.type) {
         case 'fill':

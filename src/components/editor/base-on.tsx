@@ -4,7 +4,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { memo, useEffect, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import styled from 'styled-components/macro';
 import { useAtomValue, useSetAtom } from 'jotai';
 
 import useGetSelectedLayer from 'hooks/useGetSelectedLayer';
@@ -28,7 +27,7 @@ import {
 import { mapState, selectedLayerIDState, styleObjState } from 'atoms/map';
 import { columnsState } from 'atoms/general';
 
-import { Row, Column } from 'common/styles';
+import { Row, Column, Selector, Label } from 'common/styles';
 
 import { ReactComponent as Arrow } from '../../assets/icons/arrow-down.svg';
 import { ReactComponent as Check } from '../../assets/icons/tick.svg';
@@ -64,7 +63,7 @@ const BaseOn = ({ type }: IProps) => {
     );
     // @ts-ignore line
     setSize(layer?.[styleKey]?.[property] ?? 1);
-  }, [layer]);
+  }, [layer, styleKey, property]);
 
   const component = useMemo(() => {
     return {
@@ -88,7 +87,7 @@ const BaseOn = ({ type }: IProps) => {
         ) : (
           <InputNumber
             min={1}
-            max={5}
+            max={20}
             value={size}
             onChange={(number: number) => {
               if (property && styleKey && openLayerID && map)
@@ -210,13 +209,3 @@ const BaseOn = ({ type }: IProps) => {
 };
 
 export default memo(BaseOn);
-
-const Selector = styled(Row)`
-  justify-content: start;
-  gap: 1em;
-  padding: 0;
-`;
-
-const Label = styled.div`
-  width: 12ch;
-`;

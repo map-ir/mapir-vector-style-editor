@@ -69,15 +69,16 @@ export default function Map() {
 
   // Show the layers on Map
   useEffect(() => {
+    console.log('🚀 ~ file: map.tsx ~ line 84 ~ Map ~ styleObj', styleObj);
     if (map && isMapLoaded && styleObj) {
       const srcName = Object.keys(styleObj.sources)[0];
       const srcData = styleObj.sources[Object.keys(styleObj.sources)[0]];
       const layersStyle = styleObj.layers;
       if (!map.getSource(srcName)) {
         map.addSource(srcName, srcData);
-        for (const layerStyle of layersStyle) {
-          if (!map.getLayer(layerStyle.id)) map.addLayer(layerStyle);
-        }
+      }
+      for (const layerStyle of layersStyle) {
+        if (!map.getLayer(layerStyle.id)) map.addLayer(layerStyle);
       }
     }
   }, [map, isMapLoaded, styleObj]);

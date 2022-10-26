@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled, { css } from 'styled-components/macro';
 
 export const LayerComponent = styled.div`
   display: flex;
@@ -46,4 +46,33 @@ export const Column = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: stretch;
+`;
+
+export const Selector = styled(Row)`
+  justify-content: start;
+  gap: 1em;
+  padding: 0;
+`;
+
+export const Label = styled.div`
+  width: 12ch;
+`;
+
+export const Icon = styled.div<{ bg?: string; hover?: string }>`
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 2em;
+  height: 2em;
+  background-color: ${(p) => (p.bg ? p.bg : 'var(--color-primary)')};
+  border-radius: var(--radius-8);
+  ${(p) =>
+    p.hover &&
+    css`
+      &:hover {
+        background-color: ${p.hover};
+      }
+    `}
 `;

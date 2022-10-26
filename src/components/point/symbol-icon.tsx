@@ -114,7 +114,6 @@ const SetIcon = () => {
                 height={icon.height}
                 title={key}
                 onClick={() => {
-                  setIconName(key);
                   if (openLayerID && map)
                     updateStyle(
                       openLayerID,
