@@ -13,11 +13,12 @@ import {
 
 import type { PointLayer } from '../../types/map';
 
+import { addNewLayer } from 'common/utils/add-new-layer';
+
 import { ReactComponent as Circle } from '../../assets/icons/circle.svg';
 import { ReactComponent as Symbol } from '../../assets/icons/symbol.svg';
 import { ReactComponent as Heatmap } from '../../assets/icons/heatmap.svg';
 import { ReactComponent as Cluster } from '../../assets/icons/cluster.svg';
-import { addNewLayer } from 'common/utils/add-new-layer';
 
 interface IProps {
   type: PointLayer;

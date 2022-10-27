@@ -5,25 +5,15 @@ import typescript from '@rollup/plugin-typescript';
 import babel from '@rollup/plugin-babel';
 import peerDeps from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
-import visualizer from 'rollup-plugin-visualizer';
 import { terser } from 'rollup-plugin-terser';
-import url from '@rollup/plugin-url';
 import svgr from '@svgr/rollup';
-import { getFiles } from './scripts/buildUtils';
+// import visualizer from 'rollup-plugin-visualizer';
+// import url from '@rollup/plugin-url';
 
 const extensions = ['.js', '.ts', '.jsx', '.tsx'];
 
 export default {
-  input: [
-    './src/index.tsx',
-    // ...getFiles('./src/assets', extensions),
-    ...getFiles('./src/common', extensions),
-    ...getFiles('./src/components', extensions),
-    ...getFiles('./src/atoms', extensions),
-    // ...getFiles('./src/libs', extensions),
-    ...getFiles('./src/hooks', extensions),
-    // ...getFiles('./src/utils', extensions),
-  ],
+  input: './src/index.tsx',
   output: [
     {
       dir: 'dist',

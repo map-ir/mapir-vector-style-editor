@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
@@ -13,6 +13,8 @@ import ZoomRange from '../editor/zoom-range';
 import SpecEditor from './spec-editor';
 import { addNewLayer } from 'common/utils/add-new-layer';
 import deleteLayer from 'common/utils/delete-layer';
+
+import useOutsideClickHandler from 'hooks/useOutsideClickHandler';
 
 import type { Layer } from 'mapbox-gl';
 import type { LayerType } from 'types/map';
@@ -32,6 +34,9 @@ const LayersStyle = () => {
 
   const [addLayer, isAdding] = useState(false);
 
+  const addLayerRef = useRef<HTMLDivElement>(null);
+  useOutsideClickHandler(addLayerRef, isAdding.bind(null, false));
+
   const toggleExpand = (layerID?: string) => {
     setOpenLayerID((currentid: string | undefined) =>
       currentid !== layerID ? layerID : undefined
@@ -39,47 +44,49 @@ const LayersStyle = () => {
   };
 
   return (
-    <Wrapper onClick={isAdding.bind(null, false)}>
+    <Wrapper>
       <Header>
         <Title>{title}</Title>
-        {!addLayer && (
-          <Icon
-            onClick={(e) => {
-              e.stopPropagation();
-              isAdding(true);
-            }}
-          >
-            <Plus color={'var(--light-1)'} />
-          </Icon>
-        )}
-        {addLayer && (
-          <StyledRow>
+        <div ref={addLayerRef}>
+          {!addLayer && (
             <Icon
-              title={intl.formatMessage({ id: 'point' })}
-              bg={'var(--light-2)'}
-              hover={'var(--color-primary-20)'}
-              onClick={() => addNewLayer('point', setStyleObj)}
+              onClick={(e) => {
+                e.stopPropagation();
+                isAdding(true);
+              }}
             >
-              <Point color={'var(--color-primary)'} />
+              <Plus color={'var(--light-1)'} />
             </Icon>
-            <Icon
-              title={intl.formatMessage({ id: 'line' })}
-              bg={'var(--light-2)'}
-              hover={'var(--color-primary-20)'}
-              onClick={() => addNewLayer('line', setStyleObj)}
-            >
-              <Line color={'var(--color-primary)'} />
-            </Icon>
-            <Icon
-              title={intl.formatMessage({ id: 'polygon' })}
-              bg={'var(--light-2)'}
-              hover={'var(--color-primary-20)'}
-              onClick={() => addNewLayer('fill', setStyleObj)}
-            >
-              <Polygon color={'var(--color-primary)'} />
-            </Icon>
-          </StyledRow>
-        )}
+          )}
+          {addLayer && (
+            <StyledRow>
+              <Icon
+                title={intl.formatMessage({ id: 'point' })}
+                bg={'var(--light-2)'}
+                hover={'var(--color-primary-20)'}
+                onClick={() => addNewLayer('point', setStyleObj)}
+              >
+                <Point color={'var(--color-primary)'} />
+              </Icon>
+              <Icon
+                title={intl.formatMessage({ id: 'line' })}
+                bg={'var(--light-2)'}
+                hover={'var(--color-primary-20)'}
+                onClick={() => addNewLayer('line', setStyleObj)}
+              >
+                <Line color={'var(--color-primary)'} />
+              </Icon>
+              <Icon
+                title={intl.formatMessage({ id: 'polygon' })}
+                bg={'var(--light-2)'}
+                hover={'var(--color-primary-20)'}
+                onClick={() => addNewLayer('fill', setStyleObj)}
+              >
+                <Polygon color={'var(--color-primary)'} />
+              </Icon>
+            </StyledRow>
+          )}
+        </div>
       </Header>
       <LayersContainer>
         {styleObj?.layers
@@ -156,6 +163,9 @@ const LayersContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 1em;
+  overflow: hidden;
+  overflow-y: auto;
+  scrollbar-gutter: stable both-edges;
 `;
 
 const ExpandBody = styled(LayersContainer)`

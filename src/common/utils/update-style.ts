@@ -1,5 +1,12 @@
 import { Dispatch, SetStateAction } from 'react';
-import type { Expression, Map, Style, StyleFunction } from 'mapbox-gl';
+
+import type {
+  Expression,
+  Map,
+  Style,
+  StyleFunction,
+  AnyLayer,
+} from 'mapbox-gl';
 
 const updateStyle = (
   layer_id: string,
@@ -32,18 +39,23 @@ const updateStyle = (
     const selectedLayer = map
       ?.getStyle()
       ?.layers?.filter((l) => l.id === layer_id);
+
     console.log(
       '🚀 ~ file: update-style.ts ~ line 33 ~ setStyle ~ selectedLayer',
       selectedLayer
     );
 
+    const indexOfSelectedLayer = curr_style.layers.findIndex(
+      (i) => i.id === selectedLayer[0].id
+    );
+
+    const newLayers = ([] as AnyLayer[]).concat(curr_style.layers);
+    newLayers[indexOfSelectedLayer] = selectedLayer[0];
+
     return {
       ...curr_style,
-      layers: [
-        ...curr_style.layers.filter((l) => l.id !== layer_id),
-        ...selectedLayer,
-      ],
-    } as Style;
+      layers: newLayers,
+    };
   });
 };
 
