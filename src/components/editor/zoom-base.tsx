@@ -57,7 +57,6 @@ const ZoomBase = ({ type }: IProps) => {
     [1, 1],
     [1, 1],
   ]);
-  const [isUpdating, setIsUpdating] = useState(false);
 
   const [activePageId, setActivePageId] = useState<PageIds>(
     () => tabs?.filter((i) => !i.disabled).slice(0)[0].id as PageIds
@@ -97,8 +96,8 @@ const ZoomBase = ({ type }: IProps) => {
     }
   }, [layer]);
 
-  const styleValue: number | Expression | StyleFunction = useMemo(
-    () => [
+  const styleValue = useCallback(
+    (value: (number | string)[][]) => [
       'interpolate',
       activePageId === 'cubic-bezier'
         ? ([activePageId] as (number | string)[]).concat(cubicPoints.flat())
@@ -106,38 +105,39 @@ const ZoomBase = ({ type }: IProps) => {
         ? ([activePageId] as (number | string)[]).concat([expoPower])
         : [activePageId],
       ['zoom'],
-      ...pairs.flat(),
+      ...value.flat(),
     ],
-    [activePageId, cubicPoints, expoPower, pairs]
+    [activePageId, cubicPoints, expoPower]
   );
 
-  const applyStyles = useCallback(() => {
-    if (openLayerID && map && property && styleKey && pairs.length > 0) {
-      console.log(
-        '🚀 ~ file: zoom-base.tsx ~ line 126 ~ applyStyles ~ styleValue',
-        styleValue
-      );
-      updateStyle(
-        openLayerID,
-        map,
-        styleKey,
-        property,
-        styleValue,
-        setStyleObj
-      );
-    }
-  }, [openLayerID, map, styleValue, styleKey, property]);
+  const stylePowerValue = useCallback(
+    (expo: number, value: (number | string)[][]) => [
+      'interpolate',
+      ([activePageId] as (number | string)[]).concat([expo]),
+      ['zoom'],
+      ...value.flat(),
+    ],
+    [activePageId]
+  );
 
-  useEffect(() => {
-    if (isUpdating) {
-      console.log(
-        '🚀 ~ file: zoom-base.tsx ~ line 133 ~ useEffect ~ isUpdating',
-        isUpdating
-      );
-      applyStyles();
-      setIsUpdating(false);
-    }
-  }, [isUpdating]);
+  const styleCubicValue = useCallback(
+    (cubic: number[][], value: (number | string)[][]) => [
+      'interpolate',
+      ([activePageId] as (number | string)[]).concat(cubic.flat()),
+      ['zoom'],
+      ...value.flat(),
+    ],
+    [activePageId]
+  );
+
+  const applyStyles = useCallback(
+    (value: number | Expression | StyleFunction) => {
+      if (openLayerID && map && property && styleKey && pairs.length > 0) {
+        updateStyle(openLayerID, map, styleKey, property, value, setStyleObj);
+      }
+    },
+    [openLayerID, map, styleKey, property]
+  );
 
   return (
     <Column style={{ width: '100%' }}>
@@ -169,8 +169,11 @@ const ZoomBase = ({ type }: IProps) => {
                   max={2}
                   value={expoPower}
                   onChange={(value) => {
-                    setexpoPower(value);
-                    setIsUpdating(true);
+                    const arg = stylePowerValue(value, pairs) as
+                      | number
+                      | Expression
+                      | StyleFunction;
+                    applyStyles(arg);
                   }}
                 />
               </PairsWrap>
@@ -191,8 +194,15 @@ const ZoomBase = ({ type }: IProps) => {
                   max={1}
                   value={cubicPoints[0][0]}
                   onChange={(value) => {
-                    setCubicPoints((curr) => [[value, curr[0][1]], curr[1]]);
-                    setIsUpdating(true);
+                    styleCubicValue(
+                      [[value, cubicPoints[0][1]], cubicPoints[1]],
+                      pairs
+                    );
+                    const arg = styleCubicValue(
+                      [[value, cubicPoints[0][1]], cubicPoints[1]],
+                      pairs
+                    ) as number | Expression | StyleFunction;
+                    applyStyles(arg);
                   }}
                 />
                 Y1:{' '}
@@ -201,8 +211,11 @@ const ZoomBase = ({ type }: IProps) => {
                   max={1}
                   value={cubicPoints[0][1]}
                   onChange={(value) => {
-                    setCubicPoints((curr) => [[curr[0][0], value], curr[1]]);
-                    setIsUpdating(true);
+                    const arg = styleCubicValue(
+                      [[cubicPoints[0][0], value], cubicPoints[1]],
+                      pairs
+                    ) as number | Expression | StyleFunction;
+                    applyStyles(arg);
                   }}
                 />
               </PairsWrap>
@@ -213,8 +226,15 @@ const ZoomBase = ({ type }: IProps) => {
                   max={1}
                   value={cubicPoints[1][0]}
                   onChange={(value) => {
-                    setCubicPoints((curr) => [curr[0], [value, curr[1][1]]]);
-                    setIsUpdating(true);
+                    styleCubicValue(
+                      [cubicPoints[0], [value, cubicPoints[1][1]]],
+                      pairs
+                    );
+                    const arg = styleCubicValue(
+                      [cubicPoints[0], [value, cubicPoints[1][1]]],
+                      pairs
+                    ) as number | Expression | StyleFunction;
+                    applyStyles(arg);
                   }}
                 />
                 Y2:{' '}
@@ -223,8 +243,15 @@ const ZoomBase = ({ type }: IProps) => {
                   max={1}
                   value={cubicPoints[1][1]}
                   onChange={(value) => {
-                    setCubicPoints((curr) => [curr[0], [curr[1][0], value]]);
-                    setIsUpdating(true);
+                    styleCubicValue(
+                      [cubicPoints[0], [cubicPoints[1][0], value]],
+                      pairs
+                    );
+                    const arg = styleCubicValue(
+                      [cubicPoints[0], [cubicPoints[1][0], value]],
+                      pairs
+                    ) as number | Expression | StyleFunction;
+                    applyStyles(arg);
                   }}
                 />
               </PairsWrap>
@@ -250,17 +277,17 @@ const ZoomBase = ({ type }: IProps) => {
             style={{ cursor: 'pointer' }}
             color={'var(--color-primary)'}
             onClick={() => {
-              setPairs((curr) => {
-                const temp = [...curr];
-                temp.push([
-                  Math.floor(
-                    ((temp[0][0] as number) + (temp[1][0] as number)) / 2
-                  ),
-                  type === 'color' ? '#FFB800' : 1,
-                ]);
-                return temp.sort((a, b) => (a[0] as number) - (b[0] as number));
-              });
-              setIsUpdating(true);
+              const temp = [...pairs];
+              temp.push([
+                Math.floor(
+                  ((temp[0][0] as number) + (temp[1][0] as number)) / 2
+                ),
+                type === 'color' ? '#FFB800' : 1,
+              ]);
+              const arg = styleValue(
+                temp.sort((a, b) => (a[0] as number) - (b[0] as number))
+              ) as number | Expression | StyleFunction;
+              applyStyles(arg);
             }}
           />
         </StyledRow>
@@ -272,35 +299,29 @@ const ZoomBase = ({ type }: IProps) => {
                 <ColorPicker
                   value={pair?.[1]}
                   onChange={(e) => {
-                    setPairs((curr) => {
-                      const temp = [...curr];
-                      console.log(
-                        '🚀 ~ file: zoom-base.tsx ~ line 267 ~ ZoomBase ~ e',
-                        e
-                      );
-                      temp[index] = [
-                        temp[index][0],
-                        e.target.value.toUpperCase(),
-                      ];
-                      console.log(
-                        '🚀 ~ file: zoom-base.tsx ~ line 283 ~ setPairs ~ temp',
-                        temp
-                      );
-                      return temp;
-                    });
-                    setIsUpdating(true);
+                    const temp = [...pairs];
+                    temp[index] = [
+                      temp[index][0],
+                      e.target.value.toUpperCase(),
+                    ];
+                    const arg = styleValue(temp) as
+                      | number
+                      | Expression
+                      | StyleFunction;
+                    applyStyles(arg);
                   }}
                 />
               ) : (
                 <InputNumber
                   value={pair?.[1] as number}
                   onChange={(value) => {
-                    setPairs((curr) => {
-                      const temp = [...curr];
-                      temp[index] = [temp[index][0], value];
-                      return temp;
-                    });
-                    setIsUpdating(true);
+                    const temp = [...pairs];
+                    temp[index] = [temp[index][0], value];
+                    const arg = styleValue(temp) as
+                      | number
+                      | Expression
+                      | StyleFunction;
+                    applyStyles(arg);
                   }}
                 />
               )}{' '}
@@ -311,12 +332,13 @@ const ZoomBase = ({ type }: IProps) => {
                 max={layer?.maxzoom ?? 20}
                 value={pair?.[0]}
                 onChange={(value) => {
-                  setPairs((curr) => {
-                    const temp = [...curr];
-                    temp[index] = [value, temp[index][1]];
-                    return temp;
-                  });
-                  setIsUpdating(true);
+                  const temp = [...pairs];
+                  temp[index] = [value, temp[index][1]];
+                  const arg = styleValue(temp) as
+                    | number
+                    | Expression
+                    | StyleFunction;
+                  applyStyles(arg);
                 }}
               />{' '}
               {/* zoom */}
@@ -325,10 +347,12 @@ const ZoomBase = ({ type }: IProps) => {
               style={{ cursor: 'pointer' }}
               color={'var(--color-primary)'}
               onClick={() => {
-                setPairs((curr) =>
-                  curr?.filter((c, index2) => index !== index2)
-                );
-                setIsUpdating(true);
+                const temp = pairs?.filter((c, index2) => index !== index2);
+                const arg = styleValue(temp) as
+                  | number
+                  | Expression
+                  | StyleFunction;
+                applyStyles(arg);
               }}
             />
           </StyledRow>
