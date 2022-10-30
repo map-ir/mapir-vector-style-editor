@@ -57,12 +57,14 @@ const BaseOn = ({ type }: IProps) => {
   const [method, setMethod] = useState<OptionsType>(options[0]);
 
   useEffect(() => {
-    setColor(
+    if (type === 'color')
+      setColor(
+        // @ts-ignore line
+        layer?.[styleKey]?.[property] ?? '#C11010'
+      );
+    if (type === 'size')
       // @ts-ignore line
-      layer?.[styleKey]?.[property] ?? '#C11010'
-    );
-    // @ts-ignore line
-    setSize(layer?.[styleKey]?.[property] ?? 1);
+      setSize(layer?.[styleKey]?.[property] ?? 1);
   }, [layer, styleKey, property]);
 
   const component = useMemo(() => {

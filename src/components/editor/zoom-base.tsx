@@ -113,6 +113,10 @@ const ZoomBase = ({ type }: IProps) => {
 
   const applyStyles = useCallback(() => {
     if (openLayerID && map && property && styleKey && pairs.length > 0) {
+      console.log(
+        '🚀 ~ file: zoom-base.tsx ~ line 126 ~ applyStyles ~ styleValue',
+        styleValue
+      );
       updateStyle(
         openLayerID,
         map,
@@ -126,6 +130,10 @@ const ZoomBase = ({ type }: IProps) => {
 
   useEffect(() => {
     if (isUpdating) {
+      console.log(
+        '🚀 ~ file: zoom-base.tsx ~ line 133 ~ useEffect ~ isUpdating',
+        isUpdating
+      );
       applyStyles();
       setIsUpdating(false);
     }
@@ -266,10 +274,18 @@ const ZoomBase = ({ type }: IProps) => {
                   onChange={(e) => {
                     setPairs((curr) => {
                       const temp = [...curr];
+                      console.log(
+                        '🚀 ~ file: zoom-base.tsx ~ line 267 ~ ZoomBase ~ e',
+                        e
+                      );
                       temp[index] = [
                         temp[index][0],
                         e.target.value.toUpperCase(),
                       ];
+                      console.log(
+                        '🚀 ~ file: zoom-base.tsx ~ line 283 ~ setPairs ~ temp',
+                        temp
+                      );
                       return temp;
                     });
                     setIsUpdating(true);
