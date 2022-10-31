@@ -72,6 +72,11 @@ const ZoomBase = ({ type }: IProps) => {
   );
 
   useEffect(() => {
+    const arg = styleValue(pairs) as number | Expression | StyleFunction;
+    applyStyles(arg);
+  }, [activePageId]);
+
+  useEffect(() => {
     // @ts-ignore line
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     const expression = layer?.[styleKey]?.[property];
@@ -111,23 +116,23 @@ const ZoomBase = ({ type }: IProps) => {
   );
 
   const stylePowerValue = useCallback(
-    (expo: number, value: (number | string)[][]) => [
+    (expo: number) => [
       'interpolate',
       ([activePageId] as (number | string)[]).concat([expo]),
       ['zoom'],
-      ...value.flat(),
+      ...pairs.flat(),
     ],
-    [activePageId]
+    [activePageId, pairs]
   );
 
   const styleCubicValue = useCallback(
-    (cubic: number[][], value: (number | string)[][]) => [
+    (cubic: number[][]) => [
       'interpolate',
       ([activePageId] as (number | string)[]).concat(cubic.flat()),
       ['zoom'],
-      ...value.flat(),
+      ...pairs.flat(),
     ],
-    [activePageId]
+    [activePageId, pairs]
   );
 
   const applyStyles = useCallback(
@@ -169,7 +174,7 @@ const ZoomBase = ({ type }: IProps) => {
                   max={2}
                   value={expoPower}
                   onChange={(value) => {
-                    const arg = stylePowerValue(value, pairs) as
+                    const arg = stylePowerValue(value) as
                       | number
                       | Expression
                       | StyleFunction;
@@ -194,14 +199,14 @@ const ZoomBase = ({ type }: IProps) => {
                   max={1}
                   value={cubicPoints[0][0]}
                   onChange={(value) => {
-                    styleCubicValue(
-                      [[value, cubicPoints[0][1]], cubicPoints[1]],
-                      pairs
-                    );
-                    const arg = styleCubicValue(
-                      [[value, cubicPoints[0][1]], cubicPoints[1]],
-                      pairs
-                    ) as number | Expression | StyleFunction;
+                    styleCubicValue([
+                      [value, cubicPoints[0][1]],
+                      cubicPoints[1],
+                    ]);
+                    const arg = styleCubicValue([
+                      [value, cubicPoints[0][1]],
+                      cubicPoints[1],
+                    ]) as number | Expression | StyleFunction;
                     applyStyles(arg);
                   }}
                 />
@@ -211,10 +216,10 @@ const ZoomBase = ({ type }: IProps) => {
                   max={1}
                   value={cubicPoints[0][1]}
                   onChange={(value) => {
-                    const arg = styleCubicValue(
-                      [[cubicPoints[0][0], value], cubicPoints[1]],
-                      pairs
-                    ) as number | Expression | StyleFunction;
+                    const arg = styleCubicValue([
+                      [cubicPoints[0][0], value],
+                      cubicPoints[1],
+                    ]) as number | Expression | StyleFunction;
                     applyStyles(arg);
                   }}
                 />
@@ -226,14 +231,14 @@ const ZoomBase = ({ type }: IProps) => {
                   max={1}
                   value={cubicPoints[1][0]}
                   onChange={(value) => {
-                    styleCubicValue(
-                      [cubicPoints[0], [value, cubicPoints[1][1]]],
-                      pairs
-                    );
-                    const arg = styleCubicValue(
-                      [cubicPoints[0], [value, cubicPoints[1][1]]],
-                      pairs
-                    ) as number | Expression | StyleFunction;
+                    styleCubicValue([
+                      cubicPoints[0],
+                      [value, cubicPoints[1][1]],
+                    ]);
+                    const arg = styleCubicValue([
+                      cubicPoints[0],
+                      [value, cubicPoints[1][1]],
+                    ]) as number | Expression | StyleFunction;
                     applyStyles(arg);
                   }}
                 />
@@ -243,14 +248,14 @@ const ZoomBase = ({ type }: IProps) => {
                   max={1}
                   value={cubicPoints[1][1]}
                   onChange={(value) => {
-                    styleCubicValue(
-                      [cubicPoints[0], [cubicPoints[1][0], value]],
-                      pairs
-                    );
-                    const arg = styleCubicValue(
-                      [cubicPoints[0], [cubicPoints[1][0], value]],
-                      pairs
-                    ) as number | Expression | StyleFunction;
+                    styleCubicValue([
+                      cubicPoints[0],
+                      [cubicPoints[1][0], value],
+                    ]);
+                    const arg = styleCubicValue([
+                      cubicPoints[0],
+                      [cubicPoints[1][0], value],
+                    ]) as number | Expression | StyleFunction;
                     applyStyles(arg);
                   }}
                 />
