@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/indent */
-import React, { useState, useCallback, useEffect, memo, useMemo } from 'react';
+import React, { useState, useCallback, useEffect, memo } from 'react';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { FormattedMessage, useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
@@ -77,6 +77,10 @@ const ZoomBase = ({ type }: IProps) => {
   }, [activePageId]);
 
   useEffect(() => {
+    console.log('🚀 ~ file: zoom-base.tsx ~ line 82 ~ ZoomBase ~ pairs', pairs);
+  }, [pairs]);
+
+  useEffect(() => {
     // @ts-ignore line
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     const expression = layer?.[styleKey]?.[property];
@@ -142,6 +146,20 @@ const ZoomBase = ({ type }: IProps) => {
       }
     },
     [openLayerID, map, styleKey, property]
+  );
+
+  const changeZoom = useCallback(
+    (value: number, index: number) => {
+      console.log(
+        '🚀 ~ file: zoom-base.tsx ~ line 341 ~ ZoomBase ~ pairs',
+        pairs
+      );
+      const temp = [...pairs];
+      temp[index] = [value, temp[index][1]];
+      const arg = styleValue(temp) as number | Expression | StyleFunction;
+      applyStyles(arg);
+    },
+    [pairs]
   );
 
   return (
@@ -336,15 +354,7 @@ const ZoomBase = ({ type }: IProps) => {
                 min={layer?.minzoom ?? 1}
                 max={layer?.maxzoom ?? 20}
                 value={pair?.[0]}
-                onChange={(value) => {
-                  const temp = [...pairs];
-                  temp[index] = [value, temp[index][1]];
-                  const arg = styleValue(temp) as
-                    | number
-                    | Expression
-                    | StyleFunction;
-                  applyStyles(arg);
-                }}
+                onChange={(value) => changeZoom(value, index)}
               />{' '}
               {/* zoom */}
             </PairsWrap>
