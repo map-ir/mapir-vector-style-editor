@@ -25,7 +25,7 @@ const useGetStyleKey = (type: string) => {
   const [styleKey, setStyleKey] = useState<'layout' | 'zoom' | 'paint'>();
 
   useEffect(() => {
-    // TODO: circle-stroke-opacity and circle-stroke-color
+    // TODO: circle-stroke-opacity
     if (type === 'opacity') {
       switch (layer?.type) {
         case 'symbol':
@@ -41,18 +41,28 @@ const useGetStyleKey = (type: string) => {
           setProperty('fill-opacity');
           break;
       }
-    }
-    if (type === 'stroke') {
+    } else if (type === 'stroke-color') {
       switch (layer?.type) {
         case 'fill':
           setProperty('fill-outline-color');
           break;
         case 'circle':
+          setProperty('circle-stroke-color');
+          break;
+      }
+    } else if (type === 'stroke-size') {
+      switch (layer?.type) {
+        case 'circle':
           setProperty('circle-stroke-width');
           break;
       }
-    }
-    if (type === 'size') {
+    } else if (type === 'stroke-opacity') {
+      switch (layer?.type) {
+        case 'circle':
+          setProperty('circle-stroke-opacity');
+          break;
+      }
+    } else if (type === 'size') {
       switch (layer?.type) {
         case 'symbol':
           setProperty('icon-size');
@@ -64,8 +74,7 @@ const useGetStyleKey = (type: string) => {
           setProperty('line-width');
           break;
       }
-    }
-    if (type === 'color') {
+    } else if (type === 'color') {
       switch (layer?.type) {
         case 'fill':
           setProperty('fill-color');

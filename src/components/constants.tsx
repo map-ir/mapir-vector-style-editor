@@ -69,14 +69,14 @@ export const lineTabs: ITab<LinePageIdsType>[] = [
   },
 ];
 
-const fillPageIds = ['fill', 'outline', 'title', 'other'] as const;
+const fillPageIds = ['fill', 'fill-outline', 'title', 'other'] as const;
 export type FillPageIdsType = typeof fillPageIds[number];
 export const fillTabs: ITab<FillPageIdsType>[] = [
   {
     id: 'fill',
   },
   {
-    id: 'outline',
+    id: 'fill-outline',
     disabled: false,
   },
   {
@@ -113,6 +113,11 @@ export const components: Record<string, JSX.Element> = {
     <>
       <BaseOn type="stroke" />
       <BaseOn type="color" />
+    </>
+  ),
+  'fill-outline': (
+    <>
+      <BaseOn type="stroke-color" />
     </>
   ),
   other: <SetOpacity />,

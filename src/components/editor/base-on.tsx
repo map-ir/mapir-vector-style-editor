@@ -36,7 +36,13 @@ const options = ['static', 'dynamic', 'zoom', 'conditional'] as const;
 type OptionsType = typeof options[number];
 
 interface IProps {
-  type: 'size' | 'color' | 'stroke';
+  type:
+    | 'size'
+    | 'color'
+    | 'stroke'
+    | 'stroke-color'
+    | 'stroke-size'
+    | 'stroke-opacity';
 }
 
 const BaseOn = ({ type }: IProps) => {

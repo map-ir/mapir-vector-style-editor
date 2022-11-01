@@ -10,6 +10,7 @@ export default {
   symbol: 'Symbol',
   circle: 'Circle',
   outline: 'Outline',
+  'fill-outline': 'Outline',
   other: 'Other',
   title: 'Title',
   opacity: 'Opacity',

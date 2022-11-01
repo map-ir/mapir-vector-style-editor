@@ -23,7 +23,13 @@ import { ReactComponent as Delete } from '../../assets/icons/delete.svg';
 import type { Expression, StyleFunction } from 'mapbox-gl';
 
 interface IProps {
-  type: 'size' | 'color' | 'stroke';
+  type:
+    | 'size'
+    | 'color'
+    | 'stroke'
+    | 'stroke-color'
+    | 'stroke-size'
+    | 'stroke-opacity';
 }
 
 const pageIds = ['linear', 'exponential', 'cubic-bezier'] as const;
@@ -75,10 +81,6 @@ const ZoomBase = ({ type }: IProps) => {
     const arg = styleValue(pairs) as number | Expression | StyleFunction;
     applyStyles(arg);
   }, [activePageId]);
-
-  useEffect(() => {
-    console.log('🚀 ~ file: zoom-base.tsx ~ line 82 ~ ZoomBase ~ pairs', pairs);
-  }, [pairs]);
 
   useEffect(() => {
     // @ts-ignore line
@@ -146,20 +148,6 @@ const ZoomBase = ({ type }: IProps) => {
       }
     },
     [openLayerID, map, styleKey, property]
-  );
-
-  const changeZoom = useCallback(
-    (value: number, index: number) => {
-      console.log(
-        '🚀 ~ file: zoom-base.tsx ~ line 341 ~ ZoomBase ~ pairs',
-        pairs
-      );
-      const temp = [...pairs];
-      temp[index] = [value, temp[index][1]];
-      const arg = styleValue(temp) as number | Expression | StyleFunction;
-      applyStyles(arg);
-    },
-    [pairs]
   );
 
   return (
@@ -354,7 +342,15 @@ const ZoomBase = ({ type }: IProps) => {
                 min={layer?.minzoom ?? 1}
                 max={layer?.maxzoom ?? 20}
                 value={pair?.[0]}
-                onChange={(value) => changeZoom(value, index)}
+                onChange={(value) => {
+                  const temp = [...pairs];
+                  temp[index] = [value, temp[index][1]];
+                  const arg = styleValue(temp) as
+                    | number
+                    | Expression
+                    | StyleFunction;
+                  applyStyles(arg);
+                }}
               />{' '}
               {/* zoom */}
             </PairsWrap>

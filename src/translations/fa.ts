@@ -10,6 +10,7 @@ export default {
   symbol: 'آیکون',
   circle: 'دایره',
   outline: 'حاشیه',
+  'fill-outline': 'حاشیه',
   other: 'سایر',
   title: 'عنوان',
   opacity: 'شفافیت',

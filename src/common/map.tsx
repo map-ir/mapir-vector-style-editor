@@ -69,7 +69,6 @@ export default function Map() {
 
   // Show the layers on Map
   useEffect(() => {
-    console.log('🚀 ~ file: map.tsx ~ line 84 ~ Map ~ styleObj', styleObj);
     if (map && isMapLoaded && styleObj) {
       const srcName = Object.keys(styleObj.sources)[0];
       const srcData = styleObj.sources[Object.keys(styleObj.sources)[0]];
