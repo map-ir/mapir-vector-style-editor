@@ -51,7 +51,7 @@ function NumberInput(
           break;
       }
     },
-    [valueAsNumber]
+    [valueAsNumber, _onChange]
   );
 
   const numValue = (
