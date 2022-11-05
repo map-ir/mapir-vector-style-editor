@@ -75,41 +75,40 @@ const BaseOn = ({ type }: IProps) => {
 
   const component = useMemo(() => {
     return {
-      static:
-        type === 'color' ? (
-          // <Sample color={color} />
-          <ColorPicker
-            value={color}
-            onChange={(e) => {
-              if (property && styleKey && openLayerID && map)
-                updateStyle(
-                  openLayerID,
-                  map,
-                  styleKey,
-                  property,
-                  e.target.value,
-                  setStyleObj
-                );
-            }}
-          />
-        ) : (
-          <InputNumber
-            min={1}
-            max={20}
-            value={size}
-            onChange={(number: number) => {
-              if (property && styleKey && openLayerID && map)
-                updateStyle(
-                  openLayerID,
-                  map,
-                  styleKey,
-                  property,
-                  number,
-                  setStyleObj
-                );
-            }}
-          />
-        ),
+      static: ['color', 'stroke-color'].includes(type) ? (
+        // <Sample color={color} />
+        <ColorPicker
+          value={color}
+          onChange={(e) => {
+            if (property && styleKey && openLayerID && map)
+              updateStyle(
+                openLayerID,
+                map,
+                styleKey,
+                property,
+                e.target.value,
+                setStyleObj
+              );
+          }}
+        />
+      ) : (
+        <InputNumber
+          min={1}
+          max={20}
+          value={size}
+          onChange={(number: number) => {
+            if (property && styleKey && openLayerID && map)
+              updateStyle(
+                openLayerID,
+                map,
+                styleKey,
+                property,
+                number,
+                setStyleObj
+              );
+          }}
+        />
+      ),
       dynamic: (
         <Selector>
           <Label>
@@ -165,7 +164,11 @@ const BaseOn = ({ type }: IProps) => {
         <Selector>
           <Label>
             <FormattedMessage
-              id={type === 'color' ? 'color_base_on' : 'size_base_on'}
+              id={
+                ['color', 'stroke-color'].includes(type)
+                  ? 'color_base_on'
+                  : 'size_base_on'
+              }
             />
           </Label>
           <Select
@@ -177,7 +180,9 @@ const BaseOn = ({ type }: IProps) => {
           >
             <SelectTrigger
               aria-label={intl.formatMessage({
-                id: type === 'color' ? 'color_base_on' : 'size_base_on',
+                id: ['color', 'stroke-color'].includes(type)
+                  ? 'color_base_on'
+                  : 'size_base_on',
               })}
             >
               <SelectValue
