@@ -36,21 +36,22 @@ const updateStyle = (
   setStyle((curr_style) => {
     if (!curr_style) return null;
 
-    const selectedLayer = map
-      ?.getStyle()
-      ?.layers?.filter((l) => l.id === layer_id);
-
-    console.log(
-      '🚀 ~ file: update-style.ts ~ line 33 ~ setStyle ~ selectedLayer',
-      selectedLayer
-    );
+    const selectedLayer = curr_style.layers?.filter((l) => l.id === layer_id);
 
     const indexOfSelectedLayer = curr_style.layers.findIndex(
       (i) => i.id === selectedLayer[0].id
     );
 
     const newLayers = ([] as AnyLayer[]).concat(curr_style.layers);
-    newLayers[indexOfSelectedLayer] = selectedLayer[0];
+    newLayers[indexOfSelectedLayer] = {
+      ...selectedLayer[0],
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      [type]: {
+        // @ts-ignore line
+        ...selectedLayer[0][type],
+        [key]: value,
+      },
+    };
 
     return {
       ...curr_style,

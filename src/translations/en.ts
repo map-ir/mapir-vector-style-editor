@@ -11,6 +11,7 @@ export default {
   circle: 'Circle',
   outline: 'Outline',
   'fill-outline': 'Outline',
+  'circle-outline': 'Outline',
   other: 'Other',
   title: 'Title',
   opacity: 'Opacity',

@@ -11,6 +11,7 @@ export default {
   circle: 'دایره',
   outline: 'حاشیه',
   'fill-outline': 'حاشیه',
+  'circle-outline': 'حاشیه',
   other: 'سایر',
   title: 'عنوان',
   opacity: 'شفافیت',

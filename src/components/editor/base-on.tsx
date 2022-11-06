@@ -63,12 +63,12 @@ const BaseOn = ({ type }: IProps) => {
   const [method, setMethod] = useState<OptionsType>(options[0]);
 
   useEffect(() => {
-    if (type === 'color')
+    if (['color', 'stroke-color'].includes(type))
       setColor(
         // @ts-ignore line
         layer?.[styleKey]?.[property] ?? '#C11010'
       );
-    if (type === 'size')
+    if (['size', 'stroke-size'].includes(type))
       // @ts-ignore line
       setSize(layer?.[styleKey]?.[property] ?? 1);
   }, [layer, styleKey, property]);

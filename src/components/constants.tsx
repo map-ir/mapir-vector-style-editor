@@ -29,14 +29,14 @@ export const symbolTabs: ITab<SymbolPageIdsType>[] = [
   },
 ];
 
-const circlePageIds = ['circle', 'outline', 'title', 'other'] as const;
+const circlePageIds = ['circle', 'circle-outline', 'title', 'other'] as const;
 export type CirclePageIdsType = typeof circlePageIds[number];
 export const circleTabs: ITab<CirclePageIdsType>[] = [
   {
     id: 'circle',
   },
   {
-    id: 'outline',
+    id: 'circle-outline',
     disabled: false,
   },
   {
@@ -113,6 +113,12 @@ export const components: Record<string, JSX.Element> = {
     <>
       <BaseOn type="stroke" />
       <BaseOn type="color" />
+    </>
+  ),
+  'circle-outline': (
+    <>
+      <BaseOn type="stroke-size" />
+      <BaseOn type="stroke-color" />
     </>
   ),
   'fill-outline': (
