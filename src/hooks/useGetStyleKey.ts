@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/indent */
 import { useEffect, useState } from 'react';
-import useGetSelectedLayer from './useGetSelectedLayer';
+import { useAtomValue } from 'jotai';
 
-const useGetStyleKey = (type: string) => {
-  const { layer } = useGetSelectedLayer();
+import { layerState } from 'atoms/map';
+
+function useGetStyleKey(type: string) {
+  const layer = useAtomValue(layerState);
 
   const [property, setProperty] = useState<
     | 'icon-size'
@@ -25,7 +27,10 @@ const useGetStyleKey = (type: string) => {
   const [styleKey, setStyleKey] = useState<'layout' | 'zoom' | 'paint'>();
 
   useEffect(() => {
-    // TODO: circle-stroke-opacity
+    console.log(
+      '🚀 ~ file: useGetStyleKey.ts ~ line 30 ~ useEffect ~ layer',
+      layer
+    );
     if (type === 'opacity') {
       switch (layer?.type) {
         case 'symbol':
@@ -95,6 +100,6 @@ const useGetStyleKey = (type: string) => {
   }, [property]);
 
   return { styleKey, property };
-};
+}
 
 export default useGetStyleKey;

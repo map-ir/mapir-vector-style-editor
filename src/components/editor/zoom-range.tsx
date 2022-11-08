@@ -6,9 +6,13 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import RangeSlider from 'common/range-slider';
 import InputNumber from 'common/input-number';
 import UpdateStyle from 'common/utils/update-style';
-import useGetSelectedLayer from 'hooks/useGetSelectedLayer';
 
-import { mapState, selectedLayerIDState, styleObjState } from 'atoms/map';
+import {
+  layerState,
+  mapState,
+  selectedLayerIDState,
+  styleObjState,
+} from 'atoms/map';
 
 import type { Layer } from 'mapbox-gl';
 
@@ -16,8 +20,7 @@ const ZoomrRange = () => {
   const map = useAtomValue(mapState);
   const openLayerID = useAtomValue(selectedLayerIDState);
   const setStyleObj = useSetAtom(styleObjState);
-
-  const { layer } = useGetSelectedLayer();
+  const layer = useAtomValue(layerState);
 
   const zoomChange = (value: number[]) => {
     if (!openLayerID || !map) return;
@@ -33,17 +36,12 @@ const ZoomrRange = () => {
         <InputNumber
           min={1}
           max={20}
-          value={(layer as Layer)?.maxzoom ?? 20}
-          onChange={(number) =>
-            zoomChange([(layer as Layer)?.minzoom ?? 1, number])
-          }
+          value={layer?.maxzoom ?? 20}
+          onChange={(number) => zoomChange([layer?.minzoom ?? 1, number])}
         />
         <RangeSlider
           // defaultValue={[zoom[0], zoom[1]]}
-          value={[
-            (layer as Layer)?.minzoom ?? 1,
-            (layer as Layer)?.maxzoom ?? 20,
-          ]}
+          value={[layer?.minzoom ?? 1, layer?.maxzoom ?? 20]}
           min={1}
           max={20}
           step={1}
@@ -54,10 +52,8 @@ const ZoomrRange = () => {
         <InputNumber
           min={1}
           max={20}
-          value={(layer as Layer)?.minzoom ?? 1}
-          onChange={(number) =>
-            zoomChange([number, (layer as Layer)?.maxzoom ?? 20])
-          }
+          value={layer?.minzoom ?? 1}
+          onChange={(number) => zoomChange([number, layer?.maxzoom ?? 20])}
         />
       </Slider>
     </Wrapper>

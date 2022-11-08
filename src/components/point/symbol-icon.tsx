@@ -11,7 +11,6 @@ import { FormattedMessage } from 'react-intl';
 import Sample from 'common/sample';
 import Portal from 'common/portal';
 import useOutsideClickHandler from 'hooks/useOutsideClickHandler';
-import useGetSelectedLayer from 'hooks/useGetSelectedLayer';
 import updateStyle from 'common/utils/update-style';
 import { Row } from 'common/styles';
 
@@ -20,6 +19,7 @@ import {
   spriteState,
   mapState,
   styleObjState,
+  layerState,
 } from 'atoms/map';
 
 import type { SymbolLayer } from 'mapbox-gl';
@@ -30,6 +30,7 @@ const SetIcon = () => {
   const openLayerID = useAtomValue(selectedLayerIDState);
   const sprite = useAtomValue(spriteState);
   const setStyleObj = useSetAtom(styleObjState);
+  const layer = useAtomValue(layerState);
 
   const [iconRef, setIconRef] = useState<HTMLDivElement | null>(null);
   const [iconWrapperRef, setIconWrapperRef] = useState<HTMLDivElement | null>(
@@ -63,8 +64,6 @@ const SetIcon = () => {
   useEffect(() => {
     if (sprite) getIcons(sprite);
   }, [sprite]);
-
-  const { layer } = useGetSelectedLayer();
 
   useEffect(() => {
     setIconName(

@@ -18,9 +18,13 @@ import {
 } from 'common/select';
 import { Column, Row, Selector, Label } from 'common/styles';
 import updateStyle from 'common/utils/update-style';
-import useGetSelectedLayer from 'hooks/useGetSelectedLayer';
 
-import { mapState, selectedLayerIDState, styleObjState } from 'atoms/map';
+import {
+  layerState,
+  mapState,
+  selectedLayerIDState,
+  styleObjState,
+} from 'atoms/map';
 import { columnsState } from 'atoms/general';
 
 import { ReactComponent as Arrow } from '../../assets/icons/arrow-down.svg';
@@ -35,7 +39,7 @@ const SetTitle = () => {
   const openLayerID = useAtomValue(selectedLayerIDState);
   const setStyleObj = useSetAtom(styleObjState);
   const columns = useAtomValue(columnsState);
-  const { layer: BaseLayer } = useGetSelectedLayer();
+  const BaseLayer = useAtomValue(layerState);
 
   const [layer, setLayer] = useState<Layer>();
   const [layerID, setLayerID] = useState(openLayerID);

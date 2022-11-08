@@ -25,7 +25,7 @@ import { ReactComponent as Point } from '../../assets/icons/point.svg';
 import { ReactComponent as Line } from '../../assets/icons/line.svg';
 import { ReactComponent as Polygon } from '../../assets/icons/polygon.svg';
 
-const LayersStyle = () => {
+function LayersStyle() {
   const intl = useIntl();
   const map = useAtomValue(mapState);
   const title = useAtomValue(titleState);
@@ -38,6 +38,7 @@ const LayersStyle = () => {
   useOutsideClickHandler(addLayerRef, isAdding.bind(null, false));
 
   const toggleExpand = (layerID?: string) => {
+    console.log('setting: ', { layerID });
     setOpenLayerID((currentid: string | undefined) =>
       currentid !== layerID ? layerID : undefined
     );
@@ -125,7 +126,7 @@ const LayersStyle = () => {
       </LayersContainer>
     </Wrapper>
   );
-};
+}
 
 export default LayersStyle;
 

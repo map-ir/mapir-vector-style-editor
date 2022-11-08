@@ -5,9 +5,13 @@ import { useAtomValue, useSetAtom } from 'jotai';
 
 import { Row, Selector, Label, Icon } from 'common/styles';
 import updateStyle from 'common/utils/update-style';
-import useGetSelectedLayer from 'hooks/useGetSelectedLayer';
 
-import { mapState, selectedLayerIDState, styleObjState } from 'atoms/map';
+import {
+  mapState,
+  selectedLayerIDState,
+  styleObjState,
+  layerState,
+} from 'atoms/map';
 
 import { ReactComponent as Solid } from '../../assets/icons/solid-line.svg';
 import { ReactComponent as Dash } from '../../assets/icons/dash-line.svg';
@@ -20,7 +24,7 @@ const SetLineType = () => {
   const map = useAtomValue(mapState);
   const openLayerID = useAtomValue(selectedLayerIDState);
   const setStyleObj = useSetAtom(styleObjState);
-  const { layer } = useGetSelectedLayer();
+  const layer = useAtomValue(layerState);
 
   const [join, setJoin] = useState<'bevel' | 'round' | 'miter'>('miter');
   const [dash, setDash] = useState<number[]>([1, 0]);

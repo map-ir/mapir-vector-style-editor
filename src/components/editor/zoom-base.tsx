@@ -12,10 +12,14 @@ import ColorPicker from 'common/color-picker';
 import Gradiant from 'common/gradiant';
 import { splitArray, toFaDigits } from 'common/utils';
 import updateStyle from 'common/utils/update-style';
-import useGetSelectedLayer from 'hooks/useGetSelectedLayer';
 import useGetStyleKey from 'hooks/useGetStyleKey';
 
-import { mapState, selectedLayerIDState, styleObjState } from 'atoms/map';
+import {
+  mapState,
+  selectedLayerIDState,
+  styleObjState,
+  layerState,
+} from 'atoms/map';
 
 import { ReactComponent as Plus } from '../../assets/icons/plus.svg';
 import { ReactComponent as Delete } from '../../assets/icons/delete.svg';
@@ -54,7 +58,7 @@ const ZoomBase = ({ type }: IProps) => {
   const map = useAtomValue(mapState);
   const openLayerID = useAtomValue(selectedLayerIDState);
   const setStyleObj = useSetAtom(styleObjState);
-  const { layer } = useGetSelectedLayer();
+  const layer = useAtomValue(layerState);
   const { styleKey, property } = useGetStyleKey(type);
 
   const [pairs, setPairs] = useState<(number | string)[][]>([]); // Pairs of zoom/value or zoom/color
@@ -101,11 +105,19 @@ const ZoomBase = ({ type }: IProps) => {
       setPairs(splitArray((expression as string[])?.slice(3), 2));
     } else {
       setPairs([
-        [minzoom, expression ?? (type === 'color' ? '#7BA6CD' : 1)],
-        [maxzoom, expression ?? (type === 'color' ? '#C11010' : 1)],
+        [
+          minzoom,
+          expression ??
+            (['color', 'stroke-color'].includes(type) ? '#7BA6CD' : 1),
+        ],
+        [
+          maxzoom,
+          expression ??
+            (['color', 'stroke-color'].includes(type) ? '#C11010' : 1),
+        ],
       ]);
     }
-  }, [layer]);
+  }, [layer, property, styleKey]);
 
   const styleValue = useCallback(
     (value: (number | string)[][]) => [
@@ -272,7 +284,7 @@ const ZoomBase = ({ type }: IProps) => {
       </PageSwitch>
       <Column>
         <StyledRow>
-          {type === 'color' ? (
+          {['color', 'stroke-color'].includes(type) ? (
             <Gradiant
               pairs={pairs}
               min={layer?.minzoom ?? 1}
@@ -293,7 +305,7 @@ const ZoomBase = ({ type }: IProps) => {
                 Math.floor(
                   ((temp[0][0] as number) + (temp[1][0] as number)) / 2
                 ),
-                type === 'color' ? '#FFB800' : 1,
+                ['color', 'stroke-color'].includes(type) ? '#FFB800' : 1,
               ]);
               const arg = styleValue(
                 temp.sort((a, b) => (a[0] as number) - (b[0] as number))
@@ -305,7 +317,7 @@ const ZoomBase = ({ type }: IProps) => {
         {pairs?.map((pair, index) => (
           <StyledRow key={index}>
             <PairsWrap>
-              {type === 'color' ? (
+              {['color', 'stroke-color'].includes(type) ? (
                 // <Sample color={pair?.[1] as string} />
                 <ColorPicker
                   value={pair?.[1]}

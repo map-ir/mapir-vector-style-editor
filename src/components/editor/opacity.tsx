@@ -6,17 +6,22 @@ import InputNumber from 'common/input-number';
 import RangeSlider from 'common/range-slider';
 import { Row, Selector, Label } from 'common/styles';
 import updateStyle from 'common/utils/update-style';
-import useGetSelectedLayer from 'hooks/useGetSelectedLayer';
 import useGetStyleKey from 'hooks/useGetStyleKey';
 
-import { mapState, selectedLayerIDState, styleObjState } from 'atoms/map';
+import {
+  layerState,
+  mapState,
+  selectedLayerIDState,
+  styleObjState,
+} from 'atoms/map';
 
 const SetOpacity = () => {
   const intl = useIntl();
   const map = useAtomValue(mapState);
   const openLayerID = useAtomValue(selectedLayerIDState);
   const setStyleObj = useSetAtom(styleObjState);
-  const { layer } = useGetSelectedLayer();
+  const layer = useAtomValue(layerState);
+
   const { styleKey, property } = useGetStyleKey('opacity');
 
   const [opacity, setOpacity] = useState(100);

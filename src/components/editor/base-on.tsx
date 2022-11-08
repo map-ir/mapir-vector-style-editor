@@ -6,7 +6,6 @@ import React, { memo, useEffect, useMemo, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useAtomValue, useSetAtom } from 'jotai';
 
-import useGetSelectedLayer from 'hooks/useGetSelectedLayer';
 import useGetStyleKey from 'hooks/useGetStyleKey';
 import updateStyle from 'common/utils/update-style';
 import ZoomBase from './zoom-base';
@@ -24,7 +23,12 @@ import {
   SelectItemIndicator,
 } from 'common/select';
 
-import { mapState, selectedLayerIDState, styleObjState } from 'atoms/map';
+import {
+  layerState,
+  mapState,
+  selectedLayerIDState,
+  styleObjState,
+} from 'atoms/map';
 import { columnsState } from 'atoms/general';
 
 import { Row, Column, Selector, Label } from 'common/styles';
@@ -51,8 +55,8 @@ const BaseOn = ({ type }: IProps) => {
   const openLayerID = useAtomValue(selectedLayerIDState);
   const setStyleObj = useSetAtom(styleObjState);
   const columns = useAtomValue(columnsState);
+  const layer = useAtomValue(layerState);
 
-  const { layer } = useGetSelectedLayer();
   const { styleKey, property } = useGetStyleKey(type);
   // @ts-ignore line
   const [size, setSize] = useState<number>(layer?.layout?.[property] ?? 1);
