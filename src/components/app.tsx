@@ -16,7 +16,15 @@ import { titleState, columnsState } from '../atoms/general';
 import type { IProps } from 'types/general';
 import type { Style } from 'mapbox-gl';
 
-const App = ({ map, locale, styleURL, sprite, title, columns }: IProps) => {
+const App = ({
+  map,
+  locale,
+  styleURL,
+  sprite,
+  title,
+  columns,
+  onSubmit,
+}: IProps) => {
   const setMapProp = useSetAtom(mapPropsState);
   const [styleURLAtom, setStyleURL] = useAtom(styleURLState);
   const setStyleObj = useSetAtom(styleObjState);
@@ -57,7 +65,7 @@ const App = ({ map, locale, styleURL, sprite, title, columns }: IProps) => {
 
   return (
     <Wrapper>
-      <Editor />
+      <Editor onSubmit={onSubmit} />
       <Map />
     </Wrapper>
   );

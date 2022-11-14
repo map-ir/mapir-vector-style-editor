@@ -153,7 +153,7 @@ export const DefaultSymbolLayer: Partial<SymbolLayer> = {
 export const DefaultTextLayer: Partial<SymbolLayer> = {
   type: 'symbol',
   layout: {
-    'symbol-placement': 'point',
+    'symbol-placement': 'line',
     'symbol-spacing': 800,
     'text-field': '',
     'text-size': 16,
@@ -182,7 +182,7 @@ export const DefaultLineLayer: Partial<LineLayer> = {
     'line-join': 'miter',
   },
   paint: {
-    'line-width': ['interpolate', ['exponential', 1.5], ['zoom'], 1, 2, 18, 44],
+    'line-width': 5,
     'line-color': '#2E0767',
     'line-translate': [0, 0],
   },

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAtomValue } from 'jotai';
 import styled from 'styled-components/macro';
 import { FormattedMessage } from 'react-intl';
 
@@ -6,7 +7,16 @@ import Button from 'common/button';
 
 import LayersStyle from './layers';
 
-export default function Editor() {
+import { styleObjState } from 'atoms/map';
+
+import type { Style } from 'mapbox-gl';
+
+interface IProps {
+  onSubmit?: (arg: Style | null) => void;
+}
+
+export default function Editor({ onSubmit }: IProps) {
+  const styleObj = useAtomValue(styleObjState);
   return (
     <Wrapper>
       <LayersStyle />
@@ -14,7 +24,7 @@ export default function Editor() {
         <Button tertiary>
           <FormattedMessage id="cancel" />
         </Button>
-        <Button primary>
+        <Button primary onClick={() => onSubmit?.(styleObj)}>
           <FormattedMessage id="save" />
         </Button>
       </ButtonWrapper>

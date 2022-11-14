@@ -22,6 +22,7 @@ export default {
   color_base_on: 'Color Base on',
   static: 'Static',
   dynamic: 'Dynamic',
+  size: 'Size',
   zoom: 'Zoom',
   conditional: 'Conditional',
   selection: 'Select...',
@@ -34,4 +35,5 @@ export default {
   expo_desc: '',
   expo_power: '',
   cubic_desc: '',
+  'no-value': 'No Value',
 };

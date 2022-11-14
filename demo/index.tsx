@@ -29,7 +29,7 @@ function App() {
                 url,
                 headers: {
                   token:
-                    'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjcyZjhkOWMyYWIyNDUyMjhhYjFiM2I0ZjVmMzk2NWZiYmQ1NjliNDA5YTQxOTZiZjJmYmI2MGVmYmU3OGU2ZTIwNTZhYjZlNjc5Zjc5OWRkIn0.eyJhdWQiOiIxIiwianRpIjoiNzJmOGQ5YzJhYjI0NTIyOGFiMWIzYjRmNWYzOTY1ZmJiZDU2OWI0MDlhNDE5NmJmMmZiYjYwZWZiZTc4ZTZlMjA1NmFiNmU2NzlmNzk5ZGQiLCJpYXQiOjE2Njc4ODcyNjgsIm5iZiI6MTY2Nzg4NzI2OCwiZXhwIjoxNjY3ODkwODY4LCJzdWIiOiI5YmY2NjkyOS0xOWMxLTRiOWUtODFiNS03Y2Y5OThiN2I0YjIiLCJzY29wZXMiOlsiYmFzaWMiLCJteTphZG1pbiJdfQ.OHRKmuiH204EA2UqF_-AQXi-fHasHj7uog6fcLwa_N-QbgO9a6sol5KwVy_9ugqzrwqA3Kx64KzqiZTRC1b2HgqHFtmyuUa6WEG3P7-UrzERn-bpZ1tIo-XBV8Q4DItoGH3Iyzjx8ao2cHQBx2ixMjpbCar5twlF-NWkpSBh4MyhepKzoKqGyodL3g4D44aiqWU8hQBs7mxOMOceKnyTRndUmbNo4NCqCfcpO5sLukJNpUlIXfr5474IcKtO1pMoIjLWGhIRKy136I7KJKO7UuqtEV4-alWH0CtUfX7dxVaqcOWL3zxgIqG1om27bR9_q1dFbG-e8g7DByxxm4Hh4w',
+                    'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjU2MzA5ODIzZmJhNjcwYTVhMzZiYWUzZWU2OTljMzM3NTFkNjQ4YWEyMGNlNjBiYjBmNDE5YzUxYjdjN2EyMzdlMjFlZTkxODA0OTgxMDkxIn0.eyJhdWQiOiIxIiwianRpIjoiNTYzMDk4MjNmYmE2NzBhNWEzNmJhZTNlZTY5OWMzMzc1MWQ2NDhhYTIwY2U2MGJiMGY0MTljNTFiN2M3YTIzN2UyMWVlOTE4MDQ5ODEwOTEiLCJpYXQiOjE2Njg0MjM2MDAsIm5iZiI6MTY2ODQyMzYwMCwiZXhwIjoxNjY4NDI3MjAwLCJzdWIiOiI5YmY2NjkyOS0xOWMxLTRiOWUtODFiNS03Y2Y5OThiN2I0YjIiLCJzY29wZXMiOlsiYmFzaWMiLCJteTphZG1pbiJdfQ.YyKZOoMrPOUrEyWGUb_2EFtsqfEZwfeswdcdtjmDUo7v2iScHmyGbYcEzPhLwOTSsHW3ARhUPu8Q8cqvx3rodE-hFEmgoLAeb8H5hu3SjRk_WFqons01EHRq4Qalqj4qj0HkNQg3mu9zdMOjNrbjQBtyJYmw94Xks_i63Qd7dosM9f59hxg4O7B2VmRLLM-xlGHe7RUBVfEt4zcR86tbS6MGfHqDN8EKoDkJo050BOdahnvsMHo3HhHajzA-gYvt6EhdDtCguNcTmY4et4AhwDhxWxgQ_ZXouGq1SdYpwawSDyZxNKMlm_teplbSKXdjy-kkY8JXgwvKCqmq7ttQrA',
                   'x-api-key':
                     'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijc4ZGQ1MTRmMjNkYTk2NmUxZWQ4MmU3ZGFhNDU3NmU0OGIyNTA5Y2QyN2VlNWY3YTcyNGE1MDhhYTE0MDliYmI3YmU3ZTRlYjE4MTRiOTdlIn0.eyJhdWQiOiIxNDkiLCJqdGkiOiI3OGRkNTE0ZjIzZGE5NjZlMWVkODJlN2RhYTQ1NzZlNDhiMjUwOWNkMjdlZTVmN2E3MjRhNTA4YWExNDA5YmJiN2JlN2U0ZWIxODE0Yjk3ZSIsImlhdCI6MTYxNDY5MTAyMiwibmJmIjoxNjE0NjkxMDIyLCJleHAiOjE2MTcxOTMwMjIsInN1YiI6IiIsInNjb3BlcyI6WyJiYXNpYyJdfQ.nUJZ6yinVoYvi9ryiXwhgKsSBXoNiiSR_aR_z2-x0UMoVbdQhwJZFP7G4Kxu36qAlgypdDvuu0FBgig_m_N45f7P6APRfpfWgo1BUUzqCUCr0O47GsPz4TZw5UHtRtlEVTbVi7D3286i7uiG1xz7DhdgEQYUwexTY1XnTZEsZB2u6tTBQm9IYTsROyGUF_aMfZQdWAuxArhpGYTqAZdCed8m5mY1JtGX7W92yeFWDni08DmpWESmDB83b4I6yND_eNoaYZFQheXE3uI2XrHeWNnQX5Hctp8hY94y7xZmKajw1iV_GQbI4cSgmDm4g5f31-_wdIKkLQiTIgljlVYbSg',
                 },
@@ -42,6 +42,9 @@ function App() {
         sprite="https://map.ir/vector/styles/main/sprite"
         title="تنظیمات استایل"
         columns={['city']}
+        onSubmit={(style) => {
+          console.log('🚀 ~ file: index.tsx ~ line 46 ~ App ~ style', style);
+        }}
       />
     </main>
   );

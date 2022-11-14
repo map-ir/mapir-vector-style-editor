@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, MouseEvent } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components/macro';
@@ -38,10 +38,14 @@ function LayersStyle() {
   useOutsideClickHandler(addLayerRef, isAdding.bind(null, false));
 
   const toggleExpand = (layerID?: string) => {
-    console.log('setting: ', { layerID });
     setOpenLayerID((currentid: string | undefined) =>
       currentid !== layerID ? layerID : undefined
     );
+  };
+
+  const handleAddLayer = (type: string) => {
+    addNewLayer(type, setStyleObj);
+    isAdding(false);
   };
 
   return (
@@ -51,7 +55,7 @@ function LayersStyle() {
         <div ref={addLayerRef}>
           {!addLayer && (
             <Icon
-              onClick={(e) => {
+              onClick={(e: MouseEvent) => {
                 e.stopPropagation();
                 isAdding(true);
               }}
@@ -65,7 +69,7 @@ function LayersStyle() {
                 title={intl.formatMessage({ id: 'point' })}
                 bg={'var(--light-2)'}
                 hover={'var(--color-primary-20)'}
-                onClick={() => addNewLayer('point', setStyleObj)}
+                onClick={() => handleAddLayer('point')}
               >
                 <Point color={'var(--color-primary)'} />
               </Icon>
@@ -73,7 +77,7 @@ function LayersStyle() {
                 title={intl.formatMessage({ id: 'line' })}
                 bg={'var(--light-2)'}
                 hover={'var(--color-primary-20)'}
-                onClick={() => addNewLayer('line', setStyleObj)}
+                onClick={() => handleAddLayer('line')}
               >
                 <Line color={'var(--color-primary)'} />
               </Icon>
@@ -81,7 +85,7 @@ function LayersStyle() {
                 title={intl.formatMessage({ id: 'polygon' })}
                 bg={'var(--light-2)'}
                 hover={'var(--color-primary-20)'}
-                onClick={() => addNewLayer('fill', setStyleObj)}
+                onClick={() => handleAddLayer('fill')}
               >
                 <Polygon color={'var(--color-primary)'} />
               </Icon>

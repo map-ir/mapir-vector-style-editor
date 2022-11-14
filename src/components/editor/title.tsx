@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/indent */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 
 import InputNumber from 'common/input-number';
 import ColorPicker from 'common/color-picker';
@@ -32,12 +34,13 @@ import { ReactComponent as Check } from '../../assets/icons/tick.svg';
 import { addNewLayer } from 'common/utils/add-new-layer';
 
 import type { Layer } from 'mapbox-gl';
+import deleteLayer from 'common/utils/delete-layer';
 
 const SetTitle = () => {
   const intl = useIntl();
   const map = useAtomValue(mapState);
   const openLayerID = useAtomValue(selectedLayerIDState);
-  const setStyleObj = useSetAtom(styleObjState);
+  const [styleObj, setStyleObj] = useAtom(styleObjState);
   const columns = useAtomValue(columnsState);
   const BaseLayer = useAtomValue(layerState);
 
@@ -45,7 +48,7 @@ const SetTitle = () => {
   const [layerID, setLayerID] = useState(openLayerID);
   const [fontColor, setColor] = useState('#000000');
   const [fontSize, setSize] = useState(16);
-  const [field, setField] = useState('');
+  const [field, setField] = useState('no-value');
 
   useEffect(() => {
     if (openLayerID && BaseLayer?.type !== 'symbol') {
@@ -57,17 +60,24 @@ const SetTitle = () => {
     if (map && layerID) {
       // add a symbol layer for text
       if (!map?.getLayer(layerID)) addNewLayer('text', setStyleObj, layerID);
-      setLayer(map?.getStyle()?.layers?.find((l: Layer) => l.id === layerID));
+      setLayer(styleObj?.layers?.find((l: Layer) => l.id === layerID));
     }
-  }, [map, layerID]);
+  }, [map, layerID, styleObj]);
 
   useEffect(() => {
     // @ts-ignore line
     setColor(layer?.paint?.['text-color'] ?? '#000000');
     // @ts-ignore line
     setSize(layer?.layout?.['text-size'] ?? 16);
-    // @ts-ignore line
-    setField(layer?.layout?.['text-field'] ?? '');
+    setField(
+      // @ts-ignore line
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      layer?.layout?.['text-field']
+        ? // @ts-ignore line
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          layer?.layout?.['text-field']?.[1]
+        : 'no-value'
+    );
   }, [layer]);
 
   return (
@@ -127,15 +137,30 @@ const SetTitle = () => {
             dir={intl.locale === 'fa' ? 'rtl' : 'ltr'}
             value={field}
             onValueChange={(value) => {
-              if (layerID && map)
-                updateStyle(
-                  layerID,
-                  map,
-                  'layout',
-                  'text-field',
-                  ['get', value],
-                  setStyleObj
-                );
+              if (layerID && map) {
+                if (value === 'no-value') {
+                  if (BaseLayer?.type !== 'symbol') {
+                    deleteLayer(layerID, map, setStyleObj);
+                  } else {
+                    updateStyle(
+                      layerID,
+                      map,
+                      'layout',
+                      'text-field',
+                      '',
+                      setStyleObj
+                    );
+                  }
+                } else
+                  updateStyle(
+                    layerID,
+                    map,
+                    'layout',
+                    'text-field',
+                    ['get', value],
+                    setStyleObj
+                  );
+              }
             }}
           >
             <SelectTrigger
@@ -150,6 +175,14 @@ const SetTitle = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectViewport>
+                <SelectItem value={'no-value'}>
+                  <SelectItemText>
+                    <FormattedMessage id="no-value" />
+                  </SelectItemText>
+                  <SelectItemIndicator>
+                    <Check />
+                  </SelectItemIndicator>
+                </SelectItem>
                 {columns?.map((column) => (
                   <SelectItem key={column} value={column}>
                     <SelectItemText>{column}</SelectItemText>

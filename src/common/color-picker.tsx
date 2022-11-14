@@ -1,8 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { InputHTMLAttributes } from 'react';
 import styled from 'styled-components/macro';
+import Color from 'color';
 
 const ColorPicker = (props: InputHTMLAttributes<HTMLInputElement>) => {
-  return <ColorInput {...props} type={'color'} />;
+  const color = Color(props.value);
+
+  return <ColorInput {...props} value={color.hex()} type={'color'} />;
 };
 
 export default ColorPicker;

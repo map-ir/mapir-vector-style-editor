@@ -27,10 +27,6 @@ function useGetStyleKey(type: string) {
   const [styleKey, setStyleKey] = useState<'layout' | 'zoom' | 'paint'>();
 
   useEffect(() => {
-    console.log(
-      '🚀 ~ file: useGetStyleKey.ts ~ line 30 ~ useEffect ~ layer',
-      layer
-    );
     if (type === 'opacity') {
       switch (layer?.type) {
         case 'symbol':

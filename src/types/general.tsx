@@ -1,3 +1,4 @@
+import type { Style } from 'mapbox-gl';
 import type { MapProps } from 'types/map';
 
 interface IProps {
@@ -7,6 +8,7 @@ interface IProps {
   sprite?: string;
   title?: string;
   columns?: string[];
+  onSubmit?: (arg: Style | null) => void;
 }
 
 type Renderable = JSX.Element | undefined | null | false;

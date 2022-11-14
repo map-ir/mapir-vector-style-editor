@@ -16,9 +16,6 @@ const updateStyle = (
   value: number | number[] | Expression | StyleFunction | string,
   setStyle: Dispatch<SetStateAction<Style | null>>
 ) => {
-  console.log('🚀 ~ file: update-style.ts ~ line 12 ~ type', type);
-  console.log('🚀 ~ file: update-style.ts ~ line 12 ~ value', value);
-  console.log('🚀 ~ file: update-style.ts ~ line 12 ~ key', key);
   if (!layer_id || !map) return;
 
   switch (type) {

@@ -64,6 +64,7 @@ const MapirStyleEditor = ({
   sprite,
   title,
   columns,
+  onSubmit,
 }: IProps) => {
   return (
     <IntlProvider locale={locale} key={locale} messages={messages[locale]}>
@@ -76,6 +77,7 @@ const MapirStyleEditor = ({
           title={title}
           sprite={sprite}
           columns={columns}
+          onSubmit={onSubmit}
         />
       </Provider>
     </IntlProvider>

@@ -5,7 +5,7 @@ import typescript from '@rollup/plugin-typescript';
 import babel from '@rollup/plugin-babel';
 import peerDeps from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 import svgr from '@svgr/rollup';
 // import visualizer from 'rollup-plugin-visualizer';
 // import url from '@rollup/plugin-url';
@@ -16,9 +16,8 @@ export default {
   input: './src/index.tsx',
   output: [
     {
-      dir: 'dist',
+      file: 'dist/index.js',
       format: 'esm',
-      preserveModules: true,
       preserveModulesRoot: 'src',
       sourcemap: 'inline',
     },
@@ -32,7 +31,6 @@ export default {
     }),
     peerDeps(),
     resolve(),
-    commonjs(),
     babel({
       babelrc: true,
       babelHelpers: 'runtime',
@@ -40,15 +38,16 @@ export default {
       extensions: extensions,
     }),
     postcss(),
-    terser(),
     // visualizer({
     //   filename: 'bundle-analysis.html',
     //   open: true,
     // }),
     typescript({
       tsconfig: './tsconfig.build.json',
-      declaration: true,
-      declarationDir: './dist',
+      // declaration: true,
+      // declarationDir: './dist',
     }),
+    commonjs(),
+    terser(),
   ],
 };

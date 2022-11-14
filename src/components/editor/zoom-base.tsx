@@ -108,13 +108,9 @@ const ZoomBase = ({ type }: IProps) => {
         [
           minzoom,
           expression ??
-            (['color', 'stroke-color'].includes(type) ? '#7BA6CD' : 1),
-        ],
-        [
-          maxzoom,
-          expression ??
             (['color', 'stroke-color'].includes(type) ? '#C11010' : 1),
         ],
+        [maxzoom, ['color', 'stroke-color'].includes(type) ? '#000000' : 1],
       ]);
     }
   }, [layer, property, styleKey]);
@@ -293,7 +289,8 @@ const ZoomBase = ({ type }: IProps) => {
             />
           ) : (
             <Description>
-              <Star>*</Star>مقدار : زوم
+              <Star>*</Star>
+              <FormattedMessage id="size" /> : <FormattedMessage id="zoom" />
             </Description>
           )}
           <Plus
@@ -367,9 +364,12 @@ const ZoomBase = ({ type }: IProps) => {
               {/* zoom */}
             </PairsWrap>
             <Delete
-              style={{ cursor: 'pointer' }}
-              color={'var(--color-primary)'}
+              style={{ cursor: pairs.length < 3 ? 'not-allowed' : 'pointer' }}
+              color={
+                pairs.length < 3 ? 'var(--shade-3)' : 'var(--color-primary)'
+              }
               onClick={() => {
+                if (pairs.length < 3) return;
                 const temp = pairs?.filter((c, index2) => index !== index2);
                 const arg = styleValue(temp) as
                   | number
