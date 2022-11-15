@@ -4,7 +4,7 @@
   "description": "An editor for styling vector tiles with Mapbox style Spec.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup -c && parcel build demo/index.html --dist-dir build",
+    "build": "rollup -c && parcel build demo/index.html --public-url /mapir-vector-style-editor/ --dist-dir build",
     "watch": "rollup -cw",
     "dev": "parcel demo/index.html --dist-dir build",
     "start": "npm-run-all --parallel watch dev"
