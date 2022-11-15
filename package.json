@@ -1,0 +1,85 @@
+{
+  "name": "mapir-vector-style-editor",
+  "version": "1.0.0",
+  "description": "An editor for styling vector tiles with Mapbox style Spec.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup -c && parcel build demo/index.html --dist-dir build",
+    "watch": "rollup -cw",
+    "dev": "parcel demo/index.html --dist-dir build",
+    "start": "npm-run-all --parallel watch dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/map-ir/mapir-vector-style-editor.git"
+  },
+  "keywords": [
+    "mapbox",
+    "vector",
+    "style",
+    "style-editor",
+    "mapir"
+  ],
+  "author": "Reyhane Masumi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/map-ir/mapir-vector-style-editor/issues"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/map-ir/mapir-vector-style-editor#readme",
+  "devDependencies": {
+    "@babel/core": "^7.19.3",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-transform-runtime": "^7.19.1",
+    "@babel/preset-env": "^7.19.1",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.18.6",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "22.0.2",
+    "@rollup/plugin-inject": "4.0.4",
+    "@rollup/plugin-node-resolve": "14.1.0",
+    "@rollup/plugin-terser": "^0.1.0",
+    "@rollup/plugin-typescript": "8.5.0",
+    "@rollup/plugin-url": "^7.0.0",
+    "@svgr/rollup": "^6.4.0",
+    "@types/uuid": "^8.3.4",
+    "babel-plugin-macros": "^3.1.0",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-import-resolver-typescript": "^3.5.1",
+    "npm-run-all": "^4.1.5",
+    "parcel": "^2.7.0",
+    "path-browserify": "^1.0.1",
+    "process": "^0.11.10",
+    "rollup": "^2.79.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "4.0.2",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-visualizer": "5.8.2",
+    "stream-browserify": "^3.0.0"
+  },
+  "peerDependencies": {
+    "@popperjs/core": "2.11.6",
+    "@radix-ui/react-select": "1.0.0",
+    "@radix-ui/react-slider": "^1.0.0",
+    "@types/mapbox-gl": "^2.7.5",
+    "@types/react-dom": "18.0.6",
+    "@types/styled-components": "5.1.26",
+    "@types/color": "^3.0.3",
+    "jotai": "^1.8.4",
+    "mapbox-gl": "1.13.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-intl": "^6.1.2",
+    "react-popper": "^2.3.0",
+    "react-scripts": "5.0.1",
+    "styled-components": "^5.3.5",
+    "styled-map": "^3.3.0",
+    "typescript": "^4.8.4",
+    "color": "^4.2.3",
+    "uuid": "^9.0.0"
+  }
+}

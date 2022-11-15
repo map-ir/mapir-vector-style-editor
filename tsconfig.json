@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "es5",
+    "lib": ["es6", "dom", "DOM.Iterable"],
+    "sourceMap": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "rootDir": "src",
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "downlevelIteration": true,
+    "baseUrl": "src/",
+    "paths": {
+      "common/*": ["common/*"],
+      "components/*": ["components/*"],
+      "atoms/*": ["atoms/*"],
+      "hooks/*": ["hooks/*"],
+      "utils/*": ["utils/*"],
+      "styles/*": ["styles/*"]
+    }
+  },
+  "include": ["custom.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist",
+    "demo",
+    "scripts",
+    "acceptance-tests",
+    "webpack",
+    "jest"
+  ],
+  "types": ["typePatches"]
+}

@@ -1,0 +1,10 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.75" y="0.75" width="38.5" height="38.5" rx="5.25" stroke="currentColor" opacity="0.7" stroke-width="1.5"/>
+<line y1="-0.75" x2="22.0826" y2="-0.75" transform="matrix(0.662292 -0.749246 0.769045 0.639194 13.5 28.2725)" stroke="currentColor" opacity="0.7" stroke-width="1.5"/>
+<path d="M27.2266 26.6582L11.3358 11.2493" stroke="currentColor" opacity="0.7" stroke-width="1.5"/>
+<rect x="26.5" y="25.9082" width="6.50007" height="6.30298" fill="currentColor" opacity="0.7"/>
+<rect x="7.8125" y="27.4844" width="5.68756" height="5.51511" fill="currentColor" opacity="0.7"/>
+<rect x="7" y="7" width="5.68756" height="5.51511" fill="currentColor" opacity="0.7"/>
+<rect x="25.6875" y="7.78809" width="5.68756" height="5.51511" fill="currentColor" opacity="0.7"/>
+<rect x="15.9375" y="15.666" width="8.9376" height="8.6666" fill="currentColor"/>
+</svg>
