@@ -14,13 +14,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 18
-      - name: Bundle 📦
+      - name: Bundle 📦 and Build Demo 🔧
         run: |
           npm install
           npm run build
-      - name: Install and Build Demo 🔧
-        working-directory: demo
-        run: npm run build
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
