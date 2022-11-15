@@ -42,6 +42,18 @@ const Wrapper = styled.div`
   border: 1px solid var(--shade-4);
   border-radius: var(--radius-16);
   padding: 1em;
+  @media screen and (max-width: 1920px) {
+    width: 30%;
+  }
+  @media screen and (max-width: 1630px) {
+    width: 35%;
+  }
+  @media screen and (max-width: 1180px) {
+    width: 45%;
+  }
+  @media screen and (max-width: 1024px) {
+    width: 55%;
+  }
 `;
 
 const ButtonWrapper = styled.div`
