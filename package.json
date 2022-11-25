@@ -1,7 +1,8 @@
 {
   "name": "mapir-vector-style-editor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An editor for styling vector tiles with Mapbox style Spec.",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rollup -c && parcel build demo/index.html --public-url /mapir-vector-style-editor/ --dist-dir build",
