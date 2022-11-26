@@ -31,12 +31,12 @@ export default {
       // icon: true,
     }),
     peerDeps(),
-    // babel({
-    //   babelrc: true,
-    //   babelHelpers: 'runtime',
-    //   exclude: ['**/node_modules/**', '**/libs/**'],
-    //   extensions: extensions,
-    // }),
+    babel({
+      babelrc: true,
+      babelHelpers: 'runtime',
+      exclude: ['**/node_modules/**', '**/libs/**'],
+      extensions: extensions,
+    }),
     postcss(),
     // visualizer({
     //   filename: 'bundle-analysis.html',
@@ -44,8 +44,8 @@ export default {
     // }),
     typescript({
       tsconfig: './tsconfig.build.json',
-      // declaration: true,
-      // declarationDir: './dist',
+      declaration: true,
+      declarationDir: './dist',
     }),
     commonjs(),
     terser(),

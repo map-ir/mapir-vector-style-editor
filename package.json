@@ -4,7 +4,6 @@
   "description": "An editor for styling vector tiles with Mapbox style Spec.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rollup -c",
     "build:demo": "parcel build demo/index.html --public-url /mapir-vector-style-editor/ --dist-dir build",
     "watch": "rollup -cw",
