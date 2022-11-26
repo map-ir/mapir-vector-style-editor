@@ -14,6 +14,7 @@ const extensions = ['.js', '.ts', '.jsx', '.tsx'];
 
 export default {
   input: './src/index.tsx',
+  external: ['react', 'react-dom'],
   output: [
     {
       file: 'dist/index.js',
@@ -30,13 +31,12 @@ export default {
       // icon: true,
     }),
     peerDeps(),
-    resolve(),
-    babel({
-      babelrc: true,
-      babelHelpers: 'runtime',
-      exclude: ['**/node_modules/**', '**/libs/**'],
-      extensions: extensions,
-    }),
+    // babel({
+    //   babelrc: true,
+    //   babelHelpers: 'runtime',
+    //   exclude: ['**/node_modules/**', '**/libs/**'],
+    //   extensions: extensions,
+    // }),
     postcss(),
     // visualizer({
     //   filename: 'bundle-analysis.html',
@@ -49,5 +49,6 @@ export default {
     }),
     commonjs(),
     terser(),
+    resolve(),
   ],
 };

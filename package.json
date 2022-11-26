@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup -c && parcel build demo/index.html --public-url /mapir-vector-style-editor/ --dist-dir build",
+    "build": "rollup -c",
+    "build:demo": "parcel build demo/index.html --public-url /mapir-vector-style-editor/ --dist-dir build",
     "watch": "rollup -cw",
     "dev": "parcel demo/index.html --dist-dir build",
     "start": "npm-run-all --parallel watch dev"
