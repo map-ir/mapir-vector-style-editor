@@ -1,11 +1,9 @@
 {
   "name": "mapir-vector-style-editor",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "description": "An editor for styling vector tiles with Mapbox style Spec.",
-  "main": "dist/index.js",
   "scripts": {
-    "build": "rollup -c",
-    "build:demo": "parcel build demo/index.html --public-url /mapir-vector-style-editor/ --dist-dir build",
+    "build": "rollup -c && parcel build demo/index.html --public-url /mapir-vector-style-editor/ --dist-dir build",
     "watch": "rollup -cw",
     "dev": "parcel demo/index.html --dist-dir build",
     "start": "npm-run-all --parallel watch dev"
