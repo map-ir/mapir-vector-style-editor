@@ -27,6 +27,7 @@
     "url": "https://github.com/map-ir/mapir-vector-style-editor/issues"
   },
   "files": [
+    "src",
     "dist"
   ],
   "homepage": "https://github.com/map-ir/mapir-vector-style-editor#readme",
