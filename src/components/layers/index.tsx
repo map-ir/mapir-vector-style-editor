@@ -21,13 +21,18 @@ export default function Editor({ onSubmit, onCancle }: IProps) {
   return (
     <Wrapper>
       <LayersStyle />
+
       <ButtonWrapper>
-        <Button tertiary onClick={() => onCancle?.(styleObj)}>
-          <FormattedMessage id="cancel" />
-        </Button>
-        <Button primary onClick={() => onSubmit?.(styleObj)}>
-          <FormattedMessage id="save" />
-        </Button>
+        {onCancle && (
+          <Button tertiary onClick={() => onCancle(styleObj)}>
+            <FormattedMessage id="cancel" />
+          </Button>
+        )}
+        {onSubmit && (
+          <Button primary onClick={() => onSubmit(styleObj)}>
+            <FormattedMessage id="save" />
+          </Button>
+        )}
       </ButtonWrapper>
     </Wrapper>
   );
