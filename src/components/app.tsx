@@ -24,6 +24,7 @@ const App = ({
   title,
   columns,
   onSubmit,
+  onCancle,
 }: IProps) => {
   const setMapProp = useSetAtom(mapPropsState);
   const [styleURLAtom, setStyleURL] = useAtom(styleURLState);
@@ -64,8 +65,8 @@ const App = ({
   }, [styleURLAtom, setStyleObj]);
 
   return (
-    <Wrapper>
-      <Editor onSubmit={onSubmit} />
+    <Wrapper locale={locale ?? 'en'}>
+      <Editor onSubmit={onSubmit} onCancle={onCancle} />
       <Map />
     </Wrapper>
   );
@@ -73,7 +74,8 @@ const App = ({
 
 export default memo(App);
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ locale: string }>`
+  direction: ${(p) => (p.locale === 'fa' ? 'rtl' : 'ltr')};
   width: 100%;
   height: 100%;
   display: flex;

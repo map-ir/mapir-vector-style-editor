@@ -37,13 +37,16 @@ function App() {
             }
           },
         }}
-        // locale="en"
+        locale="en"
         styleURL="https://my-dev.map.ir/share/6de632e8-631d-4bc1-83c0-0fc69f9f2515/api/mym/styles/data/style_9bf66929-19c1-4b9e-81b5-7cf998b7b4b2_8a79fbcd-0076-48be-a82f-ca9a84fb85c3.json"
         sprite="https://map.ir/vector/styles/main/sprite"
         title="تنظیمات استایل"
         columns={['city']}
         onSubmit={(style) => {
           console.log('🚀 ~ file: index.tsx ~ line 46 ~ App ~ style', style);
+        }}
+        onCancel={(style) => {
+          console.log('🚀 ~ file: index.tsx ~ line 49 ~ App ~ style', style);
         }}
       />
     </main>
