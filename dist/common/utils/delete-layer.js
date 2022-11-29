@@ -1,2 +1,0 @@
-import{__assign as e,__spreadArray as r,__read as t}from"../../node_modules/tslib/tslib.es6.js";var l=function(l,n,a){l&&n&&a((function(a){var o;if(!a)return null;if((null===(o=null==a?void 0:a.layers)||void 0===o?void 0:o.length)<2)return a;n.getLayer(l)&&n.removeLayer(l),n.getLayer("".concat(l,"-text-layer"))&&n.removeLayer("".concat(l,"-text-layer"));var i=e({},a);return e(e({},i),{layers:r([],t(i.layers.filter((function(e){return e.id!==l}))),!1)})}))};export{l as default};
-//# sourceMappingURL=delete-layer.js.map

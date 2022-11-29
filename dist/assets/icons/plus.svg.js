@@ -1,2 +1,0 @@
-import*as t from"react";var r;function e(){return e=Object.assign?Object.assign.bind():function(t){for(var r=1;r<arguments.length;r++){var e=arguments[r];for(var n in e)Object.prototype.hasOwnProperty.call(e,n)&&(t[n]=e[n])}return t},e.apply(this,arguments)}var n=function(n){return t.createElement("svg",e({width:18,height:18,fill:"none",role:"img"},n),r||(r=t.createElement("path",{d:"M9 1.5v15M1.5 9h15",stroke:"currentColor",strokeWidth:2,strokeMiterlimit:10,strokeLinecap:"round",strokeLinejoin:"round"})))};export{n as ReactComponent};
-//# sourceMappingURL=plus.svg.js.map

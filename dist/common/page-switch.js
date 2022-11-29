@@ -1,2 +1,0 @@
-import{isValue as n}from"./utils/index.js";var r=function(r){var i,l,u=r.children,d=r.pageIndex,o=void 0===d?0:d,e=r.pageId;return u?Array.isArray(u)?e?null!==(i=u.find((function(n){var r;return(null===(r=null==n?void 0:n.props)||void 0===r?void 0:r.id)===e})))&&void 0!==i?i:null:n(o)&&null!==(l=u[o])&&void 0!==l?l:null:u:null},i=function(n){return n.children};export{i as Page,r as PageSwitch};
-//# sourceMappingURL=page-switch.js.map

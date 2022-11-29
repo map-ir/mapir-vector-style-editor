@@ -1,2 +1,0 @@
-import{useMemo as r,useEffect as n}from"react";import{createPortal as t}from"react-dom";function e(e){var o=e.children,a=e.parent,c=e.className,u=r((function(){return document.createElement("div")}),[]);return n((function(){var r=null!=a?a:document.body,n=["portal-container"];return c&&c.split(" ").forEach((function(r){return n.push(r)})),n.forEach((function(r){return u.classList.add(r)})),r.appendChild(u),function(){r.removeChild(u)}}),[u,a,c]),t(o,u)}export{e as default};
-//# sourceMappingURL=portal.js.map
