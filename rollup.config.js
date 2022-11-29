@@ -17,8 +17,10 @@ export default {
   external: ['react', 'react-dom'],
   output: [
     {
-      file: 'dist/index.js',
+      dir: 'dist',
       format: 'esm',
+      preserveModules: true,
+      preserveModulesRoot: 'src',
       sourcemap: true,
     },
   ],

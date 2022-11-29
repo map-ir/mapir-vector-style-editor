@@ -1,0 +1,1 @@
+{"version":3,"file":"spec-editor.js","sources":["../../../src/components/layers/spec-editor.tsx"],"sourcesContent":[null],"names":["memo","_a","type","React","PointEditor","InnerTabs"],"mappings":"iGASA,IAWeA,EAAAA,GAXI,SAACC,GAAE,IAAAC,EAAID,EAAAC,KACxB,OAAQA,GACN,IAAK,SAEL,IAAK,SACH,OAAOC,gBAACC,EAAW,CAACF,KAAMA,IAC5B,QACE,OAAOC,gBAACE,EAAS,CAACH,KAAMA,IAE7B"}
