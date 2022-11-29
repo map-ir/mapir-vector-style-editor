@@ -10,5 +10,5 @@
 .DS_store/
 **/.DS_store/
 
-dist/
+# dist/
 build/

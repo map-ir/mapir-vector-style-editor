@@ -19,8 +19,8 @@ export default {
     {
       file: 'dist/index.js',
       format: 'esm',
-      preserveModulesRoot: 'src',
-      sourcemap: true,
+      // preserveModulesRoot: 'src',
+      sourcemap: false,
     },
   ],
   plugins: [
