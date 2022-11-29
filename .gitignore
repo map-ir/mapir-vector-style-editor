@@ -6,9 +6,5 @@
 .env
 .env.test
 
-.idea/
-.DS_store/
-**/.DS_store/
-
 # dist/
 build/
