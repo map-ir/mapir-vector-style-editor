@@ -9,6 +9,7 @@ interface IProps {
   title?: string;
   columns?: string[];
   onSubmit?: (arg: Style | null) => void;
+  onCancle?: (arg: Style | null) => void;
 }
 
 type Renderable = JSX.Element | undefined | null | false;

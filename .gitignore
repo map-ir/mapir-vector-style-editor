@@ -6,7 +6,5 @@
 .env
 .env.test
 
-
-demo/
+# dist/
 build/
-
