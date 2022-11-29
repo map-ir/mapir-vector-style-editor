@@ -16,7 +16,7 @@ jobs:
           node-version: 18
       - name: Bundle 📦 and Build Demo 🔧
         run: |
-          npm install
+          npm ci
           npm run build
       - name: Build Demo 🔧
         run: npm run build:demo
