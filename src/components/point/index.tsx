@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { useAtomValue, useSetAtom } from 'jotai';
 
 import deleteLayer from 'common/utils/delete-layer';

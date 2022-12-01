@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'jotai';
 import { IntlProvider } from 'react-intl';
-import { createGlobalStyle } from 'styled-components/macro';
+import { createGlobalStyle } from 'styled-components';
 
 import App from './app';
 
@@ -65,6 +65,7 @@ const MapirStyleEditor = ({
   title,
   columns,
   onSubmit,
+  onCancle,
 }: IProps) => {
   return (
     <IntlProvider locale={locale} key={locale} messages={messages[locale]}>
@@ -78,6 +79,7 @@ const MapirStyleEditor = ({
           sprite={sprite}
           columns={columns}
           onSubmit={onSubmit}
+          onCancle={onCancle}
         />
       </Provider>
     </IntlProvider>

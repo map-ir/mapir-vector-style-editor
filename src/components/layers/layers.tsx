@@ -1,7 +1,7 @@
 import React, { useState, useRef, MouseEvent } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
 import { useIntl } from 'react-intl';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import { titleState } from 'atoms/general';
 import { styleObjState, selectedLayerIDState, mapState } from 'atoms/map';

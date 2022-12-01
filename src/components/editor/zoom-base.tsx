@@ -2,7 +2,7 @@
 import React, { useState, useCallback, useEffect, memo } from 'react';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { FormattedMessage, useIntl } from 'react-intl';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import SectionTab from 'common/section-tab';
 import InputNumber from 'common/input-number';

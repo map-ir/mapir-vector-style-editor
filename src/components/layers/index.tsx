@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAtomValue } from 'jotai';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 
 import Button from 'common/button';
@@ -13,20 +13,26 @@ import type { Style } from 'mapbox-gl';
 
 interface IProps {
   onSubmit?: (arg: Style | null) => void;
+  onCancle?: (arg: Style | null) => void;
 }
 
-export default function Editor({ onSubmit }: IProps) {
+export default function Editor({ onSubmit, onCancle }: IProps) {
   const styleObj = useAtomValue(styleObjState);
   return (
     <Wrapper>
       <LayersStyle />
+
       <ButtonWrapper>
-        <Button tertiary>
-          <FormattedMessage id="cancel" />
-        </Button>
-        <Button primary onClick={() => onSubmit?.(styleObj)}>
-          <FormattedMessage id="save" />
-        </Button>
+        {onCancle && (
+          <Button tertiary onClick={() => onCancle(styleObj)}>
+            <FormattedMessage id="cancel" />
+          </Button>
+        )}
+        {onSubmit && (
+          <Button primary onClick={() => onSubmit(styleObj)}>
+            <FormattedMessage id="save" />
+          </Button>
+        )}
       </ButtonWrapper>
     </Wrapper>
   );

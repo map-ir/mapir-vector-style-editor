@@ -6,7 +6,7 @@ import type {
   MouseEventHandler,
   ForwardedRef,
 } from 'react';
-import styled, { css } from 'styled-components/macro';
+import styled, { css } from 'styled-components';
 
 interface IProps {
   onClick?:

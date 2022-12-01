@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import Styled from 'styled-components/macro';
+import Styled from 'styled-components';
 import { Root, Track, Range, Thumb } from '@radix-ui/react-slider';
 import type { SliderProps } from '@radix-ui/react-slider';
 

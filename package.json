@@ -1,11 +1,15 @@
 {
   "name": "mapir-vector-style-editor",
-  "version": "1.0.1",
+  "version": "1.2.0",
+  "type": "module",
   "description": "An editor for styling vector tiles with Mapbox style Spec.",
   "main": "dist/index.js",
+  "targets": {
+    "main": false
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup -c && parcel build demo/index.html --public-url /mapir-vector-style-editor/ --dist-dir build",
+    "build": "rollup -c",
+    "build:demo": "parcel build demo/index.html --public-url /mapir-vector-style-editor/ --dist-dir build",
     "watch": "rollup -cw",
     "dev": "parcel demo/index.html --dist-dir build",
     "start": "npm-run-all --parallel watch dev"
@@ -27,6 +31,7 @@
     "url": "https://github.com/map-ir/mapir-vector-style-editor/issues"
   },
   "files": [
+    "src",
     "dist"
   ],
   "homepage": "https://github.com/map-ir/mapir-vector-style-editor#readme",
@@ -62,25 +67,26 @@
     "rollup-plugin-visualizer": "5.8.2",
     "stream-browserify": "^3.0.0"
   },
-  "peerDependencies": {
-    "@popperjs/core": "2.11.6",
-    "@radix-ui/react-select": "1.0.0",
+  "dependencies": {
+    "@popperjs/core": "^2.11.6",
+    "@radix-ui/react-select": "^1.0.0",
     "@radix-ui/react-slider": "^1.0.0",
+    "color": "^4.2.3",
+    "jotai": "^1.8.4",
+    "nanoid": "^4.0.0",
+    "styled-map": "^3.3.0"
+  },
+  "peerDependencies": {
+    "@types/color": "^3.0.3",
     "@types/mapbox-gl": "^2.7.5",
     "@types/react-dom": "18.0.6",
     "@types/styled-components": "5.1.26",
-    "@types/color": "^3.0.3",
-    "jotai": "^1.8.4",
     "mapbox-gl": "1.13.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intl": "^6.1.2",
     "react-popper": "^2.3.0",
-    "react-scripts": "5.0.1",
     "styled-components": "^5.3.5",
-    "styled-map": "^3.3.0",
-    "typescript": "^4.8.4",
-    "color": "^4.2.3",
-    "uuid": "^9.0.0"
+    "typescript": "^4.8.4"
   }
 }

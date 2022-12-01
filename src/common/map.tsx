@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import {
   Map as MapGL,
   getRTLTextPluginStatus,
@@ -84,7 +84,7 @@ export default function Map() {
 
   return (
     <MapWrapper>
-      <div id="map" ref={mapRef}></div>
+      <div id="style-editor-map" ref={mapRef}></div>
     </MapWrapper>
   );
 }
@@ -97,7 +97,7 @@ const MapWrapper = styled.div`
   overflow: hidden;
   border-radius: var(--radius-16);
 
-  #map {
+  #style-editor-map {
     width: 100%;
     height: 100%;
     background-color: #eff0f0;

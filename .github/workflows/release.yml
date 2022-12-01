@@ -16,8 +16,14 @@ jobs:
           node-version: 18
       - name: Bundle 📦 and Build Demo 🔧
         run: |
-          npm install
+          npm ci
           npm run build
+      - name: Build Demo 🔧
+        run: npm run build:demo
+      - name: Publish 📤
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
@@ -25,7 +31,3 @@ jobs:
           BRANCH: gh-pages # The branch the action should deploy to.
           FOLDER: build # The folder the action should deploy.
           CLEAN: true # Automatically remove deleted files from the deploy branch
-      - name: Publish 📤
-        uses: JS-DevTools/npm-publish@v1
-        with:
-          token: ${{ secrets.NPM_TOKEN }}

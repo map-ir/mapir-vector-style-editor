@@ -5,7 +5,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { usePopper } from 'react-popper';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 
 import Sample from 'common/sample';

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import * as SelectPrimitive from '@radix-ui/react-select';
 
 const StyledTrigger = styled(SelectPrimitive.SelectTrigger)`
@@ -37,6 +37,7 @@ const StyledContent = styled(SelectPrimitive.Content)`
   background-color: var(--light-1);
   border-radius: var(--radius-8);
   border: 1px solid var(--shade-3);
+  z-index: 10000;
 `;
 
 const StyledViewport = styled(SelectPrimitive.Viewport)`

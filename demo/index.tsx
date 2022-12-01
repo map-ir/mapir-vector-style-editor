@@ -45,6 +45,9 @@ function App() {
         onSubmit={(style) => {
           console.log('🚀 ~ file: index.tsx ~ line 46 ~ App ~ style', style);
         }}
+        onCancel={(style) => {
+          console.log('🚀 ~ file: index.tsx ~ line 49 ~ App ~ style', style);
+        }}
       />
     </main>
   );
