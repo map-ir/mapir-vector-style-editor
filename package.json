@@ -1,6 +1,6 @@
 {
-  "name": "mapir-vector-style-editor",
-  "version": "1.2.0",
+  "name": "@map.ir/vector-style-editor",
+  "version": "1.2.1",
   "type": "module",
   "description": "An editor for styling vector tiles with Mapbox style Spec.",
   "main": "dist/index.js",
@@ -9,14 +9,14 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "build:demo": "parcel build demo/index.html --public-url /mapir-vector-style-editor/ --dist-dir build",
+    "build:demo": "parcel build demo/index.html --public-url /vector-style-editor/ --dist-dir build",
     "watch": "rollup -cw",
     "dev": "parcel demo/index.html --dist-dir build",
     "start": "npm-run-all --parallel watch dev"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/map-ir/mapir-vector-style-editor.git"
+    "url": "git+https://github.com/map-ir/vector-style-editor.git"
   },
   "keywords": [
     "mapbox",
@@ -26,15 +26,18 @@
     "mapir"
   ],
   "author": "Reyhane Masumi",
+  "contributors": [
+    "Mohammad H. Sattarian"
+  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/map-ir/mapir-vector-style-editor/issues"
+    "url": "https://github.com/map-ir/vector-style-editor/issues"
   },
   "files": [
     "src",
     "dist"
   ],
-  "homepage": "https://github.com/map-ir/mapir-vector-style-editor#readme",
+  "homepage": "https://github.com/map-ir/vector-style-editor#readme",
   "devDependencies": {
     "@babel/core": "^7.19.3",
     "@babel/plugin-proposal-class-properties": "^7.18.6",
