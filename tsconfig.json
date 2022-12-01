@@ -13,27 +13,10 @@
     "strictNullChecks": true,
     "strict": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
-    "baseUrl": "src/",
-    "paths": {
-      "common/*": ["common/*"],
-      "components/*": ["components/*"],
-      "atoms/*": ["atoms/*"],
-      "hooks/*": ["hooks/*"],
-      "utils/*": ["utils/*"],
-      "styles/*": ["styles/*"]
-    }
+    "baseUrl": "src"
   },
-  "include": ["custom.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": [
-    "node_modules",
-    "build",
-    "dist",
-    "demo",
-    "scripts",
-    "acceptance-tests",
-    "webpack",
-    "jest"
-  ],
-  "types": ["typePatches"]
+  "include": ["src"],
+  "exclude": ["src/libs/**"]
 }

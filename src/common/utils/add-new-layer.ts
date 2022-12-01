@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/indent */
 import { Dispatch, SetStateAction } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { nanoid } from 'nanoid';
 import {
   DefaultSymbolLayer,
   DefaultLineLayer,
@@ -17,7 +17,7 @@ export const addNewLayer = (
   layer_id?: string
 ) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-  const id: string = type === 'text' && layer_id ? layer_id : uuidv4();
+  const id: string = type === 'text' && layer_id ? layer_id : nanoid();
   const defaultStyle =
     type === 'fill'
       ? DefaultFillLayer

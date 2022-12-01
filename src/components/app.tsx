@@ -1,6 +1,6 @@
 import React, { memo, useEffect } from 'react';
 import { useAtom, useSetAtom } from 'jotai';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 import Map from '../common/map';
 import Editor from './layers';

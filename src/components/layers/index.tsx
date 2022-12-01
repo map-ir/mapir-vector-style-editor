@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAtomValue } from 'jotai';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 
 import Button from 'common/button';

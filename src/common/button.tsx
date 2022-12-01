@@ -1,5 +1,5 @@
 import React, { memo, CSSProperties } from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import styledMap from 'styled-map';
 
 interface IButtonProps {

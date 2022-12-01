@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import * as SelectPrimitive from '@radix-ui/react-select';
 
 const StyledTrigger = styled(SelectPrimitive.SelectTrigger)`
