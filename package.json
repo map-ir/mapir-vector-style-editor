@@ -1,6 +1,6 @@
 {
   "name": "mapir-vector-style-editor",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "type": "module",
   "description": "An editor for styling vector tiles with Mapbox style Spec.",
   "main": "dist/index.js",
