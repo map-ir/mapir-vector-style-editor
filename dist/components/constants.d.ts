@@ -5,16 +5,16 @@ export interface ITab<T> {
     disabled?: boolean;
 }
 declare const symbolPageIds: readonly ["symbol", "other", "title"];
-export declare type SymbolPageIdsType = typeof symbolPageIds[number];
+export type SymbolPageIdsType = typeof symbolPageIds[number];
 export declare const symbolTabs: ITab<SymbolPageIdsType>[];
 declare const circlePageIds: readonly ["circle", "circle-outline", "title", "other"];
-export declare type CirclePageIdsType = typeof circlePageIds[number];
+export type CirclePageIdsType = typeof circlePageIds[number];
 export declare const circleTabs: ITab<CirclePageIdsType>[];
 declare const linePageIds: readonly ["line", "line-type", "title", "other"];
-export declare type LinePageIdsType = typeof linePageIds[number];
+export type LinePageIdsType = typeof linePageIds[number];
 export declare const lineTabs: ITab<LinePageIdsType>[];
 declare const fillPageIds: readonly ["fill", "fill-outline", "title", "other"];
-export declare type FillPageIdsType = typeof fillPageIds[number];
+export type FillPageIdsType = typeof fillPageIds[number];
 export declare const fillTabs: ITab<FillPageIdsType>[];
 export declare const components: Record<string, JSX.Element>;
 export declare const DefaultSymbolLayer: Partial<SymbolLayer>;

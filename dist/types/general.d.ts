@@ -11,5 +11,5 @@ interface IProps {
     onSubmit?: (arg: Style | null) => void;
     onCancle?: (arg: Style | null) => void;
 }
-declare type Renderable = JSX.Element | undefined | null | false;
+type Renderable = JSX.Element | undefined | null | false;
 export type { IProps, Renderable };

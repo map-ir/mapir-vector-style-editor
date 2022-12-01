@@ -14,7 +14,6 @@ const extensions = ['.js', '.ts', '.jsx', '.tsx'];
 
 export default {
   input: './src/index.tsx',
-  external: ['react', 'react-dom'],
   output: [
     {
       file: 'dist/index.js',
@@ -24,12 +23,22 @@ export default {
   ],
   plugins: [
     // url(),
+    peerDeps(),
     svgr({
       exportType: 'named',
       // jsxRuntime: 'automatic',
       // icon: true,
     }),
-    peerDeps(),
+    resolve({
+      browser: true,
+    }),
+    commonjs(),
+    terser(),
+    typescript({
+      tsconfig: './tsconfig.build.json',
+      declaration: true,
+      declarationDir: './dist',
+    }),
     babel({
       babelrc: true,
       babelHelpers: 'runtime',
@@ -41,13 +50,5 @@ export default {
     //   filename: 'bundle-analysis.html',
     //   open: true,
     // }),
-    typescript({
-      tsconfig: './tsconfig.build.json',
-      declaration: true,
-      declarationDir: './dist',
-    }),
-    commonjs(),
-    terser(),
-    resolve(),
   ],
 };

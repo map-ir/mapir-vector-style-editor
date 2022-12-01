@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { InputHTMLAttributes } from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import Color from 'color';
 
 const ColorPicker = (props: InputHTMLAttributes<HTMLInputElement>) => {

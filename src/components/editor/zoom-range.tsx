@@ -1,5 +1,5 @@
 import React from 'react';
-import Styled from 'styled-components/macro';
+import Styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import { useAtomValue, useSetAtom } from 'jotai';
 

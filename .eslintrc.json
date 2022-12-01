@@ -36,18 +36,7 @@
     "react-hooks/exhaustive-deps": "off",
     "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/comma-dangle": "off",
-    "no-restricted-imports": [
-      "error",
-      {
-        "paths": [
-          {
-            "name": "styled-components",
-            "message": "Please import from styled-components/macro."
-          }
-        ],
-        "patterns": ["!styled-components/macro"]
-      }
-    ],
+    "no-restricted-imports": ["error"],
     "no-console": ["warn", { "allow": ["warn", "error", "assert"] }],
     "react/jsx-key": ["warn"]
   },

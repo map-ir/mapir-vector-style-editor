@@ -1,5 +1,5 @@
 /// <reference types="react" />
-declare type Renderee = JSX.Element | null;
+type Renderee = JSX.Element | null;
 interface IPageSwitchProps {
     children: Renderee | Renderee[];
     pageIndex?: number;
