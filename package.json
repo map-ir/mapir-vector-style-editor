@@ -1,6 +1,6 @@
 {
   "name": "@map.ir/vector-style-editor",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "type": "module",
   "description": "An editor for styling vector tiles with Mapbox style Spec.",
   "main": "dist/index.js",
@@ -11,8 +11,8 @@
     "build": "rollup -c",
     "build:demo": "parcel build demo/index.html --public-url /vector-style-editor/ --dist-dir build",
     "watch": "rollup -cw",
-    "dev": "parcel demo/index.html --dist-dir build",
-    "start": "npm-run-all --parallel watch dev"
+    "serve": "parcel demo/index.html --dist-dir build",
+    "dev": "npm-run-all --parallel watch serve"
   },
   "repository": {
     "type": "git",

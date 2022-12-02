@@ -8,6 +8,7 @@ interface IProps {
   sprite?: string;
   title?: string;
   columns?: string[];
+  className?: string;
   onSubmit?: (arg: Style | null) => void;
   onCancle?: (arg: Style | null) => void;
 }
