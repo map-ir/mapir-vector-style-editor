@@ -78,7 +78,7 @@ const Title = Styled.span`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  color: var(--shade-2);
+  color: var(--SE-shade-2);
   font-size: 0.8em;
 `;
 

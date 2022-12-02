@@ -295,7 +295,7 @@ const ZoomBase = ({ type }: IProps) => {
           )}
           <Plus
             style={{ cursor: 'pointer' }}
-            color={'var(--color-primary)'}
+            color={'var(--SE-color-primary)'}
             onClick={() => {
               const temp = [...pairs];
               temp.push([
@@ -366,7 +366,9 @@ const ZoomBase = ({ type }: IProps) => {
             <Delete
               style={{ cursor: pairs.length < 3 ? 'not-allowed' : 'pointer' }}
               color={
-                pairs.length < 3 ? 'var(--shade-3)' : 'var(--color-primary)'
+                pairs.length < 3
+                  ? 'var(--SE-shade-3)'
+                  : 'var(--SE-color-primary)'
               }
               onClick={() => {
                 if (pairs.length < 3) return;
@@ -389,9 +391,9 @@ export default memo(ZoomBase);
 
 const TabWrapper = styled.div`
   align-self: center;
-  background: var(--light-1);
+  background: var(--SE-light-1);
   padding: 0.5em;
-  border-radius: var(--radius-4);
+  border-radius: var(--SE-radius-4);
 `;
 
 const PairsWrap = styled(Row)`
@@ -410,9 +412,9 @@ const Description = styled(Row)`
   font-size: smaller;
   font-weight: 300;
   padding: 0;
-  color: var(--shade-1);
+  color: var(--SE---SE-shade-1);
   text-align: justify;
 `;
 const Star = styled.span`
-  color: var(--color-primary);
+  color: var(--SE-color-primary);
 `;

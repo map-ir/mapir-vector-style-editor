@@ -15,20 +15,20 @@ export const EditorWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   padding: 1rem;
-  background-color: var(--light-2);
-  border-radius: 0 0 var(--radius-8) var(--radius-8);
+  background-color: var(--SE-light-2);
+  border-radius: 0 0 var(--SE-radius-8) var(--SE-radius-8);
   box-sizing: border-box;
   & > div:not(:last-of-type) {
-    border-bottom: 1px solid var(--shade-4);
+    border-bottom: 1px solid var(--SE-shade-4);
   }
 `;
 
 export const Select = styled.select`
   appearance: none;
   background-image: url('../assets/icons/arrow-down.svg');
-  background-color: var(--light-1);
-  border: 1px solid var(--shade-3);
-  border-radius: var(--radius-4);
+  background-color: var(--SE-light-1);
+  border: 1px solid var(--SE-shade-3);
+  border-radius: var(--SE-radius-4);
   padding: 0 1em;
   height: 2em;
 `;
@@ -66,8 +66,8 @@ export const Icon = styled.div<{ bg?: string; hover?: string }>`
   align-items: center;
   width: 2em;
   height: 2em;
-  background-color: ${(p) => (p.bg ? p.bg : 'var(--color-primary)')};
-  border-radius: var(--radius-8);
+  background-color: ${(p) => (p.bg ? p.bg : 'var(--SE-color-primary)')};
+  border-radius: var(--SE-radius-8);
   ${(p) =>
     p.hover &&
     css`

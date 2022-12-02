@@ -81,7 +81,7 @@ const StyledInput = styled.input`
   width: 2em;
   height: 2em;
   text-align: center;
-  border: 1px solid var(--shade-3);
-  border-radius: var(--radius-4);
+  border: 1px solid var(--SE-shade-3);
+  border-radius: var(--SE-radius-4);
   font-family: inherit;
 `;

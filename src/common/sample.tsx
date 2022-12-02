@@ -37,7 +37,7 @@ export const Container = styled.div<IProps>`
   height: 2em;
   border-radius: 5px;
   border: 1px solid var(--light-3);
-  background: var(--light-1);
+  background: var(--SE-light-1);
 
   ${(p) =>
     p.img &&

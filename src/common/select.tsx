@@ -9,34 +9,34 @@ const StyledTrigger = styled(SelectPrimitive.SelectTrigger)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-4);
+  border-radius: var(--SE-radius-4);
   padding: 0 0.5em;
   line-height: 1;
   height: 2em;
   gap: 1em;
-  background-color: var(--light-1);
-  color: var(--shade-1);
-  border: 1px solid var(--shade-3);
+  background-color: var(--SE-light-1);
+  color: var(--SE---SE-shade-1);
+  border: 1px solid var(--SE-shade-3);
   &:hover {
-    background-color: var(--light-2);
+    background-color: var(--SE-light-2);
   }
   &:focus {
   }
   &[data-placeholder] {
-    color: var(--shade-4);
+    color: var(--SE-shade-4);
   }
 `;
 
 const StyledIcon = styled(SelectPrimitive.SelectIcon)`
-  color: var(--shade-2);
+  color: var(--SE-shade-2);
   transform: rotate(180deg);
 `;
 
 const StyledContent = styled(SelectPrimitive.Content)`
   overflow: hidden;
-  background-color: var(--light-1);
-  border-radius: var(--radius-8);
-  border: 1px solid var(--shade-3);
+  background-color: var(--SE-light-1);
+  border-radius: var(--SE-radius-8);
+  border: 1px solid var(--SE-shade-3);
   z-index: 10000;
 `;
 
@@ -56,8 +56,8 @@ function Content({ children, ...props }) {
 const StyledItem = styled(SelectPrimitive.Item)`
   all: unset;
   line-height: 1;
-  color: var(--shade-3);
-  border-radius: var(--radius-4);
+  color: var(--SE-shade-3);
+  border-radius: var(--SE-radius-4);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -68,25 +68,25 @@ const StyledItem = styled(SelectPrimitive.Item)`
   position: relative;
   user-select: none;
   &[data-disabled] {
-    color: var(--shade-3);
+    color: var(--SE-shade-3);
     pointer-events: none;
   }
 
   &[data-highlighted] {
-    background-color: var(--color-primary-20);
-    color: var(--shade-2);
+    background-color: var(--SE-color-primary-20);
+    color: var(--SE-shade-2);
   }
 `;
 
 const StyledLabel = styled(SelectPrimitive.Label)`
   padding: 0 0.5em;
   line-height: 1;
-  color: var(--shade-3);
+  color: var(--SE-shade-3);
 `;
 
 const StyledSeparator = styled(SelectPrimitive.Separator)`
   height: 1em;
-  background-color: var(--shade-3);
+  background-color: var(--SE-shade-3);
   margin: 1em;
 `;
 
@@ -105,7 +105,7 @@ const StyledItemIndicator = styled(SelectPrimitive.ItemIndicator)`
 //   justify-content: cente;
 //   height: 25;
 //   background-color: white;
-//   color: var(--color-primary);
+//   color: var(--SE-color-primary);
 //   cursor: default;
 // `;
 
@@ -114,8 +114,8 @@ const StyledScrollUpButton = styled(SelectPrimitive.ScrollUpButton)`
   align-items: center;
   justify-content: center;
   height: 1em;
-  background-color: var(--light-1);
-  color: var(--color-primary);
+  background-color: var(--SE-light-1);
+  color: var(--SE-color-primary);
   cursor: default;
 `;
 
@@ -124,8 +124,8 @@ const StyledScrollDownButton = styled(SelectPrimitive.ScrollDownButton)`
   align-items: center;
   justify-content: center;
   height: 1em;
-  background-color: var(--light-1);
-  color: var(--color-primary);
+  background-color: var(--SE-light-1);
+  color: var(--SE-color-primary);
   cursor: default;
 `;
 

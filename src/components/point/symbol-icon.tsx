@@ -140,11 +140,11 @@ const IconWrapper = styled.div`
   place-items: center;
   gap: 1ch;
   height: 10em;
-  background-color: var(--light-1);
-  border: 1px solid var(--shade-4);
-  border-radius: var(--radius-8);
+  background-color: var(--SE-light-1);
+  border: 1px solid var(--SE-shade-4);
+  border-radius: var(--SE-radius-8);
   padding: 0.5em;
-  box-shadow: 0 0 5px 0 var(--shade-4);
+  box-shadow: 0 0 5px 0 var(--SE-shade-4);
   overflow: hidden;
   overflow-y: auto;
 `;

@@ -11,10 +11,10 @@ npm install @map.ir/vector-style-editor
 
 ## Develop
 
-use the `start` script:
+use the `dev` script:
 
 ```bash
-npm start
+npm run dev
 ```
 
 ## License

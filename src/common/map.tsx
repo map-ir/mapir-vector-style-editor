@@ -95,7 +95,7 @@ const MapWrapper = styled.div`
   /* flex-grow: 2.5; */
   width: 70%;
   overflow: hidden;
-  border-radius: var(--radius-16);
+  border-radius: var(--SE-radius-16);
 
   #style-editor-map {
     width: 100%;

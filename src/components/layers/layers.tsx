@@ -60,34 +60,34 @@ function LayersStyle() {
                 isAdding(true);
               }}
             >
-              <Plus color={'var(--light-1)'} />
+              <Plus color={'var(--SE-light-1)'} />
             </Icon>
           )}
           {addLayer && (
             <StyledRow>
               <Icon
                 title={intl.formatMessage({ id: 'point' })}
-                bg={'var(--light-2)'}
-                hover={'var(--color-primary-20)'}
+                bg={'var(--SE-light-2)'}
+                hover={'var(--SE-color-primary-20)'}
                 onClick={() => handleAddLayer('point')}
               >
-                <Point color={'var(--color-primary)'} />
+                <Point color={'var(--SE-color-primary)'} />
               </Icon>
               <Icon
                 title={intl.formatMessage({ id: 'line' })}
-                bg={'var(--light-2)'}
-                hover={'var(--color-primary-20)'}
+                bg={'var(--SE-light-2)'}
+                hover={'var(--SE-color-primary-20)'}
                 onClick={() => handleAddLayer('line')}
               >
-                <Line color={'var(--color-primary)'} />
+                <Line color={'var(--SE-color-primary)'} />
               </Icon>
               <Icon
                 title={intl.formatMessage({ id: 'polygon' })}
-                bg={'var(--light-2)'}
-                hover={'var(--color-primary-20)'}
+                bg={'var(--SE-light-2)'}
+                hover={'var(--SE-color-primary-20)'}
                 onClick={() => handleAddLayer('fill')}
               >
-                <Polygon color={'var(--color-primary)'} />
+                <Polygon color={'var(--SE-color-primary)'} />
               </Icon>
             </StyledRow>
           )}
@@ -110,11 +110,11 @@ function LayersStyle() {
                     <GeoIcon
                       // title={intl.formatMessage({ id: type })}
                       data={type}
-                      color={'var(--color-primary)'}
+                      color={'var(--SE-color-primary)'}
                     />
                     <Delete
                       style={{ cursor: 'pointer' }}
-                      color={'var(--shade-3)'}
+                      color={'var(--SE-shade-3)'}
                       onClick={() => map && deleteLayer(id, map, setStyleObj)}
                     />
                   </ExpandHeader>

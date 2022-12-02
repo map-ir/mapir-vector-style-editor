@@ -45,8 +45,8 @@ const SetLineType = () => {
         <Icon
           bg={
             JSON.stringify(dash) === JSON.stringify([1, 0])
-              ? 'var(--color-primary-20)'
-              : 'var(--light-1)'
+              ? 'var(--SE-color-primary-20)'
+              : 'var(--SE-light-1)'
           }
           onClick={() =>
             map &&
@@ -64,16 +64,16 @@ const SetLineType = () => {
           <Solid
             color={
               JSON.stringify(dash) === JSON.stringify([1, 0])
-                ? 'var(--color-primary)'
-                : 'var(--shade-3)'
+                ? 'var(--SE-color-primary)'
+                : 'var(--SE-shade-3)'
             }
           />
         </Icon>
         <Icon
           bg={
             JSON.stringify(dash) === JSON.stringify([2, 2])
-              ? 'var(--color-primary-20)'
-              : 'var(--light-1)'
+              ? 'var(--SE-color-primary-20)'
+              : 'var(--SE-light-1)'
           }
           onClick={() =>
             map &&
@@ -91,16 +91,16 @@ const SetLineType = () => {
           <Dash
             color={
               JSON.stringify(dash) === JSON.stringify([2, 2])
-                ? 'var(--color-primary)'
-                : 'var(--shade-3)'
+                ? 'var(--SE-color-primary)'
+                : 'var(--SE-shade-3)'
             }
           />
         </Icon>
         <Icon
           bg={
             JSON.stringify(dash) === JSON.stringify([1, 2])
-              ? 'var(--color-primary-20)'
-              : 'var(--light-1)'
+              ? 'var(--SE-color-primary-20)'
+              : 'var(--SE-light-1)'
           }
           onClick={() =>
             map &&
@@ -118,8 +118,8 @@ const SetLineType = () => {
           <Dot
             color={
               JSON.stringify(dash) === JSON.stringify([1, 2])
-                ? 'var(--color-primary)'
-                : 'var(--shade-3)'
+                ? 'var(--SE-color-primary)'
+                : 'var(--SE-shade-3)'
             }
           />
         </Icon>
@@ -129,7 +129,11 @@ const SetLineType = () => {
           <FormattedMessage id="join" />
         </Label>
         <Icon
-          bg={join === 'miter' ? 'var(--color-primary-20)' : 'var(--light-1)'}
+          bg={
+            join === 'miter'
+              ? 'var(--SE-color-primary-20)'
+              : 'var(--SE-light-1)'
+          }
           onClick={() =>
             map &&
             openLayerID &&
@@ -144,11 +148,17 @@ const SetLineType = () => {
           }
         >
           <Miter
-            color={join === 'miter' ? 'var(--color-primary)' : 'var(--shade-3)'}
+            color={
+              join === 'miter' ? 'var(--SE-color-primary)' : 'var(--SE-shade-3)'
+            }
           />
         </Icon>
         <Icon
-          bg={join === 'bevel' ? 'var(--color-primary-20)' : 'var(--light-1)'}
+          bg={
+            join === 'bevel'
+              ? 'var(--SE-color-primary-20)'
+              : 'var(--SE-light-1)'
+          }
           onClick={() =>
             map &&
             openLayerID &&
@@ -163,11 +173,17 @@ const SetLineType = () => {
           }
         >
           <Bevel
-            color={join === 'bevel' ? 'var(--color-primary)' : 'var(--shade-3)'}
+            color={
+              join === 'bevel' ? 'var(--SE-color-primary)' : 'var(--SE-shade-3)'
+            }
           />
         </Icon>
         <Icon
-          bg={join === 'round' ? 'var(--color-primary-20)' : 'var(--light-1)'}
+          bg={
+            join === 'round'
+              ? 'var(--SE-color-primary-20)'
+              : 'var(--SE-light-1)'
+          }
           onClick={() =>
             map &&
             openLayerID &&
@@ -182,7 +198,9 @@ const SetLineType = () => {
           }
         >
           <Round
-            color={join === 'round' ? 'var(--color-primary)' : 'var(--shade-3)'}
+            color={
+              join === 'round' ? 'var(--SE-color-primary)' : 'var(--SE-shade-3)'
+            }
           />
         </Icon>
       </Selector>

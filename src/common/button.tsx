@@ -82,7 +82,7 @@ const StyledButton = styled.button<{ off?: boolean }>`
   font-family: inherit;
   outline: none;
   border: none;
-  border-radius: var(--radius-8);
+  border-radius: var(--SE-radius-8);
   box-shadow: ${styledMap`
     cancel: none;
     default: 0 3px 6px 0 var(--shadow-1);
@@ -90,17 +90,17 @@ const StyledButton = styled.button<{ off?: boolean }>`
   background-color: ${styledMap`
     error: var(--error);
     success: var(--success);
-    cancel: var(--light-2);
-    deactive: var(--shade-4);
+    cancel: var(--SE-light-2);
+    deactive: var(--SE-shade-4);
     secondary: var(--color-secondary);
-    primary: var(--color-primary);
+    primary: var(--SE-color-primary);
     tertiary: transparent;
-    default: var(--shade-5);
+    default: var(--SE-shade-5);
   `};
   color: ${styledMap`
-    tertiary: var(--shade-1);
+    tertiary: var(--SE---SE-shade-1);
     cancel: var(--light-4);
-    default: var(--light-1);
+    default: var(--SE-light-1);
   `};
   height: ${styledMap`
     large: 3em;
