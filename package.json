@@ -11,8 +11,8 @@
     "build": "rollup -c",
     "build:demo": "parcel build demo/index.html --public-url /vector-style-editor/ --dist-dir build",
     "watch": "rollup -cw",
-    "dev": "parcel demo/index.html --dist-dir build",
-    "start": "npm-run-all --parallel watch dev"
+    "serve": "parcel demo/index.html --dist-dir build",
+    "dev": "npm-run-all --parallel watch serve"
   },
   "repository": {
     "type": "git",
