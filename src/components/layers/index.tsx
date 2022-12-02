@@ -45,8 +45,8 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 1em;
-  border: 1px solid var(--shade-4);
-  border-radius: var(--radius-16);
+  border: 1px solid var(--SE-shade-4);
+  border-radius: var(--SE-radius-16);
   padding: 1em;
   @media screen and (max-width: 1920px) {
     width: 30%;

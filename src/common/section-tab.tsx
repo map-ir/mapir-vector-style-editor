@@ -72,11 +72,11 @@ const TabItem = styled.li<{
   secondry?: boolean;
 }>`
   padding: 0.5em 2rem;
-  color: var(--shade-1);
+  color: var(--SE---SE-shade-1);
   box-shadow: none;
   outline: none;
   border: none;
-  border-radius: var(--radius-8) var(--radius-8) 0 0;
+  border-radius: var(--SE-radius-8) var(--SE-radius-8) 0 0;
   cursor: pointer;
   display: block;
   position: relative;
@@ -85,19 +85,19 @@ const TabItem = styled.li<{
   ${(p) =>
     p.secondry &&
     css`
-      color: var(--shade-2);
-      border-radius: var(--radius-8);
+      color: var(--SE-shade-2);
+      border-radius: var(--SE-radius-8);
     `}
 
   ${(p) =>
     p.active &&
     (p.secondry
       ? css`
-          background-color: var(--shade-4);
-          color: var(--shade-1);
+          background-color: var(--SE-shade-4);
+          color: var(--SE---SE-shade-1);
         `
       : css`
-          background-color: var(--light-2);
+          background-color: var(--SE-light-2);
         `)}
 
   ${(p) =>

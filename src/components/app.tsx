@@ -1,6 +1,6 @@
 import React, { memo, useEffect } from 'react';
 import { useAtom, useSetAtom } from 'jotai';
-import styled from 'styled-components';
+import styled, { css, createGlobalStyle } from 'styled-components';
 
 import Map from '../common/map';
 import Editor from './layers';
@@ -35,6 +35,32 @@ const defaultColors = {
   font_family:
     '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
 };
+
+const globalishStyle = css`
+  :root {
+    --SE-color-primary: var(--color-primary, ${defaultColors.primary});
+    --SE-color-primary-20: var(--color-primary-20, ${defaultColors.primary_20});
+    --SE-color-secondry: var(--color-secondry, ${defaultColors.secondry});
+    --SE-shade-1: var(--shade-1, ${defaultColors.shade_1});
+    --SE-shade-2: var(--shade-2, ${defaultColors.shade_2});
+    --SE-shade-3: var(--shade-3, ${defaultColors.shade_3});
+    --SE-shade-4: var(--shade-4, ${defaultColors.shade_4});
+    --SE-shade-5: var(--shade-5, ${defaultColors.shade_5});
+    --SE-light-1: var(--light-1, ${defaultColors.light_1});
+    --SE-light-2: var(--light-2, ${defaultColors.light_2});
+    --SE-success-1: var(--success-1, ${defaultColors.success_1});
+    --SE-fail-1: var(--fail-1, ${defaultColors.fail_1});
+    --SE-radius-4: var(--radius-4, ${defaultColors.border_radius_4});
+    --SE-radius-8: var(--radius-8, ${defaultColors.border_radius_8});
+    --SE-radius-16: var(--radius-16, ${defaultColors.border_radius_16});
+
+    --SE-font-family: var(--font-family, ${defaultColors.font_family});
+  }
+`;
+
+const GlobalStyle = createGlobalStyle`
+    ${globalishStyle}
+`;
 
 const App = memo(
   ({
@@ -87,6 +113,7 @@ const App = memo(
 
     return (
       <Wrapper locale={locale ?? 'en'}>
+        <GlobalStyle />
         <Editor onSubmit={onSubmit} onCancle={onCancle} />
         <Map />
       </Wrapper>
@@ -105,23 +132,5 @@ const Wrapper = styled.div<{ locale: string }>`
   justify-content: space-between;
   align-items: stretch;
   gap: 1em;
-  font-family: var(--font-family);
-
-  --color-primary: ${defaultColors.primary};
-  --color-primary-20: ${defaultColors.primary_20};
-  --color-secondry: ${defaultColors.secondry};
-  --shade-1: ${defaultColors.shade_1};
-  --shade-2: ${defaultColors.shade_2};
-  --shade-3: ${defaultColors.shade_3};
-  --shade-4: ${defaultColors.shade_4};
-  --shade-5: ${defaultColors.shade_5};
-  --light-1: ${defaultColors.light_1};
-  --light-2: ${defaultColors.light_2};
-  --success-1: ${defaultColors.success_1};
-  --fail-1: ${defaultColors.fail_1};
-  --radius-16: ${defaultColors.border_radius_16};
-  --radius-8: ${defaultColors.border_radius_8};
-  --radius-4: ${defaultColors.border_radius_4};
-
-  --font-family: ${defaultColors.font_family};
+  font-family: var(--SE-font-family);
 `;

@@ -46,24 +46,32 @@ const PointEditor = ({ type }: IProps) => {
           <Symbol
             onClick={() => changeLayerType('symbol')}
             color={
-              layerType === 'symbol' ? 'var(--color-primary)' : 'var(--shade-4)'
+              layerType === 'symbol'
+                ? 'var(--SE-color-primary)'
+                : 'var(--SE-shade-4)'
             }
           />
         )}
         <Circle
           onClick={() => changeLayerType('circle')}
           color={
-            layerType === 'circle' ? 'var(--color-primary)' : 'var(--shade-4)'
+            layerType === 'circle'
+              ? 'var(--SE-color-primary)'
+              : 'var(--SE-shade-4)'
           }
         />
         <Heatmap
           color={
-            layerType === 'heatmap' ? 'var(--color-primary)' : 'var(--shade-4)'
+            layerType === 'heatmap'
+              ? 'var(--SE-color-primary)'
+              : 'var(--SE-shade-4)'
           }
         />
         <Cluster
           color={
-            layerType === 'cluster' ? 'var(--color-primary)' : 'var(--shade-4)'
+            layerType === 'cluster'
+              ? 'var(--SE-color-primary)'
+              : 'var(--SE-shade-4)'
           }
         />
       </LayerType>
@@ -88,7 +96,7 @@ const LayerType = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  border-top: 1px solid var(--shade-5);
-  border-bottom: 1px solid var(--shade-5);
+  border-top: 1px solid var(--SE-shade-5);
+  border-bottom: 1px solid var(--SE-shade-5);
   padding: 0.5em 0;
 `;

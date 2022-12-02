@@ -26,6 +26,6 @@ const ColorInput = styled.input`
   }
   &::-webkit-color-swatch {
     border: 0;
-    border-radius: var(--radius-4);
+    border-radius: var(--SE-radius-4);
   }
 `;

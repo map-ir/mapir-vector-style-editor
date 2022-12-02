@@ -30,7 +30,7 @@ function Expandable({
         {isExpandable && (
           <HeaderAction>
             <UnitOpen onClick={onOpen} open={open}>
-              <ArrowDownIcon color={'var(--shade-3)'} />
+              <ArrowDownIcon color={'var(--SE-shade-3)'} />
             </UnitOpen>
           </HeaderAction>
         )}
@@ -49,8 +49,8 @@ const ExpandableWrapper = styled.div`
   justify-content: flex-start;
   align-items: stretch;
   padding: 0 1em;
-  border-radius: var(--radius-8);
-  border: 1px solid var(--shade-3);
+  border-radius: var(--SE-radius-8);
+  border: 1px solid var(--SE-shade-3);
   box-sizing: border-box;
 `;
 
@@ -97,7 +97,7 @@ const UnitOpen = styled.span<{ open: boolean }>`
 
 const Body = styled.div<{ open: boolean }>`
   width: 100%;
-  background-color: var(--light-1);
+  background-color: var(--SE-light-1);
   height: 0;
   overflow: hidden;
 
@@ -105,6 +105,6 @@ const Body = styled.div<{ open: boolean }>`
     props.open &&
     css`
       height: auto;
-      border-top: 1px solid var(--shade-5);
+      border-top: 1px solid var(--SE-shade-5);
     `}
 `;
