@@ -46,7 +46,7 @@ const StyledTrack = Styled(Track)`
 
 const StyledRange = Styled(Range)`
     position: absolute;
-    background-color: var(--SE---SE-shade-1);
+    background-color: var(--SE-shade-1);
     border-radius: 9999px;
     height: 100%;
 `;
@@ -56,7 +56,7 @@ const StyledThumb = Styled(Thumb)`
     display: block;
     width: 0.6em;
     height: 0.6em;
-    background-color: var(--SE---SE-shade-1);
+    background-color: var(--SE-shade-1);
     border-radius: 50%;
     z-index: 9999;
     &:focus { box-shadow: 0 0 0 2px var(--SE-shade-4); };

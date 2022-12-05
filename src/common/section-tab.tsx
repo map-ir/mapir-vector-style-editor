@@ -72,7 +72,7 @@ const TabItem = styled.li<{
   secondry?: boolean;
 }>`
   padding: 0.5em 2rem;
-  color: var(--SE---SE-shade-1);
+  color: var(--SE-shade-1);
   box-shadow: none;
   outline: none;
   border: none;
@@ -94,7 +94,7 @@ const TabItem = styled.li<{
     (p.secondry
       ? css`
           background-color: var(--SE-shade-4);
-          color: var(--SE---SE-shade-1);
+          color: var(--SE-shade-1);
         `
       : css`
           background-color: var(--SE-light-2);

@@ -412,7 +412,7 @@ const Description = styled(Row)`
   font-size: smaller;
   font-weight: 300;
   padding: 0;
-  color: var(--SE---SE-shade-1);
+  color: var(--SE-shade-1);
   text-align: justify;
 `;
 const Star = styled.span`

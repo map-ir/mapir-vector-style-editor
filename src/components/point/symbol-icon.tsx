@@ -147,4 +147,5 @@ const IconWrapper = styled.div`
   box-shadow: 0 0 5px 0 var(--SE-shade-4);
   overflow: hidden;
   overflow-y: auto;
+  z-index: 1000;
 `;

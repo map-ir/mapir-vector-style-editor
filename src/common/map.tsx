@@ -101,9 +101,6 @@ const MapWrapper = styled.div`
     width: 100%;
     height: 100%;
     background-color: #eff0f0;
-
-    /* @media (prefers-color-scheme: dark) {
-      background-color: #4a5768;
-    } */
+    direction: ltr;
   }
 `;
