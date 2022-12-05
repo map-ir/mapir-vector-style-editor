@@ -38,23 +38,23 @@ const defaultColors = {
 
 const globalishStyle = css`
   :root {
-    --SE-color-primary: var(--color-primary, ${defaultColors.primary});
-    --SE-color-primary-20: var(--color-primary-20, ${defaultColors.primary_20});
-    --SE-color-secondry: var(--color-secondry, ${defaultColors.secondry});
-    --SE-shade-1: var(--shade-1, ${defaultColors.shade_1});
-    --SE-shade-2: var(--shade-2, ${defaultColors.shade_2});
-    --SE-shade-3: var(--shade-3, ${defaultColors.shade_3});
-    --SE-shade-4: var(--shade-4, ${defaultColors.shade_4});
-    --SE-shade-5: var(--shade-5, ${defaultColors.shade_5});
-    --SE-light-1: var(--light-1, ${defaultColors.light_1});
-    --SE-light-2: var(--light-2, ${defaultColors.light_2});
-    --SE-success-1: var(--success-1, ${defaultColors.success_1});
-    --SE-fail-1: var(--fail-1, ${defaultColors.fail_1});
-    --SE-radius-4: var(--radius-4, ${defaultColors.border_radius_4});
-    --SE-radius-8: var(--radius-8, ${defaultColors.border_radius_8});
-    --SE-radius-16: var(--radius-16, ${defaultColors.border_radius_16});
+    --SE-color-primary: ${defaultColors.primary};
+    --SE-color-primary-20: ${defaultColors.primary_20};
+    --SE-color-secondry: ${defaultColors.secondry};
+    --SE-shade-1: ${defaultColors.shade_1};
+    --SE-shade-2: ${defaultColors.shade_2};
+    --SE-shade-3: ${defaultColors.shade_3};
+    --SE-shade-4: ${defaultColors.shade_4};
+    --SE-shade-5: ${defaultColors.shade_5};
+    --SE-light-1: ${defaultColors.light_1};
+    --SE-light-2: ${defaultColors.light_2};
+    --SE-success-1: ${defaultColors.success_1};
+    --SE-fail-1: ${defaultColors.fail_1};
+    --SE-radius-4: ${defaultColors.border_radius_4};
+    --SE-radius-8: ${defaultColors.border_radius_8};
+    --SE-radius-16: ${defaultColors.border_radius_16};
 
-    --SE-font-family: var(--font-family, ${defaultColors.font_family});
+    --SE-font-family: ${defaultColors.font_family};
   }
 `;
 
@@ -62,66 +62,63 @@ const GlobalStyle = createGlobalStyle`
     ${globalishStyle}
 `;
 
-const App = memo(
-  ({
-    map,
-    locale,
-    styleURL,
-    sprite,
-    title,
-    columns,
-    onSubmit,
-    onCancle,
-  }: IProps) => {
-    const setMapProp = useSetAtom(mapPropsState);
-    const [styleURLAtom, setStyleURL] = useAtom(styleURLState);
-    const setStyleObj = useSetAtom(styleObjState);
-    const setTitle = useSetAtom(titleState);
-    const setColumns = useSetAtom(columnsState);
-    const setSprite = useSetAtom(spriteState);
+const App = ({
+  map,
+  locale,
+  styleURL,
+  sprite,
+  title,
+  columns,
+  onSubmit,
+  onCancle,
+}: IProps) => {
+  const setMapProp = useSetAtom(mapPropsState);
+  const [styleURLAtom, setStyleURL] = useAtom(styleURLState);
+  const setStyleObj = useSetAtom(styleObjState);
+  const setTitle = useSetAtom(titleState);
+  const setColumns = useSetAtom(columnsState);
+  const setSprite = useSetAtom(spriteState);
 
-    setMapProp(map);
+  setMapProp(map);
 
-    useEffect(() => {
-      void setStyleURL(styleURL);
-    }, [styleURL]);
+  useEffect(() => {
+    void setStyleURL(styleURL);
+  }, [styleURL]);
 
-    useEffect(() => {
-      setSprite(sprite);
-    }, [sprite]);
+  useEffect(() => {
+    setSprite(sprite);
+  }, [sprite]);
 
-    useEffect(() => {
-      setTitle(title);
-    }, [title]);
+  useEffect(() => {
+    setTitle(title);
+  }, [title]);
 
-    useEffect(() => {
-      setColumns(columns);
-    }, [columns]);
+  useEffect(() => {
+    setColumns(columns);
+  }, [columns]);
 
-    const fetchStyle = (url: string) => {
-      return fetch(url, {
-        method: 'GET',
-      })
-        .then((res) => res.json())
-        .then((res: Style) => res);
-    };
+  const fetchStyle = (url: string) => {
+    return fetch(url, {
+      method: 'GET',
+    })
+      .then((res) => res.json())
+      .then((res: Style) => res);
+  };
 
-    useEffect(() => {
-      if (styleURLAtom)
-        void fetchStyle(styleURLAtom).then((res) => setStyleObj(res));
-    }, [styleURLAtom, setStyleObj]);
+  useEffect(() => {
+    if (styleURLAtom)
+      void fetchStyle(styleURLAtom).then((res) => setStyleObj(res));
+  }, [styleURLAtom, setStyleObj]);
 
-    return (
-      <Wrapper locale={locale ?? 'en'}>
-        <GlobalStyle />
-        <Editor onSubmit={onSubmit} onCancle={onCancle} />
-        <Map />
-      </Wrapper>
-    );
-  }
-);
-
-export default App;
+  return (
+    <Wrapper locale={locale ?? 'en'}>
+      <GlobalStyle />
+      <Editor onSubmit={onSubmit} onCancle={onCancle} />
+      <Map />
+    </Wrapper>
+  );
+};
+export default memo(App);
 
 const Wrapper = styled.div<{ locale: string }>`
   direction: ${(p) => (p.locale === 'fa' ? 'rtl' : 'ltr')};

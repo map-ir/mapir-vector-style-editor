@@ -85,20 +85,20 @@ const StyledButton = styled.button<{ off?: boolean }>`
   border-radius: var(--SE-radius-8);
   box-shadow: ${styledMap`
     cancel: none;
-    default: 0 3px 6px 0 var(--shadow-1);
+    default: 0 3px 6px 0 var(--SE-shadow-1);
   `};
   background-color: ${styledMap`
     error: var(--error);
     success: var(--success);
     cancel: var(--SE-light-2);
     deactive: var(--SE-shade-4);
-    secondary: var(--color-secondary);
+    secondary: var(--SE-color-secondary);
     primary: var(--SE-color-primary);
     tertiary: transparent;
     default: var(--SE-shade-5);
   `};
   color: ${styledMap`
-    tertiary: var(--SE---SE-shade-1);
+    tertiary: var(--SE-shade-1);
     cancel: var(--light-4);
     default: var(--SE-light-1);
   `};

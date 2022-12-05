@@ -61,7 +61,7 @@ const StyledTrack = Styled(Track)`
 
 const StyledRange = Styled(Range)<{ color?: string }>`
     position: absolute;
-    background: ${(p) => (p.color ? p.color : 'var(--SE---SE-shade-1)')};
+    background: ${(p) => (p.color ? p.color : 'var(--SE-shade-1)')};
     border-radius: 9999px;
     height: 100%;
 `;

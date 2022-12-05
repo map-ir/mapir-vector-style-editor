@@ -15,7 +15,7 @@ const StyledTrigger = styled(SelectPrimitive.SelectTrigger)`
   height: 2em;
   gap: 1em;
   background-color: var(--SE-light-1);
-  color: var(--SE---SE-shade-1);
+  color: var(--SE-shade-1);
   border: 1px solid var(--SE-shade-3);
   &:hover {
     background-color: var(--SE-light-2);
@@ -23,7 +23,7 @@ const StyledTrigger = styled(SelectPrimitive.SelectTrigger)`
   &:focus {
   }
   &[data-placeholder] {
-    color: var(--SE-shade-4);
+    color: var(--SE-shade-3);
   }
 `;
 
@@ -56,7 +56,7 @@ function Content({ children, ...props }) {
 const StyledItem = styled(SelectPrimitive.Item)`
   all: unset;
   line-height: 1;
-  color: var(--SE-shade-3);
+  color: var(--SE-shade-2);
   border-radius: var(--SE-radius-4);
   display: flex;
   flex-direction: row;
@@ -67,6 +67,7 @@ const StyledItem = styled(SelectPrimitive.Item)`
   padding: 0.5em;
   position: relative;
   user-select: none;
+  font-family: var(--SE-font-family);
   &[data-disabled] {
     color: var(--SE-shade-3);
     pointer-events: none;
@@ -124,6 +125,7 @@ const StyledScrollDownButton = styled(SelectPrimitive.ScrollDownButton)`
   align-items: center;
   justify-content: center;
   height: 1em;
+  width: 1em;
   background-color: var(--SE-light-1);
   color: var(--SE-color-primary);
   cursor: default;
