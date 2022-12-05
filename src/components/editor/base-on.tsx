@@ -21,8 +21,6 @@ import {
   SelectItem,
   SelectItemText,
   SelectItemIndicator,
-  SelectScrollUpButton,
-  SelectScrollDownButton,
 } from 'common/select';
 
 import {
@@ -199,7 +197,6 @@ const BaseOn = ({ type }: IProps) => {
               </SelectIcon>
             </SelectTrigger>
             <SelectContent>
-              <SelectScrollUpButton>up</SelectScrollUpButton>
               <SelectViewport>
                 {options
                   ?.filter((o) => {
@@ -218,7 +215,6 @@ const BaseOn = ({ type }: IProps) => {
                     </SelectItem>
                   ))}
               </SelectViewport>
-              <SelectScrollDownButton>down</SelectScrollDownButton>
             </SelectContent>
           </Select>
         </Selector>
