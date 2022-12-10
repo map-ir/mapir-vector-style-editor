@@ -9,6 +9,7 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import useGetStyleKey from 'hooks/useGetStyleKey';
 import updateStyle from 'common/utils/update-style';
 import ZoomBase from './zoom-base';
+import Conditional from './conditional';
 import InputNumber from 'common/input-number';
 import ColorPicker from 'common/color-picker';
 import {
@@ -158,7 +159,7 @@ const BaseOn = ({ type }: IProps) => {
         </Selector>
       ),
       zoom: property && <ZoomBase type={type} />,
-      conditional: <></>,
+      conditional: property && <Conditional type={type} />,
     }[method];
   }, [method, size, columns, property, styleKey, color]);
 
