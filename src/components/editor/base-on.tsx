@@ -30,7 +30,7 @@ import {
   selectedLayerIDState,
   styleObjState,
 } from 'atoms/map';
-import { columnsState, distictState } from 'atoms/general';
+import { columnsState, distinctState } from 'atoms/general';
 
 import { Row, Column, Selector, Label } from 'common/styles';
 
@@ -56,7 +56,7 @@ const BaseOn = ({ type }: IProps) => {
   const openLayerID = useAtomValue(selectedLayerIDState);
   const setStyleObj = useSetAtom(styleObjState);
   const columns = useAtomValue(columnsState);
-  const distinctFunc = useAtomValue(distictState);
+  const distinctFunc = useAtomValue(distinctState);
   const layer = useAtomValue(layerState);
 
   const { styleKey, property } = useGetStyleKey(type);

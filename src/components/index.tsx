@@ -24,7 +24,7 @@ const MapirStyleEditor = ({
   className,
   onSubmit,
   onCancle,
-  getDistictValues,
+  getDistinctValues,
 }: IProps) => {
   return (
     <IntlProvider locale={locale} key={locale} messages={messages[locale]}>
@@ -39,7 +39,7 @@ const MapirStyleEditor = ({
           columns={columns}
           onSubmit={onSubmit}
           onCancle={onCancle}
-          getDistictValues={getDistictValues}
+          getDistinctValues={getDistinctValues}
         />
       </Provider>
     </IntlProvider>

@@ -46,7 +46,7 @@ import {
   selectedLayerIDState,
   styleObjState,
 } from 'atoms/map';
-import { columnsState, distictState } from 'atoms/general';
+import { columnsState, distinctState } from 'atoms/general';
 
 import type { Expression, ExpressionName, StyleFunction } from 'mapbox-gl';
 
@@ -67,7 +67,7 @@ const Conditional = ({ type }: IProps) => {
   const openLayerID = useAtomValue(selectedLayerIDState);
   const setStyleObj = useSetAtom(styleObjState);
   const columns = useAtomValue(columnsState);
-  const distictFunc = useAtomValue(distictState);
+  const distinctFunc = useAtomValue(distinctState);
   const layer = useAtomValue(layerState);
 
   const { styleKey, property } = useGetStyleKey(type);
@@ -75,7 +75,7 @@ const Conditional = ({ type }: IProps) => {
   const [conditionType, setCondition] = useState<ExpressionName>('match');
   const [pairs, setPairs] = useState<(number | string)[][]>([]); // Pairs of zoom/value or zoom/color
   const [colName, setColName] = useState<string>();
-  const [distinctValues, setDisticts] = useState<string[]>([]);
+  const [distinctValues, setDistincts] = useState<string[]>([]);
 
   useEffect(() => {
     // @ts-ignore line
@@ -131,8 +131,8 @@ const Conditional = ({ type }: IProps) => {
 
   useEffect(() => {
     if (colName)
-      void distictFunc?.(colName).then((res: string[]) => {
-        setDisticts(res);
+      void distinctFunc?.(colName).then((res: string[]) => {
+        setDistincts(res);
         const arg = styleValue(pairs) as number | Expression | StyleFunction;
         applyStyles(arg);
       });
