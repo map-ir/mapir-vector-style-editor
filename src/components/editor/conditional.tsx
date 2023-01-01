@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { FormattedMessage, useIntl } from 'react-intl';
+import styled from 'styled-components/macro';
 
 import useGetStyleKey from 'hooks/useGetStyleKey';
 import updateStyle from 'common/utils/update-style';
@@ -18,7 +19,7 @@ import {
   SelectItemIndicator,
 } from 'common/select';
 import InputNumber from 'common/input-number';
-import Gradiant from 'common/gradiant';
+// import Gradiant from 'common/gradiant';
 import ColorPicker from 'common/color-picker';
 
 import {
@@ -30,11 +31,14 @@ import {
   Description,
   Star,
 } from 'common/styles';
+import { splitArray } from 'common/utils';
 
 import { ReactComponent as Arrow } from '../../assets/icons/arrow-down.svg';
 import { ReactComponent as Check } from '../../assets/icons/tick.svg';
 import { ReactComponent as Plus } from '../../assets/icons/plus.svg';
 import { ReactComponent as Delete } from '../../assets/icons/delete.svg';
+import { ReactComponent as Step } from '../../assets/icons/step.svg';
+import { ReactComponent as Match } from '../../assets/icons/match.svg';
 
 import {
   layerState,
@@ -42,9 +46,9 @@ import {
   selectedLayerIDState,
   styleObjState,
 } from 'atoms/map';
-import { columnsState } from 'atoms/general';
+import { columnsState, distictState } from 'atoms/general';
 
-import type { Expression, StyleFunction } from 'mapbox-gl';
+import type { Expression, ExpressionName, StyleFunction } from 'mapbox-gl';
 
 interface IProps {
   type:
@@ -63,11 +67,15 @@ const Conditional = ({ type }: IProps) => {
   const openLayerID = useAtomValue(selectedLayerIDState);
   const setStyleObj = useSetAtom(styleObjState);
   const columns = useAtomValue(columnsState);
+  const distictFunc = useAtomValue(distictState);
   const layer = useAtomValue(layerState);
 
   const { styleKey, property } = useGetStyleKey(type);
 
+  const [conditionType, setCondition] = useState<ExpressionName>('match');
   const [pairs, setPairs] = useState<(number | string)[][]>([]); // Pairs of zoom/value or zoom/color
+  const [colName, setColName] = useState<string>();
+  const [distinctValues, setDisticts] = useState<string[]>([]);
 
   useEffect(() => {
     // @ts-ignore line
@@ -76,10 +84,19 @@ const Conditional = ({ type }: IProps) => {
     const minzoom = layer?.minzoom ?? 1;
     const maxzoom = layer?.maxzoom ?? 20;
 
-    if ((expression as string[])?.[0] === 'match') {
-      console.log(
-        '🚀 ~ file: conditional.tsx:91 ~ useEffect ~ expression',
-        (expression as string[])?.[1]?.[1]
+    if (
+      (expression as string[])?.[0] === 'match' ||
+      (expression as string[])?.[0] === 'step'
+    ) {
+      setCondition((expression as string[])?.[0] as ExpressionName);
+      setColName((expression as string[])?.[1]?.[1]);
+      setPairs(
+        splitArray(
+          conditionType === 'step'
+            ? (expression as string[])?.slice(2).reverse()
+            : (expression as string[])?.slice(2),
+          2
+        )
       );
     } else {
       setPairs([
@@ -88,18 +105,19 @@ const Conditional = ({ type }: IProps) => {
           expression ??
             (['color', 'stroke-color'].includes(type) ? '#C11010' : 1),
         ],
-        [maxzoom, ['color', 'stroke-color'].includes(type) ? '#000000' : 1],
+        [maxzoom, ['color', 'stroke-color'].includes(type) ? '#2585f3' : 1],
+        [['color', 'stroke-color'].includes(type) ? '#000000' : 1],
       ]);
     }
   }, [layer, property, styleKey]);
 
   const styleValue = useCallback(
     (value: (number | string)[][]) => [
-      'match',
-      ['get', value],
-      ...value.flat(),
+      conditionType,
+      ['get', colName],
+      ...(conditionType === 'step' ? value.flat().reverse() : value.flat()),
     ],
-    []
+    [colName, conditionType]
   );
 
   const applyStyles = useCallback(
@@ -111,51 +129,91 @@ const Conditional = ({ type }: IProps) => {
     [openLayerID, map, styleKey, property]
   );
 
+  useEffect(() => {
+    if (colName)
+      void distictFunc?.(colName).then((res: string[]) => {
+        setDisticts(res);
+        const arg = styleValue(pairs) as number | Expression | StyleFunction;
+        applyStyles(arg);
+      });
+  }, [colName]);
+
+  useEffect(() => {
+    const arg = styleValue(pairs) as number | Expression | StyleFunction;
+    applyStyles(arg);
+  }, [conditionType]);
+
   return (
     <Column style={{ width: '100%' }}>
-      <Selector>
-        <Label>
-          <FormattedMessage id="value_title" />
-        </Label>
-        <Select
-          dir={intl.locale === 'fa' ? 'rtl' : 'ltr'}
-          onValueChange={(value) => {
-            if (property && styleKey && openLayerID && map)
-              updateStyle(
-                openLayerID,
-                map,
-                styleKey,
-                property,
-                ['match', ['get', value], '#000000'],
-                setStyleObj
-              );
-          }}
-        >
-          <SelectTrigger aria-label={intl.formatMessage({ id: 'value_title' })}>
-            <SelectValue
-              placeholder={intl.formatMessage({ id: 'selection' })}
+      <StyledRow>
+        <Selector>
+          <Label>
+            <FormattedMessage id="value_title" />
+          </Label>
+          <Select
+            dir={intl.locale === 'fa' ? 'rtl' : 'ltr'}
+            defaultValue={colName}
+            value={colName}
+            onValueChange={(value) => {
+              setColName(value);
+            }}
+          >
+            <SelectTrigger
+              aria-label={intl.formatMessage({ id: 'value_title' })}
+            >
+              <SelectValue
+                placeholder={intl.formatMessage({ id: 'selection' })}
+              />
+              <SelectIcon>
+                <Arrow />
+              </SelectIcon>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectViewport>
+                {columns?.map((column) => (
+                  <SelectItem key={column} value={column}>
+                    <SelectItemText>{column}</SelectItemText>
+                    <SelectItemIndicator>
+                      <Check />
+                    </SelectItemIndicator>
+                  </SelectItem>
+                ))}
+              </SelectViewport>
+            </SelectContent>
+          </Select>
+        </Selector>
+        <StyledRow>
+          <IconWrapper title="step">
+            <Step
+              width={30}
+              color={
+                conditionType === 'step'
+                  ? 'var(--SE-color-primary)'
+                  : 'var(--SE-shade-2)'
+              }
+              onClick={() => {
+                setCondition('step');
+              }}
             />
-            <SelectIcon>
-              <Arrow />
-            </SelectIcon>
-          </SelectTrigger>
-          <SelectContent>
-            <SelectViewport>
-              {columns?.map((column) => (
-                <SelectItem key={column} value={column}>
-                  <SelectItemText>{column}</SelectItemText>
-                  <SelectItemIndicator>
-                    <Check />
-                  </SelectItemIndicator>
-                </SelectItem>
-              ))}
-            </SelectViewport>
-          </SelectContent>
-        </Select>
-      </Selector>
+          </IconWrapper>
+          <IconWrapper title="match">
+            <Match
+              width={30}
+              color={
+                conditionType === 'match'
+                  ? 'var(--SE-color-primary)'
+                  : 'var(--SE-shade-2)'
+              }
+              onClick={() => {
+                setCondition('match');
+              }}
+            />
+          </IconWrapper>
+        </StyledRow>
+      </StyledRow>
       <Column>
         <StyledRow>
-          {['color', 'stroke-color'].includes(type) ? (
+          {/* {['color', 'stroke-color'].includes(type) ? (
             <Gradiant
               pairs={pairs}
               min={layer?.minzoom ?? 1}
@@ -163,25 +221,24 @@ const Conditional = ({ type }: IProps) => {
               disabled
             />
           ) : (
-            <Description>
-              <Star>*</Star>
-              <FormattedMessage id="size" /> : <FormattedMessage id="zoom" />
-            </Description>
-          )}
+          )} */}
+          <Description>
+            <Star>*</Star>
+            <FormattedMessage id="size" /> : <FormattedMessage id="value" />
+          </Description>
           <Plus
             style={{ cursor: 'pointer' }}
             color={'var(--SE-color-primary)'}
             onClick={() => {
               const temp = [...pairs];
-              temp.push([
-                Math.floor(
-                  ((temp[0][0] as number) + (temp[1][0] as number)) / 2
-                ),
+              temp.splice(pairs?.length - 1, 0, [
+                'asas',
                 ['color', 'stroke-color'].includes(type) ? '#FFB800' : 1,
               ]);
-              const arg = styleValue(
-                temp.sort((a, b) => (a[0] as number) - (b[0] as number))
-              ) as number | Expression | StyleFunction;
+              const arg = styleValue(temp) as
+                | number
+                | Expression
+                | StyleFunction;
               applyStyles(arg);
             }}
           />
@@ -192,13 +249,12 @@ const Conditional = ({ type }: IProps) => {
               {['color', 'stroke-color'].includes(type) ? (
                 // <Sample color={pair?.[1] as string} />
                 <ColorPicker
-                  value={pair?.[1]}
+                  value={pair?.[1] ?? pair?.[0]}
                   onChange={(e) => {
                     const temp = [...pairs];
-                    temp[index] = [
-                      temp[index][0],
-                      e.target.value.toUpperCase(),
-                    ];
+                    temp[index] = !pair?.[1]
+                      ? [e.target.value.toUpperCase()]
+                      : [temp[index][0], e.target.value.toUpperCase()];
                     const arg = styleValue(temp) as
                       | number
                       | Expression
@@ -208,10 +264,12 @@ const Conditional = ({ type }: IProps) => {
                 />
               ) : (
                 <InputNumber
-                  value={pair?.[1] as number}
+                  value={(pair?.[1] ?? pair?.[0]) as number}
                   onChange={(value) => {
                     const temp = [...pairs];
-                    temp[index] = [temp[index][0], value];
+                    temp[index] = !pair?.[1]
+                      ? [value]
+                      : [temp[index][0], value];
                     const arg = styleValue(temp) as
                       | number
                       | Expression
@@ -221,62 +279,70 @@ const Conditional = ({ type }: IProps) => {
                 />
               )}{' '}
               {/* value or color */}:
-              <Select
-                dir={intl.locale === 'fa' ? 'rtl' : 'ltr'}
-                onValueChange={(value) => {
-                  if (property && styleKey && openLayerID && map)
-                    updateStyle(
-                      openLayerID,
-                      map,
-                      styleKey,
-                      property,
-                      ['match', ['get', value], '#000000'],
-                      setStyleObj
-                    );
-                }}
-              >
-                <SelectTrigger
-                  aria-label={intl.formatMessage({ id: 'value_title' })}
+              {!pair?.[1] ? (
+                <div>
+                  <FormattedMessage id="default" />
+                </div>
+              ) : (
+                <Select
+                  dir={intl.locale === 'fa' ? 'rtl' : 'ltr'}
+                  defaultValue={pair?.[0] as string}
+                  value={pair?.[0] as string}
+                  onValueChange={(value) => {
+                    const temp = [...pairs];
+                    temp[index] = [value, temp[index][1]];
+                    const arg = styleValue(temp) as
+                      | number
+                      | Expression
+                      | StyleFunction;
+                    applyStyles(arg);
+                  }}
                 >
-                  <SelectValue
-                    placeholder={intl.formatMessage({ id: 'selection' })}
-                  />
-                  <SelectIcon>
-                    <Arrow />
-                  </SelectIcon>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectViewport>
-                    {columns?.map((column) => (
-                      <SelectItem key={column} value={column}>
-                        <SelectItemText>{column}</SelectItemText>
-                        <SelectItemIndicator>
-                          <Check />
-                        </SelectItemIndicator>
-                      </SelectItem>
-                    ))}
-                  </SelectViewport>
-                </SelectContent>
-              </Select>{' '}
+                  <SelectTrigger
+                    aria-label={intl.formatMessage({ id: 'value_title' })}
+                  >
+                    <SelectValue
+                      placeholder={intl.formatMessage({ id: 'selection' })}
+                    />
+                    <SelectIcon>
+                      <Arrow />
+                    </SelectIcon>
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectViewport>
+                      {distinctValues?.map((dv) => (
+                        <SelectItem key={dv} value={dv}>
+                          <SelectItemText>{dv}</SelectItemText>
+                          <SelectItemIndicator>
+                            <Check />
+                          </SelectItemIndicator>
+                        </SelectItem>
+                      ))}
+                    </SelectViewport>
+                  </SelectContent>
+                </Select>
+              )}{' '}
               {/* zoom */}
             </PairsWrap>
-            <Delete
-              style={{ cursor: pairs.length < 3 ? 'not-allowed' : 'pointer' }}
-              color={
-                pairs.length < 3
-                  ? 'var(--SE-shade-3)'
-                  : 'var(--SE-color-primary)'
-              }
-              onClick={() => {
-                if (pairs.length < 3) return;
-                const temp = pairs?.filter((c, index2) => index !== index2);
-                const arg = styleValue(temp) as
-                  | number
-                  | Expression
-                  | StyleFunction;
-                applyStyles(arg);
-              }}
-            />
+            {pair?.[1] ? (
+              <Delete
+                style={{ cursor: pairs.length < 3 ? 'not-allowed' : 'pointer' }}
+                color={
+                  pairs.length < 3
+                    ? 'var(--SE-shade-3)'
+                    : 'var(--SE-color-primary)'
+                }
+                onClick={() => {
+                  if (pairs.length < 3) return;
+                  const temp = pairs?.filter((c, index2) => index !== index2);
+                  const arg = styleValue(temp) as
+                    | number
+                    | Expression
+                    | StyleFunction;
+                  applyStyles(arg);
+                }}
+              />
+            ) : null}
           </StyledRow>
         ))}
       </Column>
@@ -285,3 +351,8 @@ const Conditional = ({ type }: IProps) => {
 };
 
 export default Conditional;
+
+const IconWrapper = styled.div`
+  cursor: pointer;
+  display: flex;
+`;

@@ -14,7 +14,7 @@ import {
   styleObjState,
 } from 'atoms/map';
 
-import type { Layer } from 'mapbox-gl';
+// import type { Layer } from 'mapbox-gl';
 
 const ZoomrRange = () => {
   const map = useAtomValue(mapState);

@@ -1,0 +1,8 @@
+<svg id="Layer_1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 18 18" xml:space="preserve">
+    <path d="M6 5H14V7H6V5Z" fill="currentColor"></path>
+    <path d="M6 8H14V10H6V8Z" fill="currentColor"></path>
+    <path d="M14 11H6V13H14V11Z" fill="currentColor"></path>
+    <path opacity="0.5" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M5.5 2C4.11929 2 3 3.11929 3 4.5V13.5C3 14.8807 4.11929 16 5.5 16C6.70948 16 7.71836 15.1411 7.94999 14H5V4H7.94999C7.71836 2.85888 6.70948 2 5.5 2Z"></path>
+</svg>

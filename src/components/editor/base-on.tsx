@@ -30,7 +30,7 @@ import {
   selectedLayerIDState,
   styleObjState,
 } from 'atoms/map';
-import { columnsState } from 'atoms/general';
+import { columnsState, distictState } from 'atoms/general';
 
 import { Row, Column, Selector, Label } from 'common/styles';
 
@@ -56,6 +56,7 @@ const BaseOn = ({ type }: IProps) => {
   const openLayerID = useAtomValue(selectedLayerIDState);
   const setStyleObj = useSetAtom(styleObjState);
   const columns = useAtomValue(columnsState);
+  const distinctFunc = useAtomValue(distictState);
   const layer = useAtomValue(layerState);
 
   const { styleKey, property } = useGetStyleKey(type);
@@ -68,14 +69,19 @@ const BaseOn = ({ type }: IProps) => {
   const [method, setMethod] = useState<OptionsType>(options[0]);
 
   useEffect(() => {
+    // @ts-ignore line
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+    const expression = layer?.[styleKey]?.[property];
+
+    if (expression?.[0] === 'match' || expression?.[0] === 'step')
+      setMethod('conditional');
+    else if (expression?.[0] === 'interpolate') setMethod('zoom');
+    else if (expression?.[0] === 'get') setMethod('dynamic');
+    else setMethod('static');
+
     if (['color', 'stroke-color'].includes(type))
-      setColor(
-        // @ts-ignore line
-        layer?.[styleKey]?.[property] ?? '#C11010'
-      );
-    if (['size', 'stroke-size'].includes(type))
-      // @ts-ignore line
-      setSize(layer?.[styleKey]?.[property] ?? 1);
+      setColor(expression ?? '#C11010');
+    if (['size', 'stroke-size'].includes(type)) setSize(expression ?? 1);
   }, [layer, styleKey, property]);
 
   const component = useMemo(() => {
@@ -178,6 +184,7 @@ const BaseOn = ({ type }: IProps) => {
           </Label>
           <Select
             defaultValue={options[0]}
+            value={method}
             dir={intl.locale === 'fa' ? 'rtl' : 'ltr'}
             onValueChange={(value: OptionsType) => {
               setMethod(value);
@@ -203,6 +210,8 @@ const BaseOn = ({ type }: IProps) => {
                   ?.filter((o) => {
                     if (!columns)
                       return !['dynamic', 'conditional'].includes(o);
+                    else if (columns && !distinctFunc)
+                      return !['conditional'].includes(o);
                     else return true;
                   })
                   ?.map((option) => (
