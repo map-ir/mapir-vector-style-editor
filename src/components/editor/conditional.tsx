@@ -72,7 +72,11 @@ const Conditional = ({ type }: IProps) => {
 
   const { styleKey, property } = useGetStyleKey(type);
 
-  const [conditionType, setCondition] = useState<ExpressionName>('match');
+  // @ts-ignore line
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument
+  const [conditionType, setCondition] = useState<ExpressionName>(
+    layer?.[styleKey]?.[property]?.[0] ?? 'match'
+  );
   const [pairs, setPairs] = useState<(number | string)[][]>([]); // Pairs of zoom/value or zoom/color
   const [colName, setColName] = useState<string>();
   const [distinctValues, setDistincts] = useState<string[]>([]);
@@ -81,6 +85,10 @@ const Conditional = ({ type }: IProps) => {
     // @ts-ignore line
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     const expression = layer?.[styleKey]?.[property];
+    console.log(
+      '🚀 ~ file: conditional.tsx:84 ~ useEffect ~ expression',
+      expression
+    );
     const minzoom = layer?.minzoom ?? 1;
     const maxzoom = layer?.maxzoom ?? 20;
 
@@ -99,7 +107,7 @@ const Conditional = ({ type }: IProps) => {
         )
       );
     } else {
-      setPairs([
+      const temp = [
         [
           minzoom,
           expression ??
@@ -107,7 +115,8 @@ const Conditional = ({ type }: IProps) => {
         ],
         [maxzoom, ['color', 'stroke-color'].includes(type) ? '#2585f3' : 1],
         [['color', 'stroke-color'].includes(type) ? '#000000' : 1],
-      ]);
+      ];
+      setPairs(temp);
     }
   }, [layer, property, styleKey]);
 
@@ -139,6 +148,10 @@ const Conditional = ({ type }: IProps) => {
   }, [colName]);
 
   useEffect(() => {
+    console.log(
+      '🚀 ~ file: conditional.tsx:150 ~ Conditional ~ conditionType',
+      conditionType
+    );
     const arg = styleValue(pairs) as number | Expression | StyleFunction;
     applyStyles(arg);
   }, [conditionType]);

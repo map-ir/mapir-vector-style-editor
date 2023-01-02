@@ -2,7 +2,7 @@ import React, { useCallback, forwardRef } from 'react';
 import styled from 'styled-components';
 import { useIntl } from 'react-intl';
 
-import { toNumberString, toEnDigits, toFaDigits, toNumber } from './utils';
+import { toNumberString, toEnDigits, toFaDigits } from './utils';
 
 import type { ForwardedRef } from 'react';
 
@@ -21,7 +21,8 @@ function NumberInput(
   ref?: ForwardedRef<HTMLInputElement> | null
 ) {
   const intl = useIntl();
-  const valueAsNumber = toNumber(value);
+  // const valueAsNumber = toNumber(value);
+  const valueAsNumber = parseFloat(value.toString());
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const _onChange = useCallback(
@@ -54,11 +55,12 @@ function NumberInput(
     [valueAsNumber, _onChange]
   );
 
-  const numValue = (
-    Math.round(((valueAsNumber ?? 10) + Number.EPSILON) * 100) / 100
-  )
-    .toFixed(1)
-    .replace(/[.,]0$/, '');
+  const numValue = valueAsNumber;
+  // (
+  //   Math.round(((valueAsNumber ?? 10) + Number.EPSILON) * 100) / 100
+  // )
+  //   .toFixed(1)
+  //   .replace(/[.,]0$/, '');
 
   return (
     <StyledInput

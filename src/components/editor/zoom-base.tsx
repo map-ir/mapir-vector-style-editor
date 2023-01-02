@@ -193,6 +193,7 @@ const ZoomBase = ({ type }: IProps) => {
                 <InputNumber
                   min={0}
                   max={2}
+                  step={0.01}
                   value={expoPower}
                   onChange={(value) => {
                     const arg = stylePowerValue(value) as
@@ -218,6 +219,7 @@ const ZoomBase = ({ type }: IProps) => {
                 <InputNumber
                   min={0}
                   max={1}
+                  step={0.01}
                   value={cubicPoints[0][0]}
                   onChange={(value) => {
                     styleCubicValue([
@@ -235,6 +237,7 @@ const ZoomBase = ({ type }: IProps) => {
                 <InputNumber
                   min={0}
                   max={1}
+                  step={0.01}
                   value={cubicPoints[0][1]}
                   onChange={(value) => {
                     const arg = styleCubicValue([
@@ -250,6 +253,7 @@ const ZoomBase = ({ type }: IProps) => {
                 <InputNumber
                   min={0}
                   max={1}
+                  step={0.01}
                   value={cubicPoints[1][0]}
                   onChange={(value) => {
                     styleCubicValue([
@@ -267,6 +271,7 @@ const ZoomBase = ({ type }: IProps) => {
                 <InputNumber
                   min={0}
                   max={1}
+                  step={0.01}
                   value={cubicPoints[1][1]}
                   onChange={(value) => {
                     styleCubicValue([
