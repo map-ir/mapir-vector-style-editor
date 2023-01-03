@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 import { Dispatch, SetStateAction } from 'react';
 
 import type {
@@ -40,15 +41,23 @@ const updateStyle = (
     );
 
     const newLayers = ([] as AnyLayer[]).concat(curr_style.layers);
-    newLayers[indexOfSelectedLayer] = {
-      ...selectedLayer[0],
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      [type]: {
-        // @ts-ignore line
-        ...selectedLayer[0][type],
-        [key]: value,
-      },
-    };
+    newLayers[indexOfSelectedLayer] = (
+      type === 'zoom'
+        ? {
+            ...selectedLayer[0],
+            minzoom: parseInt(key.toString()),
+            maxzoom: parseInt(value.toString()),
+          }
+        : {
+            ...selectedLayer[0],
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            [type]: {
+              // @ts-ignore line
+              ...selectedLayer[0][type],
+              [key]: value,
+            },
+          }
+    ) as AnyLayer;
 
     return {
       ...curr_style,

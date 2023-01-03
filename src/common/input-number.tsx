@@ -2,7 +2,7 @@ import React, { useCallback, forwardRef } from 'react';
 import styled from 'styled-components';
 import { useIntl } from 'react-intl';
 
-import { toNumberString, toEnDigits, toFaDigits } from './utils';
+import { toEnDigits, toFaDigits } from './utils';
 
 import type { ForwardedRef } from 'react';
 
@@ -55,12 +55,8 @@ function NumberInput(
     [valueAsNumber, _onChange]
   );
 
-  const numValue = valueAsNumber;
-  // (
-  //   Math.round(((valueAsNumber ?? 10) + Number.EPSILON) * 100) / 100
-  // )
-  //   .toFixed(1)
-  //   .replace(/[.,]0$/, '');
+  const numValue =
+    valueAsNumber % 1 === 0 ? valueAsNumber : valueAsNumber.toFixed(2);
 
   return (
     <StyledInput
@@ -70,7 +66,7 @@ function NumberInput(
       {...(props ?? {})}
       value={intl.locale === 'en' ? numValue : toFaDigits(numValue)}
       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-        _onChange(parseFloat(toNumberString(toEnDigits(e.target.value))));
+        _onChange(parseFloat(toEnDigits(e.target.value.toString())));
       }}
       onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => onKeyPress(e)}
     />
@@ -80,7 +76,8 @@ function NumberInput(
 export default forwardRef(NumberInput);
 
 const StyledInput = styled.input`
-  width: 2em;
+  min-width: 2em;
+  max-width: 2em;
   height: 2em;
   text-align: center;
   border: 1px solid var(--SE-shade-3);

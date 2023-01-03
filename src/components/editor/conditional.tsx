@@ -72,11 +72,7 @@ const Conditional = ({ type }: IProps) => {
 
   const { styleKey, property } = useGetStyleKey(type);
 
-  // @ts-ignore line
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument
-  const [conditionType, setCondition] = useState<ExpressionName>(
-    layer?.[styleKey]?.[property]?.[0] ?? 'match'
-  );
+  const [conditionType, setCondition] = useState<ExpressionName>('match');
   const [pairs, setPairs] = useState<(number | string)[][]>([]); // Pairs of zoom/value or zoom/color
   const [colName, setColName] = useState<string>();
   const [distinctValues, setDistincts] = useState<string[]>([]);
@@ -85,10 +81,6 @@ const Conditional = ({ type }: IProps) => {
     // @ts-ignore line
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     const expression = layer?.[styleKey]?.[property];
-    console.log(
-      '🚀 ~ file: conditional.tsx:84 ~ useEffect ~ expression',
-      expression
-    );
     const minzoom = layer?.minzoom ?? 1;
     const maxzoom = layer?.maxzoom ?? 20;
 
@@ -100,7 +92,7 @@ const Conditional = ({ type }: IProps) => {
       setColName((expression as string[])?.[1]?.[1]);
       setPairs(
         splitArray(
-          conditionType === 'step'
+          (expression as string[])?.[0] === 'step'
             ? (expression as string[])?.slice(2).reverse()
             : (expression as string[])?.slice(2),
           2
@@ -148,10 +140,6 @@ const Conditional = ({ type }: IProps) => {
   }, [colName]);
 
   useEffect(() => {
-    console.log(
-      '🚀 ~ file: conditional.tsx:150 ~ Conditional ~ conditionType',
-      conditionType
-    );
     const arg = styleValue(pairs) as number | Expression | StyleFunction;
     applyStyles(arg);
   }, [conditionType]);
