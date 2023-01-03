@@ -1,14 +1,32 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { InputHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes, useCallback } from 'react';
 import styled from 'styled-components';
 import Color from 'color';
 
-const ColorPicker = (props: InputHTMLAttributes<HTMLInputElement>) => {
-  const color = Color(props.value);
+import { debounce } from './utils';
 
-  return <ColorInput {...props} value={color.hex()} type={'color'} />;
+const ColorPicker = ({
+  value,
+  onChange: _onChange,
+  ...props
+}: InputHTMLAttributes<HTMLInputElement>) => {
+  const color = Color(value);
+
+  const onChange = useCallback(
+    _onChange ? debounce(_onChange, 300) : () => undefined,
+    [_onChange]
+  );
+
+  return (
+    <ColorInput
+      type={'color'}
+      {...props}
+      value={color.hex()}
+      onChange={onChange}
+    />
+  );
 };
 
 export default ColorPicker;

@@ -41,3 +41,16 @@ export function splitArray(flatArray: (string | number)[], numCols: number) {
   }
   return newArray;
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function debounce(callback: (...args: any[]) => any, wait: number) {
+  let timeoutId: number | undefined = undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (...args: any[]) => {
+    window.clearTimeout(timeoutId);
+    timeoutId = window.setTimeout(() => {
+      // eslint-disable-next-line prefer-spread
+      callback.apply(null, args);
+    }, wait);
+  };
+}
