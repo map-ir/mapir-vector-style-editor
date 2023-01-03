@@ -329,13 +329,10 @@ const ZoomBase = ({ type }: IProps) => {
               {['color', 'stroke-color'].includes(type) ? (
                 // <Sample color={pair?.[1] as string} />
                 <ColorPicker
-                  value={pair?.[1]}
-                  onChange={(e) => {
+                  value={pair?.[1] as string}
+                  onChange={(color) => {
                     const temp = [...pairs];
-                    temp[index] = [
-                      temp[index][0],
-                      e.target.value.toUpperCase(),
-                    ];
+                    temp[index] = [temp[index][0], color.toUpperCase()];
                     const arg = styleValue(temp) as
                       | number
                       | Expression

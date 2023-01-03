@@ -90,14 +90,14 @@ const BaseOn = ({ type }: IProps) => {
         // <Sample color={color} />
         <ColorPicker
           value={color}
-          onChange={(e) => {
+          onChange={(color) => {
             if (property && styleKey && openLayerID && map)
               updateStyle(
                 openLayerID,
                 map,
                 styleKey,
                 property,
-                e.target.value,
+                color,
                 setStyleObj
               );
           }}
