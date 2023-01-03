@@ -7,11 +7,12 @@ import Color from 'color';
 
 import { debounce } from './utils';
 
-const ColorPicker = ({
-  value,
-  onChange: _onChange,
-  ...props
-}: InputHTMLAttributes<HTMLInputElement>) => {
+interface IProps {
+  value: string;
+  onChange: (newColor: string) => void;
+}
+
+const ColorPicker = ({ value, onChange: _onChange, ...props }: IProps) => {
   const color = Color(value);
 
   const onChange = useCallback(
@@ -22,9 +23,11 @@ const ColorPicker = ({
   return (
     <ColorInput
       type={'color'}
-      {...props}
       value={color.hex()}
-      onChange={onChange}
+      onChange={(e) => {
+        const value = e.target.value;
+        onChange(value);
+      }}
     />
   );
 };

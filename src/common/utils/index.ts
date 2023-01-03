@@ -48,8 +48,10 @@ export function debounce(callback: (...args: any[]) => any, wait: number) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (...args: any[]) => {
     window.clearTimeout(timeoutId);
+    console.log('🚀 ~ file: index.ts:50 ~ return ~ args', args);
     timeoutId = window.setTimeout(() => {
       // eslint-disable-next-line prefer-spread
+      console.log('🚀 ~ file: index.ts:50 ~ return ~ args', args);
       callback.apply(null, args);
     }, wait);
   };
