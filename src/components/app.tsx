@@ -11,7 +11,7 @@ import {
   styleObjState,
   spriteState,
 } from '../atoms/map';
-import { titleState, columnsState } from '../atoms/general';
+import { titleState, columnsState, distinctState } from '../atoms/general';
 
 import type { IProps } from 'types/general';
 import type { Style } from 'mapbox-gl';
@@ -71,12 +71,14 @@ const App = ({
   columns,
   onSubmit,
   onCancle,
+  getDistinctValues,
 }: IProps) => {
   const setMapProp = useSetAtom(mapPropsState);
   const [styleURLAtom, setStyleURL] = useAtom(styleURLState);
   const setStyleObj = useSetAtom(styleObjState);
   const setTitle = useSetAtom(titleState);
   const setColumns = useSetAtom(columnsState);
+  const setDistinctFunc = useSetAtom(distinctState);
   const setSprite = useSetAtom(spriteState);
 
   setMapProp(map);
@@ -96,6 +98,13 @@ const App = ({
   useEffect(() => {
     setColumns(columns);
   }, [columns]);
+
+  useEffect(() => {
+    if (getDistinctValues)
+      void setDistinctFunc(
+        () => (col_name: string) => getDistinctValues(col_name)
+      );
+  }, [getDistinctValues]);
 
   const fetchStyle = (url: string) => {
     return fetch(url, {

@@ -7,7 +7,14 @@ import styled from 'styled-components';
 import SectionTab from 'common/section-tab';
 import InputNumber from 'common/input-number';
 import { PageSwitch, Page } from 'common/page-switch';
-import { Column, Row } from 'common/styles';
+import {
+  Column,
+  Row,
+  PairsWrap,
+  StyledRow,
+  Description,
+  Star,
+} from 'common/styles';
 import ColorPicker from 'common/color-picker';
 import Gradiant from 'common/gradiant';
 import { splitArray, toFaDigits } from 'common/utils';
@@ -186,6 +193,7 @@ const ZoomBase = ({ type }: IProps) => {
                 <InputNumber
                   min={0}
                   max={2}
+                  step={0.01}
                   value={expoPower}
                   onChange={(value) => {
                     const arg = stylePowerValue(value) as
@@ -211,6 +219,7 @@ const ZoomBase = ({ type }: IProps) => {
                 <InputNumber
                   min={0}
                   max={1}
+                  step={0.01}
                   value={cubicPoints[0][0]}
                   onChange={(value) => {
                     styleCubicValue([
@@ -228,6 +237,7 @@ const ZoomBase = ({ type }: IProps) => {
                 <InputNumber
                   min={0}
                   max={1}
+                  step={0.01}
                   value={cubicPoints[0][1]}
                   onChange={(value) => {
                     const arg = styleCubicValue([
@@ -243,6 +253,7 @@ const ZoomBase = ({ type }: IProps) => {
                 <InputNumber
                   min={0}
                   max={1}
+                  step={0.01}
                   value={cubicPoints[1][0]}
                   onChange={(value) => {
                     styleCubicValue([
@@ -260,6 +271,7 @@ const ZoomBase = ({ type }: IProps) => {
                 <InputNumber
                   min={0}
                   max={1}
+                  step={0.01}
                   value={cubicPoints[1][1]}
                   onChange={(value) => {
                     styleCubicValue([
@@ -394,27 +406,4 @@ const TabWrapper = styled.div`
   background: var(--SE-light-1);
   padding: 0.5em;
   border-radius: var(--SE-radius-4);
-`;
-
-const PairsWrap = styled(Row)`
-  justify-content: start;
-  gap: 1em;
-  padding: 0;
-`;
-
-const StyledRow = styled(Row)`
-  padding: 0.3em 0;
-`;
-
-const Description = styled(Row)`
-  justify-content: start;
-  gap: 0.3em;
-  font-size: smaller;
-  font-weight: 300;
-  padding: 0;
-  color: var(--SE-shade-1);
-  text-align: justify;
-`;
-const Star = styled.span`
-  color: var(--SE-color-primary);
 `;

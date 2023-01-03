@@ -76,3 +76,26 @@ export const Icon = styled.div<{ bg?: string; hover?: string }>`
       }
     `}
 `;
+
+export const PairsWrap = styled(Row)`
+  justify-content: start;
+  gap: 1em;
+  padding: 0;
+`;
+
+export const StyledRow = styled(Row)`
+  padding: 0.3em 0;
+`;
+
+export const Description = styled(Row)`
+  justify-content: start;
+  gap: 0.3em;
+  font-size: smaller;
+  font-weight: 300;
+  padding: 0;
+  color: var(--SE-shade-1);
+  text-align: justify;
+`;
+export const Star = styled.span`
+  color: var(--SE-color-primary);
+`;

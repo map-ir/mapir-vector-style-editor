@@ -11,6 +11,8 @@ interface IProps {
   className?: string;
   onSubmit?: (arg: Style | null) => void;
   onCancle?: (arg: Style | null) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  getDistinctValues?: (arg: string) => Promise<any>;
 }
 
 type Renderable = JSX.Element | undefined | null | false;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import { useAtomValue, useSetAtom } from 'jotai';
@@ -14,13 +14,19 @@ import {
   styleObjState,
 } from 'atoms/map';
 
-import type { Layer } from 'mapbox-gl';
+// import type { Layer } from 'mapbox-gl';
 
 const ZoomrRange = () => {
   const map = useAtomValue(mapState);
   const openLayerID = useAtomValue(selectedLayerIDState);
   const setStyleObj = useSetAtom(styleObjState);
   const layer = useAtomValue(layerState);
+
+  const [zoom, setZoom] = useState([1, 20]);
+
+  useEffect(() => {
+    setZoom([layer?.minzoom ?? 1, layer?.maxzoom ?? 20]);
+  }, [layer]);
 
   const zoomChange = (value: number[]) => {
     if (!openLayerID || !map) return;
@@ -36,12 +42,12 @@ const ZoomrRange = () => {
         <InputNumber
           min={1}
           max={20}
-          value={layer?.maxzoom ?? 20}
-          onChange={(number) => zoomChange([layer?.minzoom ?? 1, number])}
+          value={zoom[1]}
+          onChange={(number) => zoomChange([zoom[0], number])}
         />
         <RangeSlider
           // defaultValue={[zoom[0], zoom[1]]}
-          value={[layer?.minzoom ?? 1, layer?.maxzoom ?? 20]}
+          value={zoom}
           min={1}
           max={20}
           step={1}
@@ -52,8 +58,8 @@ const ZoomrRange = () => {
         <InputNumber
           min={1}
           max={20}
-          value={layer?.minzoom ?? 1}
-          onChange={(number) => zoomChange([number, layer?.maxzoom ?? 20])}
+          value={zoom[0]}
+          onChange={(number) => zoomChange([number, zoom[1]])}
         />
       </Slider>
     </Wrapper>

@@ -56,7 +56,7 @@ function Content({ children, ...props }) {
 const StyledItem = styled(SelectPrimitive.Item)`
   all: unset;
   line-height: 1;
-  color: var(--SE-shade-2);
+  color: var(--SE-shade-1);
   border-radius: var(--SE-radius-4);
   display: flex;
   flex-direction: row;
@@ -75,7 +75,7 @@ const StyledItem = styled(SelectPrimitive.Item)`
 
   &[data-highlighted] {
     background-color: var(--SE-color-primary-20);
-    color: var(--SE-shade-2);
+    color: var(--SE-shade-1);
   }
 `;
 
@@ -98,6 +98,7 @@ const StyledItemIndicator = styled(SelectPrimitive.ItemIndicator)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  color: var(--SE-color-primary);
 `;
 
 // const scrollButtonStyles = `
