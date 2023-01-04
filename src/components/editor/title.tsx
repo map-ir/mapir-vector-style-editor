@@ -112,7 +112,7 @@ const SetTitle = () => {
           </Label>
           <ColorPicker
             value={fontColor}
-            onChange={(e) => {
+            onChange={(color) => {
               {
                 if (layerID && map)
                   updateStyle(
@@ -120,7 +120,7 @@ const SetTitle = () => {
                     map,
                     'paint',
                     'text-color',
-                    e.target.value,
+                    color,
                     setStyleObj
                   );
               }

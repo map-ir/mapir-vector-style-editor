@@ -250,12 +250,12 @@ const Conditional = ({ type }: IProps) => {
               {['color', 'stroke-color'].includes(type) ? (
                 // <Sample color={pair?.[1] as string} />
                 <ColorPicker
-                  value={pair?.[1] ?? pair?.[0]}
-                  onChange={(e) => {
+                  value={(pair?.[1] ?? pair?.[0]) as string}
+                  onChange={(color) => {
                     const temp = [...pairs];
                     temp[index] = !pair?.[1]
-                      ? [e.target.value.toUpperCase()]
-                      : [temp[index][0], e.target.value.toUpperCase()];
+                      ? [color.toUpperCase()]
+                      : [temp[index][0], color.toUpperCase()];
                     const arg = styleValue(temp) as
                       | number
                       | Expression

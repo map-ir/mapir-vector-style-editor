@@ -56,7 +56,7 @@ function NumberInput(
   );
 
   const numValue =
-    valueAsNumber % 1 === 0 ? valueAsNumber : valueAsNumber.toFixed(2);
+    valueAsNumber % 1 === 0 ? valueAsNumber : valueAsNumber.toFixed(1);
 
   return (
     <StyledInput

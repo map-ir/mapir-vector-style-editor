@@ -193,7 +193,7 @@ const ZoomBase = ({ type }: IProps) => {
                 <InputNumber
                   min={0}
                   max={2}
-                  step={0.01}
+                  step={0.1}
                   value={expoPower}
                   onChange={(value) => {
                     const arg = stylePowerValue(value) as
@@ -219,7 +219,7 @@ const ZoomBase = ({ type }: IProps) => {
                 <InputNumber
                   min={0}
                   max={1}
-                  step={0.01}
+                  step={0.1}
                   value={cubicPoints[0][0]}
                   onChange={(value) => {
                     styleCubicValue([
@@ -237,7 +237,7 @@ const ZoomBase = ({ type }: IProps) => {
                 <InputNumber
                   min={0}
                   max={1}
-                  step={0.01}
+                  step={0.1}
                   value={cubicPoints[0][1]}
                   onChange={(value) => {
                     const arg = styleCubicValue([
@@ -253,7 +253,7 @@ const ZoomBase = ({ type }: IProps) => {
                 <InputNumber
                   min={0}
                   max={1}
-                  step={0.01}
+                  step={0.1}
                   value={cubicPoints[1][0]}
                   onChange={(value) => {
                     styleCubicValue([
@@ -271,7 +271,7 @@ const ZoomBase = ({ type }: IProps) => {
                 <InputNumber
                   min={0}
                   max={1}
-                  step={0.01}
+                  step={0.1}
                   value={cubicPoints[1][1]}
                   onChange={(value) => {
                     styleCubicValue([
@@ -329,13 +329,10 @@ const ZoomBase = ({ type }: IProps) => {
               {['color', 'stroke-color'].includes(type) ? (
                 // <Sample color={pair?.[1] as string} />
                 <ColorPicker
-                  value={pair?.[1]}
-                  onChange={(e) => {
+                  value={pair?.[1] as string}
+                  onChange={(color) => {
                     const temp = [...pairs];
-                    temp[index] = [
-                      temp[index][0],
-                      e.target.value.toUpperCase(),
-                    ];
+                    temp[index] = [temp[index][0], color.toUpperCase()];
                     const arg = styleValue(temp) as
                       | number
                       | Expression
