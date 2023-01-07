@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAtomValue } from 'jotai';
 import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
+import Editor from '@monaco-editor/react';
 
 import Button from 'common/button';
 
 import LayersStyle from './layers';
 
 import { styleObjState } from 'atoms/map';
+
+import { ReactComponent as CodeIcon } from '../../assets/icons/code.svg';
 
 import type { Style } from 'mapbox-gl';
 
@@ -16,13 +19,44 @@ interface IProps {
   onCancle?: (arg: Style | null) => void;
 }
 
-export default function Editor({ onSubmit, onCancle }: IProps) {
+export default function LayersEditor({ onSubmit, onCancle }: IProps) {
   const styleObj = useAtomValue(styleObjState);
+
+  const [showEditor, setShowEditor] = useState(false);
+
   return (
     <Wrapper>
-      <LayersStyle />
+      {showEditor ? (
+        <div style={{ direction: 'ltr' }}>
+          <Editor
+            // height="90vh"
+            defaultLanguage="json"
+            defaultValue={
+              JSON.stringify(styleObj?.layers) ?? 'There is no layer'
+            }
+            onMount={(editor, monaco) => {
+              // @ts-ignore
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+              monaco.editor.getAction('editor.action.formatDocument').run();
+              console.log(
+                '🚀 ~ file: index.tsx:41 ~ LayersEditor ~ monaco',
+                monaco
+              );
+            }}
+          />
+        </div>
+      ) : (
+        <LayersStyle />
+      )}
 
       <ButtonWrapper>
+        <CodeIcon
+          onClick={() => {
+            setShowEditor(!showEditor);
+          }}
+          width={30}
+          color="var(--SE-shade-2)"
+        />
         {onCancle && (
           <Button tertiary onClick={() => onCancle(styleObj)}>
             <FormattedMessage id="cancel" />
