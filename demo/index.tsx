@@ -37,14 +37,14 @@ function App() {
           },
         }}
         // locale="en"
-        styleURL="https://my-dev.map.ir/share/9b18700b-b0e3-4f8d-ab03-f5f4bc2b9449/api/mym/styles/data/style_c64e409f-bbe1-4621-9119-5c46b8325a46_64f5088b-4212-4dcf-b256-91d07202121c.json"
+        styleURL="https://my-dev.map.ir/share/fab8d10d-c32a-4da8-823f-43647a0997c5/api/mym/styles/data/style_9bf66929-19c1-4b9e-81b5-7cf998b7b4b2_afc78483-3eb5-4d8f-9a56-91374d46adc2.json"
         sprite="https://map.ir/vector/styles/main/sprite"
         title="تنظیمات استایل"
-        columns={['province_name', 'city']}
+        columns={['num', 'city']}
         getDistinctValues={(column_name) => {
           if (column_name)
             return fetch(
-              `https://my-dev.map.ir/editor/tables/b19d4092-5090-4f3d-a58a-f836320b5646/rows?$top=100&$apply=distinct(${column_name})`,
+              `https://my-dev.map.ir/editor/tables/2ede04d2-3c8e-4c2d-bc09-2c1ab099bc4b/rows?$top=100&$apply=distinct(${column_name})`,
               {
                 headers: {
                   'content-type': 'application/json',
@@ -82,4 +82,4 @@ root.render(
 );
 
 const token =
-  'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjIwYTYxZmEzMDZhYWQ1ODRhMDFmOGIyMDM2M2I2MmQxNzMzZTljODc5MTliMWQyM2Y5NzkyZmRlODc4YjgyMmFkMmY1MzU3ZTc1MmZiOWU4In0.eyJhdWQiOiIxIiwianRpIjoiMjBhNjFmYTMwNmFhZDU4NGEwMWY4YjIwMzYzYjYyZDE3MzNlOWM4NzkxOWIxZDIzZjk3OTJmZGU4NzhiODIyYWQyZjUzNTdlNzUyZmI5ZTgiLCJpYXQiOjE2NzMwNzIwMzksIm5iZiI6MTY3MzA3MjAzOSwiZXhwIjoxNjczMDc1NjM5LCJzdWIiOiI5YmY2NjkyOS0xOWMxLTRiOWUtODFiNS03Y2Y5OThiN2I0YjIiLCJzY29wZXMiOlsiYmFzaWMiLCJteTphZG1pbiJdfQ.LHZ-pWbhA14a1j_Rf1vCoXKyU5Lg8OM3fSRmml7Gw2_3qa30BY6qm1MDdsxTIGsbXxWi7PSjClz265Gyy18LNaUS4V_e757iX5fgO4qqE_vid-Hdsp00nmk13OMPojuA_lltlFQAMW3f91rg7Mx1CWbo4Q2BaQ7NWJAzeVReXjJdrVNPdmJLZz4hf7RYX8uYMZzLrbLREZRuL9G_0vAKdl-4ur7yr6eJtJL4BGxW_RW3qgHuts44EZZiWnpV9qwGmshuBypY7AEpksiHwcP6cpgL-Y0usjGk9tKSH2aovwPk4jU0CIn5yAl_Gs4g3YPjOA4YXaqK4u6Vo9oc3l6BPA';
+  'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImU0MWVhMWZmMjZiMDE4YmI1ZTZlODE2NTA5ZGQ3NWZiNzI3MWRjYjVlZmNiNWVlNTBhMjk2YWM3MTQyNTQ5NzZmMDdjNmMwNDVjNmUxZmNmIn0.eyJhdWQiOiIxIiwianRpIjoiZTQxZWExZmYyNmIwMThiYjVlNmU4MTY1MDlkZDc1ZmI3MjcxZGNiNWVmY2I1ZWU1MGEyOTZhYzcxNDI1NDk3NmYwN2M2YzA0NWM2ZTFmY2YiLCJpYXQiOjE2NzMxODgxMTUsIm5iZiI6MTY3MzE4ODExNSwiZXhwIjoxNjczMTkxNzE1LCJzdWIiOiI5YmY2NjkyOS0xOWMxLTRiOWUtODFiNS03Y2Y5OThiN2I0YjIiLCJzY29wZXMiOlsiYmFzaWMiLCJteTphZG1pbiJdfQ.fuBI5g_BNm1hOPV8m_2pM-bXqGzvykh7_tlv0mpCz5VOAjsctsofKEpVSA_jIVqDlPrWPMPw1nCdlhsFeL6n7sv1EZLVJhtuQMCf-6fCEXOXBSihvFwfofDcAe4QE64l3FYKZ8dPR7BBncO3a9yu9KFaLFlLQaSFvQmZY2GHCwrb9RpMs16pZS6sYnKknFddz1GwxIH61KM56cbXDONeyGXoTHmNSlOUyXAZeWBpm7Rr6317s_Slv5BFsd7r_oji9aq3f5G_eX_HrLNLP-OKEOK-AjiatQDJCBVz-YQNgaBdT3eC_Nhqw4Xd9eohqekZmLTQ5ko83LfpJcRZE6bIgA';

@@ -38,4 +38,5 @@ export default {
   cubic_desc: '',
   'no-value': 'No Value',
   value: 'Value',
+  loading: 'Loading...',
 };

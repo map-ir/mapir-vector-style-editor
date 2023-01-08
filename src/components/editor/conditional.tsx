@@ -81,6 +81,10 @@ const Conditional = ({ type }: IProps) => {
     // @ts-ignore line
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     const expression = layer?.[styleKey]?.[property];
+    console.log(
+      '🚀 ~ file: conditional.tsx:84 ~ useEffect ~ expression',
+      expression
+    );
     const minzoom = layer?.minzoom ?? 1;
     const maxzoom = layer?.maxzoom ?? 20;
 
@@ -90,14 +94,16 @@ const Conditional = ({ type }: IProps) => {
     ) {
       setCondition((expression as string[])?.[0] as ExpressionName);
       setColName((expression as string[])?.[1]?.[1]);
-      setPairs(
-        splitArray(
-          (expression as string[])?.[0] === 'step'
-            ? (expression as string[])?.slice(2).reverse()
-            : (expression as string[])?.slice(2),
-          2
-        )
-      );
+
+      let arr = splitArray((expression as string[])?.slice(2), 2);
+
+      if ((expression as string[])?.[0] === 'step') {
+        const popped = arr.pop() ?? [];
+        const reversed = arr.map((a) => a.reverse());
+        arr = [...reversed, popped];
+      }
+
+      setPairs(arr);
     } else {
       const temp = [
         [
@@ -113,11 +119,20 @@ const Conditional = ({ type }: IProps) => {
   }, [layer, property, styleKey]);
 
   const styleValue = useCallback(
-    (value: (number | string)[][]) => [
-      conditionType,
-      ['get', colName],
-      ...(conditionType === 'step' ? value.flat().reverse() : value.flat()),
-    ],
+    (value: (number | string)[][]) => {
+      let arr = value;
+      console.log(
+        '🚀 ~ file: conditional.tsx:137 ~ Conditional ~ value',
+        value
+      );
+      if (conditionType === 'step') {
+        const popped = arr.pop() ?? [];
+        const reversed = arr.map((a) => a.reverse());
+        arr = [...reversed, popped];
+      }
+      console.log('🚀 ~ file: conditional.tsx:141 ~ Conditional ~ arr', arr);
+      return [conditionType, ['get', colName], ...arr.flat()];
+    },
     [colName, conditionType]
   );
 

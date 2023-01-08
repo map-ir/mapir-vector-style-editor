@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useAtomValue } from 'jotai';
 import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
-import Editor from '@monaco-editor/react';
 
 import Button from 'common/button';
 
@@ -26,36 +25,14 @@ export default function LayersEditor({ onSubmit, onCancle }: IProps) {
 
   return (
     <Wrapper>
-      {showEditor ? (
-        <div style={{ direction: 'ltr' }}>
-          <Editor
-            // height="90vh"
-            defaultLanguage="json"
-            defaultValue={
-              JSON.stringify(styleObj?.layers) ?? 'There is no layer'
-            }
-            onMount={(editor, monaco) => {
-              // @ts-ignore
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-              monaco.editor.getAction('editor.action.formatDocument').run();
-              console.log(
-                '🚀 ~ file: index.tsx:41 ~ LayersEditor ~ monaco',
-                monaco
-              );
-            }}
-          />
-        </div>
-      ) : (
-        <LayersStyle />
-      )}
-
+      <LayersStyle showEditor={showEditor} />
       <ButtonWrapper>
         <CodeIcon
           onClick={() => {
             setShowEditor(!showEditor);
           }}
           width={30}
-          color="var(--SE-shade-2)"
+          color={showEditor ? 'var(--SE-color-primary)' : 'var(--SE-shade-2)'}
         />
         {onCancle && (
           <Button tertiary onClick={() => onCancle(styleObj)}>
