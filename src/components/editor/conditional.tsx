@@ -85,6 +85,7 @@ const Conditional = ({ type }: IProps) => {
       '🚀 ~ file: conditional.tsx:84 ~ useEffect ~ expression',
       expression
     );
+    if (expression?.length % 2 === 0) return;
     const minzoom = layer?.minzoom ?? 1;
     const maxzoom = layer?.maxzoom ?? 20;
 
@@ -92,7 +93,8 @@ const Conditional = ({ type }: IProps) => {
       (expression as string[])?.[0] === 'match' ||
       (expression as string[])?.[0] === 'step'
     ) {
-      setCondition((expression as string[])?.[0] as ExpressionName);
+      if ((expression as string[])?.[0] === 'match') setCondition('match');
+      if ((expression as string[])?.[0] === 'step') setCondition('step');
       setColName((expression as string[])?.[1]?.[1]);
 
       let arr = splitArray((expression as string[])?.slice(2), 2);
@@ -120,17 +122,14 @@ const Conditional = ({ type }: IProps) => {
 
   const styleValue = useCallback(
     (value: (number | string)[][]) => {
+      if (value?.length % 2 === 0) return;
       let arr = value;
-      console.log(
-        '🚀 ~ file: conditional.tsx:137 ~ Conditional ~ value',
-        value
-      );
+      console.log('🚀 ~ file: conditional.tsx:126 ~ Conditional ~ arr', arr);
       if (conditionType === 'step') {
         const popped = arr.pop() ?? [];
         const reversed = arr.map((a) => a.reverse());
         arr = [...reversed, popped];
       }
-      console.log('🚀 ~ file: conditional.tsx:141 ~ Conditional ~ arr', arr);
       return [conditionType, ['get', colName], ...arr.flat()];
     },
     [colName, conditionType]
