@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
 import { useIntl } from 'react-intl';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Editor, { useMonaco } from '@monaco-editor/react';
 
 import { titleState } from 'atoms/general';
@@ -218,7 +218,7 @@ function LayersStyle() {
             })}
         </LayersContainer>
       )}
-      <IconWrapper>
+      <IconWrapper isRtl={intl.locale === 'fa'}>
         <CodeIcon
           onClick={() => {
             setShowEditor(!showEditor);
@@ -282,11 +282,18 @@ const StyledRow = styled(Row)`
   gap: 1em;
 `;
 
-const IconWrapper = styled.div`
+const IconWrapper = styled.div<{ isRtl?: boolean }>`
   cursor: pointer;
   position: absolute;
   bottom: 1rem;
-  right: 2rem;
+  ${(p) =>
+    p.isRtl
+      ? css`
+          right: 2rem;
+        `
+      : css`
+          left: 2rem;
+        `}
 `;
 
 const EditorWrapper = styled.div`
