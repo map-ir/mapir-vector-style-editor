@@ -58,9 +58,11 @@ interface IProps {
     | 'stroke-color'
     | 'stroke-size'
     | 'stroke-opacity';
+  method: 'match' | 'step';
+  selectedCol: string;
 }
 
-const Conditional = ({ type }: IProps) => {
+const Conditional = ({ type, method, selectedCol }: IProps) => {
   const intl = useIntl();
 
   const map = useAtomValue(mapState);
@@ -72,20 +74,15 @@ const Conditional = ({ type }: IProps) => {
 
   const { styleKey, property } = useGetStyleKey(type);
 
-  const [conditionType, setCondition] = useState<ExpressionName>('match');
+  const [conditionType, setCondition] = useState<ExpressionName>(method);
   const [pairs, setPairs] = useState<(number | string)[][]>([]); // Pairs of zoom/value or zoom/color
-  const [colName, setColName] = useState<string>();
+  const [colName, setColName] = useState<string>(selectedCol);
   const [distinctValues, setDistincts] = useState<string[]>([]);
 
   useEffect(() => {
     // @ts-ignore line
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     const expression = layer?.[styleKey]?.[property];
-    console.log(
-      '🚀 ~ file: conditional.tsx:84 ~ useEffect ~ expression',
-      expression
-    );
-    if (expression?.length % 2 === 0) return;
     const minzoom = layer?.minzoom ?? 1;
     const maxzoom = layer?.maxzoom ?? 20;
 
@@ -93,10 +90,6 @@ const Conditional = ({ type }: IProps) => {
       (expression as string[])?.[0] === 'match' ||
       (expression as string[])?.[0] === 'step'
     ) {
-      if ((expression as string[])?.[0] === 'match') setCondition('match');
-      if ((expression as string[])?.[0] === 'step') setCondition('step');
-      setColName((expression as string[])?.[1]?.[1]);
-
       let arr = splitArray((expression as string[])?.slice(2), 2);
 
       if ((expression as string[])?.[0] === 'step') {
@@ -122,9 +115,7 @@ const Conditional = ({ type }: IProps) => {
 
   const styleValue = useCallback(
     (value: (number | string)[][]) => {
-      if (value?.length % 2 === 0) return;
       let arr = value;
-      console.log('🚀 ~ file: conditional.tsx:126 ~ Conditional ~ arr', arr);
       if (conditionType === 'step') {
         const popped = arr.pop() ?? [];
         const reversed = arr.map((a) => a.reverse());
@@ -137,7 +128,7 @@ const Conditional = ({ type }: IProps) => {
 
   const applyStyles = useCallback(
     (value: number | Expression | StyleFunction) => {
-      if (openLayerID && map && property && styleKey && pairs.length > 0) {
+      if (openLayerID && map && property && styleKey && value) {
         updateStyle(openLayerID, map, styleKey, property, value, setStyleObj);
       }
     },

@@ -77,7 +77,13 @@ export default function Map() {
         map.addSource(srcName, srcData);
       }
       for (const layerStyle of layersStyle) {
-        if (!map.getLayer(layerStyle.id)) map.addLayer(layerStyle);
+        if (!map.getLayer(layerStyle.id)) {
+          try {
+            map.addLayer(layerStyle);
+          } catch (err) {
+            console.error(err);
+          }
+        }
       }
     }
   }, [map, isMapLoaded, styleObj]);

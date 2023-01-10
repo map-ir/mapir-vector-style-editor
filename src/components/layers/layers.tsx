@@ -32,8 +32,9 @@ import { ReactComponent as Delete } from '../../assets/icons/delete.svg';
 import { ReactComponent as Point } from '../../assets/icons/point.svg';
 import { ReactComponent as Line } from '../../assets/icons/line.svg';
 import { ReactComponent as Polygon } from '../../assets/icons/polygon.svg';
+import { ReactComponent as CodeIcon } from '../../assets/icons/code.svg';
 
-function LayersStyle({ showEditor }: { showEditor: boolean }) {
+function LayersStyle() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const editorRef = useRef<any>();
   const monaco = useMonaco();
@@ -49,6 +50,7 @@ function LayersStyle({ showEditor }: { showEditor: boolean }) {
   const [changedValue, setChanged] = useState<string | undefined>(
     JSON.stringify(styleObj?.layers) ?? ''
   );
+  const [showEditor, setShowEditor] = useState(false);
 
   const addLayerRef = useRef<HTMLDivElement>(null);
   useOutsideClickHandler(addLayerRef, isAdding.bind(null, false));
@@ -65,12 +67,12 @@ function LayersStyle({ showEditor }: { showEditor: boolean }) {
   };
 
   useEffect(() => {
-    setChanged(JSON.stringify(styleObj?.layers) ?? '');
+    // setChanged(JSON.stringify(styleObj?.layers) ?? '');
     setTimeout(function () {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
       void editorRef?.current?.getAction('editor.action.formatDocument')?.run();
     }, 1000);
-  }, [styleObj, editorRef]);
+  }, [editorRef]);
 
   const handleChange = useCallback(
     (value: string | undefined) => {
@@ -146,12 +148,12 @@ function LayersStyle({ showEditor }: { showEditor: boolean }) {
         </div>
       </Header>
       {showEditor ? (
-        <div style={{ direction: 'ltr', width: '100%', overflow: 'hidden' }}>
+        <EditorWrapper>
           <Editor
             height="90vh"
             defaultLanguage="json"
-            defaultValue={changedValue}
-            value={changedValue}
+            defaultValue={JSON.stringify(styleObj?.layers) ?? ''}
+            value={JSON.stringify(styleObj?.layers) ?? ''}
             loading={intl.formatMessage({ id: 'loading' })}
             options={{
               cursorStyle: 'line',
@@ -178,7 +180,7 @@ function LayersStyle({ showEditor }: { showEditor: boolean }) {
               }, 1000);
             }}
           />
-        </div>
+        </EditorWrapper>
       ) : (
         <LayersContainer>
           {styleObj?.layers
@@ -216,6 +218,15 @@ function LayersStyle({ showEditor }: { showEditor: boolean }) {
             })}
         </LayersContainer>
       )}
+      <IconWrapper>
+        <CodeIcon
+          onClick={() => {
+            setShowEditor(!showEditor);
+          }}
+          width={30}
+          color={showEditor ? 'var(--SE-color-primary)' : 'var(--SE-shade-2)'}
+        />
+      </IconWrapper>
     </Wrapper>
   );
 }
@@ -269,4 +280,17 @@ const ExpandBody = styled(LayersContainer)`
 const StyledRow = styled(Row)`
   padding: 0;
   gap: 1em;
+`;
+
+const IconWrapper = styled.div`
+  cursor: pointer;
+  position: absolute;
+  bottom: 1rem;
+  right: 2rem;
+`;
+
+const EditorWrapper = styled.div`
+  direction: ltr;
+  width: 100%;
+  overflow: hidden;
 `;

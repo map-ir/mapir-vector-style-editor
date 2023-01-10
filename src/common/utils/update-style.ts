@@ -21,13 +21,25 @@ const updateStyle = (
 
   switch (type) {
     case 'layout':
-      map?.setLayoutProperty(layer_id, key as string, value);
+      try {
+        map?.setLayoutProperty(layer_id, key as string, value);
+      } catch (e) {
+        console.error(e);
+      }
       break;
     case 'paint':
-      map?.setPaintProperty(layer_id, key as string, value);
+      try {
+        map?.setPaintProperty(layer_id, key as string, value);
+      } catch (e) {
+        console.error(e);
+      }
       break;
     case 'zoom':
-      map?.setLayerZoomRange(layer_id, key as number, value as number);
+      try {
+        map?.setLayerZoomRange(layer_id, key as number, value as number);
+      } catch (e) {
+        console.error(e);
+      }
       break;
   }
 

@@ -9,8 +9,6 @@ import LayersStyle from './layers';
 
 import { styleObjState } from 'atoms/map';
 
-import { ReactComponent as CodeIcon } from '../../assets/icons/code.svg';
-
 import type { Style } from 'mapbox-gl';
 
 interface IProps {
@@ -21,19 +19,10 @@ interface IProps {
 export default function LayersEditor({ onSubmit, onCancle }: IProps) {
   const styleObj = useAtomValue(styleObjState);
 
-  const [showEditor, setShowEditor] = useState(false);
-
   return (
     <Wrapper>
-      <LayersStyle showEditor={showEditor} />
+      <LayersStyle />
       <ButtonWrapper>
-        <CodeIcon
-          onClick={() => {
-            setShowEditor(!showEditor);
-          }}
-          width={30}
-          color={showEditor ? 'var(--SE-color-primary)' : 'var(--SE-shade-2)'}
-        />
         {onCancle && (
           <Button tertiary onClick={() => onCancle(styleObj)}>
             <FormattedMessage id="cancel" />
