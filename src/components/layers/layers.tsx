@@ -72,7 +72,7 @@ function LayersStyle() {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
       void editorRef?.current?.getAction('editor.action.formatDocument')?.run();
     }, 1000);
-  }, [editorRef]);
+  }, [styleObj, editorRef]);
 
   const handleChange = useCallback(
     (value: string | undefined) => {
