@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAtomValue } from 'jotai';
 import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
@@ -16,12 +16,12 @@ interface IProps {
   onCancle?: (arg: Style | null) => void;
 }
 
-export default function Editor({ onSubmit, onCancle }: IProps) {
+export default function LayersEditor({ onSubmit, onCancle }: IProps) {
   const styleObj = useAtomValue(styleObjState);
+
   return (
     <Wrapper>
       <LayersStyle />
-
       <ButtonWrapper>
         {onCancle && (
           <Button tertiary onClick={() => onCancle(styleObj)}>

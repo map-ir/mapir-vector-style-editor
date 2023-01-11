@@ -58,9 +58,11 @@ interface IProps {
     | 'stroke-color'
     | 'stroke-size'
     | 'stroke-opacity';
+  method: 'match' | 'step';
+  selectedCol: string;
 }
 
-const Conditional = ({ type }: IProps) => {
+const Conditional = ({ type, method, selectedCol }: IProps) => {
   const intl = useIntl();
 
   const map = useAtomValue(mapState);
@@ -72,9 +74,9 @@ const Conditional = ({ type }: IProps) => {
 
   const { styleKey, property } = useGetStyleKey(type);
 
-  const [conditionType, setCondition] = useState<ExpressionName>('match');
+  const [conditionType, setCondition] = useState<ExpressionName>(method);
   const [pairs, setPairs] = useState<(number | string)[][]>([]); // Pairs of zoom/value or zoom/color
-  const [colName, setColName] = useState<string>();
+  const [colName, setColName] = useState<string>(selectedCol);
   const [distinctValues, setDistincts] = useState<string[]>([]);
 
   useEffect(() => {
@@ -88,16 +90,15 @@ const Conditional = ({ type }: IProps) => {
       (expression as string[])?.[0] === 'match' ||
       (expression as string[])?.[0] === 'step'
     ) {
-      setCondition((expression as string[])?.[0] as ExpressionName);
-      setColName((expression as string[])?.[1]?.[1]);
-      setPairs(
-        splitArray(
-          (expression as string[])?.[0] === 'step'
-            ? (expression as string[])?.slice(2).reverse()
-            : (expression as string[])?.slice(2),
-          2
-        )
-      );
+      let arr = splitArray((expression as string[])?.slice(2), 2);
+
+      if ((expression as string[])?.[0] === 'step') {
+        const popped = arr.pop() ?? [];
+        const reversed = arr.map((a) => a.reverse());
+        arr = [...reversed, popped];
+      }
+
+      setPairs(arr);
     } else {
       const temp = [
         [
@@ -113,17 +114,21 @@ const Conditional = ({ type }: IProps) => {
   }, [layer, property, styleKey]);
 
   const styleValue = useCallback(
-    (value: (number | string)[][]) => [
-      conditionType,
-      ['get', colName],
-      ...(conditionType === 'step' ? value.flat().reverse() : value.flat()),
-    ],
+    (value: (number | string)[][]) => {
+      let arr = value;
+      if (conditionType === 'step') {
+        const popped = arr.pop() ?? [];
+        const reversed = arr.map((a) => a.reverse());
+        arr = [...reversed, popped];
+      }
+      return [conditionType, ['get', colName], ...arr.flat()];
+    },
     [colName, conditionType]
   );
 
   const applyStyles = useCallback(
     (value: number | Expression | StyleFunction) => {
-      if (openLayerID && map && property && styleKey && pairs.length > 0) {
+      if (openLayerID && map && property && styleKey && value) {
         updateStyle(openLayerID, map, styleKey, property, value, setStyleObj);
       }
     },

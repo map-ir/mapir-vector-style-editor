@@ -67,15 +67,19 @@ const BaseOn = ({ type }: IProps) => {
     layer?.paint?.[property] ?? '#C11010'
   );
   const [method, setMethod] = useState<OptionsType>(options[0]);
+  const [methodType, setMethodType] = useState<'match' | 'step'>('match');
+  const [selectedCol, setSelectedCol] = useState<string>('');
 
   useEffect(() => {
     // @ts-ignore line
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     const expression = layer?.[styleKey]?.[property];
 
-    if (expression?.[0] === 'match' || expression?.[0] === 'step')
+    if (expression?.[0] === 'match' || expression?.[0] === 'step') {
       setMethod('conditional');
-    else if (expression?.[0] === 'interpolate') setMethod('zoom');
+      setMethodType(expression?.[0]);
+      setSelectedCol(expression?.[1]?.[1]);
+    } else if (expression?.[0] === 'interpolate') setMethod('zoom');
     else if (expression?.[0] === 'get') setMethod('dynamic');
     else setMethod('static');
 
@@ -165,9 +169,24 @@ const BaseOn = ({ type }: IProps) => {
         </Selector>
       ),
       zoom: property && <ZoomBase type={type} />,
-      conditional: property && <Conditional type={type} />,
+      conditional: property && (
+        <Conditional
+          type={type}
+          method={methodType}
+          selectedCol={selectedCol}
+        />
+      ),
     }[method];
-  }, [method, size, columns, property, styleKey, color]);
+  }, [
+    method,
+    methodType,
+    selectedCol,
+    size,
+    columns,
+    property,
+    styleKey,
+    color,
+  ]);
 
   return (
     <Column>
