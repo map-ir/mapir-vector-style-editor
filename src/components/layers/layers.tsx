@@ -4,7 +4,7 @@ import React, {
   MouseEvent,
   memo,
   useCallback,
-  useEffect,
+  useMemo,
 } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
 import { useIntl } from 'react-intl';
@@ -25,6 +25,7 @@ import deleteLayer from 'common/utils/delete-layer';
 import useOutsideClickHandler from 'hooks/useOutsideClickHandler';
 
 import type { Layer } from 'mapbox-gl';
+import type { OnValidate } from '@monaco-editor/react/lib/types';
 import type { LayerType } from 'types/map';
 
 import { ReactComponent as Plus } from '../../assets/icons/plus.svg';
@@ -33,6 +34,8 @@ import { ReactComponent as Point } from '../../assets/icons/point.svg';
 import { ReactComponent as Line } from '../../assets/icons/line.svg';
 import { ReactComponent as Polygon } from '../../assets/icons/polygon.svg';
 import { ReactComponent as CodeIcon } from '../../assets/icons/code.svg';
+
+type IMarker = Parameters<OnValidate>[0][0];
 
 function LayersStyle() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -47,13 +50,15 @@ function LayersStyle() {
   const [openLayerID, setOpenLayerID] = useAtom(selectedLayerIDState);
 
   const [addLayer, isAdding] = useState(false);
-  const [changedValue, setChanged] = useState<string | undefined>(
-    JSON.stringify(styleObj?.layers) ?? ''
-  );
   const [showEditor, setShowEditor] = useState(false);
 
   const addLayerRef = useRef<HTMLDivElement>(null);
   useOutsideClickHandler(addLayerRef, isAdding.bind(null, false));
+
+  const styleCode = useMemo(() => {
+    const code = JSON.stringify(styleObj?.layers) ?? '';
+    return code ? code : '{}';
+  }, [styleObj?.layers]);
 
   const toggleExpand = (layerID?: string) => {
     setOpenLayerID((currentid: string | undefined) =>
@@ -66,41 +71,39 @@ function LayersStyle() {
     isAdding(false);
   };
 
-  useEffect(() => {
-    // setChanged(JSON.stringify(styleObj?.layers) ?? '');
-    setTimeout(function () {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-      void editorRef?.current?.getAction('editor.action.formatDocument')?.run();
-    }, 1000);
-  }, [styleObj, editorRef]);
-
   const handleChange = useCallback(
-    (value: string | undefined) => {
-      setTimeout(() => {
-        const markers = monaco?.editor?.getModelMarkers({ owner: 'json' });
-        if (!markers?.length) {
-          setStyleObj((curr) => {
-            if (curr)
-              return {
-                ...curr,
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                layers: JSON.parse(
-                  `${value ?? ''}`.replace(/[\n\r]+/g, '').replace(/\t/g, '')
-                ),
-              };
-            else return curr;
-          });
-        }
-      }, 1000);
+    (value: string, markers?: IMarker[]) => {
+      if (!markers?.length) {
+        setStyleObj((curr) => {
+          if (curr)
+            return {
+              ...curr,
+              layers: JSON.parse(
+                value.replace(/[\n\r]+/g, '').replace(/\t/g, '')
+              ),
+            };
+          else return curr;
+        });
+      }
     },
     [monaco, editorRef]
   );
 
-  useEffect(() => {
-    if (!showEditor && changedValue) {
-      handleChange(changedValue);
+  function formatDocument() {
+    editorRef?.current?.getAction('editor.action.formatDocument').run();
+  }
+
+  function toggleEditor() {
+    if (showEditor) {
+      const finalCode = editorRef.current?.getValue();
+      const markers: IMarker[] | undefined = monaco?.editor?.getModelMarkers({
+        owner: 'json',
+      });
+
+      handleChange(finalCode, markers);
     }
-  }, [showEditor, changedValue]);
+    setShowEditor(!showEditor);
+  }
 
   return (
     <Wrapper>
@@ -152,9 +155,10 @@ function LayersStyle() {
           <Editor
             height="90vh"
             defaultLanguage="json"
-            defaultValue={JSON.stringify(styleObj?.layers) ?? ''}
-            value={JSON.stringify(styleObj?.layers) ?? ''}
-            loading={intl.formatMessage({ id: 'loading' })}
+            defaultValue={styleCode}
+            loading={
+              <span dir="rtl">{intl.formatMessage({ id: 'loading' })}</span>
+            }
             options={{
               cursorStyle: 'line',
               formatOnPaste: true,
@@ -165,19 +169,19 @@ function LayersStyle() {
               },
               autoIndent: 'full',
               automaticLayout: true,
+              smoothScrolling: true,
+              contextmenu: false,
+              // cursorSmoothCaretAnimation: true,
             }}
-            onChange={(value) => {
-              setChanged(value);
-            }}
+            keepCurrentModel
             onMount={(editor) => {
               if (editor) editorRef.current = editor;
 
-              setTimeout(function () {
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-                void editorRef?.current
-                  ?.getAction('editor.action.formatDocument')
-                  .run();
-              }, 1000);
+              /// on first initialization
+              editor.onDidChangeModelLanguageConfiguration(formatDocument);
+
+              /// on every initialization after the first one (also the first one)
+              editor.onDidLayoutChange(formatDocument);
             }}
           />
         </EditorWrapper>
@@ -218,11 +222,10 @@ function LayersStyle() {
             })}
         </LayersContainer>
       )}
+
       <IconWrapper isRtl={intl.locale === 'fa'}>
         <CodeIcon
-          onClick={() => {
-            setShowEditor(!showEditor);
-          }}
+          onClick={toggleEditor}
           width={30}
           color={showEditor ? 'var(--SE-color-primary)' : 'var(--SE-shade-2)'}
         />
