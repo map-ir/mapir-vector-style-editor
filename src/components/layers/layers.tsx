@@ -24,8 +24,9 @@ import deleteLayer from 'common/utils/delete-layer';
 
 import useOutsideClickHandler from 'hooks/useOutsideClickHandler';
 
-import type { Layer } from 'mapbox-gl';
-import type { OnValidate } from '@monaco-editor/react/lib/types';
+import type { AnyLayer, Layer } from 'mapbox-gl';
+// import type { OnValidate } from '@monaco-editor/react/lib/types';
+import type { editor } from 'monaco-editor/esm/vs/editor/editor.api';
 import type { LayerType } from 'types/map';
 
 import { ReactComponent as Plus } from '../../assets/icons/plus.svg';
@@ -35,11 +36,12 @@ import { ReactComponent as Line } from '../../assets/icons/line.svg';
 import { ReactComponent as Polygon } from '../../assets/icons/polygon.svg';
 import { ReactComponent as CodeIcon } from '../../assets/icons/code.svg';
 
-type IMarker = Parameters<OnValidate>[0][0];
+// type IMarker = Parameters<OnValidate>[0][0];
+type IMarker = editor.IMarker;
+type IEditor = editor.IStandaloneCodeEditor;
 
 function LayersStyle() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const editorRef = useRef<any>();
+  const editorRef = useRef<IEditor>();
   const monaco = useMonaco();
 
   const intl = useIntl();
@@ -80,7 +82,7 @@ function LayersStyle() {
               ...curr,
               layers: JSON.parse(
                 value.replace(/[\n\r]+/g, '').replace(/\t/g, '')
-              ),
+              ) as AnyLayer[],
             };
           else return curr;
         });
@@ -90,7 +92,7 @@ function LayersStyle() {
   );
 
   function formatDocument() {
-    editorRef?.current?.getAction('editor.action.formatDocument').run();
+    void editorRef?.current?.getAction('editor.action.formatDocument')?.run();
   }
 
   function toggleEditor() {
@@ -100,7 +102,7 @@ function LayersStyle() {
         owner: 'json',
       });
 
-      handleChange(finalCode, markers);
+      if (finalCode) handleChange(finalCode, markers);
     }
     setShowEditor(!showEditor);
   }
