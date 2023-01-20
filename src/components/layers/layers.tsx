@@ -35,16 +35,22 @@ import { ReactComponent as Point } from '../../assets/icons/point.svg';
 import { ReactComponent as Line } from '../../assets/icons/line.svg';
 import { ReactComponent as Polygon } from '../../assets/icons/polygon.svg';
 import { ReactComponent as CodeIcon } from '../../assets/icons/code.svg';
+import EditableInput from 'common/input_editable';
 
 // type IMarker = Parameters<OnValidate>[0][0];
 type IMarker = editor.IMarker;
 type IEditor = editor.IStandaloneCodeEditor;
 
+interface ILayerMetadata {
+  name: string;
+}
+
 function LayersStyle() {
-  const editorRef = useRef<IEditor>();
+  const intl = useIntl();
   const monaco = useMonaco();
 
-  const intl = useIntl();
+  const editorRef = useRef<IEditor>();
+  const addLayerRef = useRef<HTMLDivElement>(null);
 
   const map = useAtomValue(mapState);
   const title = useAtomValue(titleState);
@@ -54,13 +60,12 @@ function LayersStyle() {
   const [addLayer, isAdding] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
 
-  const addLayerRef = useRef<HTMLDivElement>(null);
   useOutsideClickHandler(addLayerRef, isAdding.bind(null, false));
 
-  const styleCode = useMemo(() => {
-    const code = JSON.stringify(styleObj?.layers) ?? '';
-    return code ? code : '{}';
-  }, [styleObj?.layers]);
+  const styleCode = useMemo(
+    () => JSON.stringify(styleObj?.layers) ?? '{}',
+    [styleObj?.layers]
+  );
 
   const toggleExpand = (layerID?: string) => {
     setOpenLayerID((currentid: string | undefined) =>
@@ -105,6 +110,10 @@ function LayersStyle() {
       if (finalCode) handleChange(finalCode, markers);
     }
     setShowEditor(!showEditor);
+  }
+
+  function renameLayer(layer: Layer, newName: string) {
+    return;
   }
 
   return (
@@ -192,7 +201,9 @@ function LayersStyle() {
           {styleObj?.layers
             ?.filter((layer: Layer) => !layer?.id?.endsWith('-text-layer'))
             ?.map((layer: Layer) => {
-              const { id, type } = layer;
+              const { id, type, metadata } = layer;
+              const { name } = metadata as ILayerMetadata;
+
               const open = openLayerID === id;
 
               return (
@@ -202,11 +213,18 @@ function LayersStyle() {
                   onOpen={toggleExpand.bind(null, id)}
                   HeaderRenderer={() => (
                     <ExpandHeader>
-                      <GeoIcon
-                        // title={intl.formatMessage({ id: type })}
-                        data={type}
-                        color={'var(--SE-color-primary)'}
-                      />
+                      <LayerTitle>
+                        <GeoIcon
+                          // title={intl.formatMessage({ id: type })}
+                          data={type}
+                          color={'var(--SE-color-primary)'}
+                        />
+                        <EditableInput
+                          placeholder="عنوان لایه"
+                          value={name}
+                          onChange={renameLayer.bind(null, layer)}
+                        />
+                      </LayerTitle>
                       <Delete
                         style={{ cursor: 'pointer' }}
                         color={'var(--SE-shade-3)'}
@@ -260,6 +278,15 @@ const Header = styled.div`
 `;
 
 const ExpandHeader = styled(Header)``;
+
+const LayerTitle = styled(Header)`
+  flex-grow: 2;
+  justify-content: flex-start;
+
+  input {
+    flex-grow: 2;
+  }
+`;
 
 const Title = styled.h2`
   margin: 0;
