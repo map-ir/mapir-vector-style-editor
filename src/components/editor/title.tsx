@@ -19,7 +19,10 @@ import {
   SelectItemIndicator,
 } from 'common/select';
 import { Column, Row, Selector, Label } from 'common/styles';
+
 import updateStyle from 'common/utils/update-style';
+import deleteLayer from 'common/utils/delete-layer';
+import { addNewLayer } from 'common/utils/add-new-layer';
 
 import {
   layerState,
@@ -31,10 +34,8 @@ import { columnsState } from 'atoms/general';
 
 import { ReactComponent as Arrow } from '../../assets/icons/arrow-down.svg';
 import { ReactComponent as Check } from '../../assets/icons/tick.svg';
-import { addNewLayer } from 'common/utils/add-new-layer';
 
 import type { Layer } from 'mapbox-gl';
-import deleteLayer from 'common/utils/delete-layer';
 
 const SetTitle = () => {
   const intl = useIntl();

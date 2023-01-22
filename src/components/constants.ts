@@ -1,11 +1,3 @@
-import React from 'react';
-
-import SetIcon from './point/symbol-icon';
-import BaseOn from './editor/base-on';
-import SetOpacity from './editor/opacity';
-import SetLineType from './editor/line-type';
-import SetTitle from './editor/title';
-
 import type { CircleLayer, FillLayer, LineLayer, SymbolLayer } from 'mapbox-gl';
 
 export interface ITab<T> {
@@ -88,48 +80,6 @@ export const fillTabs: ITab<FillPageIdsType>[] = [
     disabled: false,
   },
 ];
-
-export const components: Record<string, JSX.Element> = {
-  symbol: (
-    <>
-      <SetIcon />
-      <BaseOn type="size" />
-    </>
-  ),
-  circle: (
-    <>
-      <BaseOn type="size" />
-      <BaseOn type="color" />
-    </>
-  ),
-  line: (
-    <>
-      <BaseOn type="size" />
-      <BaseOn type="color" />
-    </>
-  ),
-  fill: <BaseOn type="color" />,
-  outline: (
-    <>
-      <BaseOn type="stroke" />
-      <BaseOn type="color" />
-    </>
-  ),
-  'circle-outline': (
-    <>
-      <BaseOn type="stroke-size" />
-      <BaseOn type="stroke-color" />
-    </>
-  ),
-  'fill-outline': (
-    <>
-      <BaseOn type="stroke-color" />
-    </>
-  ),
-  other: <SetOpacity />,
-  title: <SetTitle />,
-  'line-type': <SetLineType />,
-};
 
 export const DefaultSymbolLayer: Partial<SymbolLayer> = {
   type: 'symbol',

@@ -4,13 +4,9 @@ import SectionTab from 'common/section-tab';
 import { PageSwitch, Page } from 'common/page-switch';
 import { LayerComponent, EditorWrapper } from 'common/styles';
 
-import {
-  symbolTabs,
-  circleTabs,
-  lineTabs,
-  fillTabs,
-  components,
-} from './constants';
+import { editorComponents } from 'components/editor';
+
+import { symbolTabs, circleTabs, lineTabs, fillTabs } from './constants';
 
 import type { LayerType } from 'types/map';
 import type { ITab } from './constants';
@@ -74,7 +70,7 @@ const InnerTabs = ({ type }: IProps) => {
       <PageSwitch pageId={activePageId}>
         {tabs?.map((tab) => (
           <Page key={tab?.id} id={tab?.id}>
-            <EditorWrapper>{components?.[tab?.id]}</EditorWrapper>
+            <EditorWrapper>{editorComponents?.[tab?.id]}</EditorWrapper>
           </Page>
         ))}
       </PageSwitch>
