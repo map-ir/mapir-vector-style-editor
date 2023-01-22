@@ -14,6 +14,8 @@ import Editor, { useMonaco } from '@monaco-editor/react';
 import { titleState } from 'atoms/general';
 import { styleObjState, selectedLayerIDState, mapState } from 'atoms/map';
 
+import EditableInput from 'common/input_editable';
+
 import GeoIcon from 'common/geo-icon';
 import Expandable from 'common/expandable';
 import { Row, Icon } from 'common/styles';
@@ -35,7 +37,7 @@ import { ReactComponent as Point } from '../../assets/icons/point.svg';
 import { ReactComponent as Line } from '../../assets/icons/line.svg';
 import { ReactComponent as Polygon } from '../../assets/icons/polygon.svg';
 import { ReactComponent as CodeIcon } from '../../assets/icons/code.svg';
-import EditableInput from 'common/input_editable';
+import updateStyle from 'common/utils/update-style';
 
 // type IMarker = Parameters<OnValidate>[0][0];
 type IMarker = editor.IMarker;
@@ -78,7 +80,7 @@ function LayersStyle() {
     isAdding(false);
   };
 
-  const handleChange = useCallback(
+  const handleChangeCode = useCallback(
     (value: string, markers?: IMarker[]) => {
       if (!markers?.length) {
         setStyleObj((curr) => {
@@ -107,13 +109,13 @@ function LayersStyle() {
         owner: 'json',
       });
 
-      if (finalCode) handleChange(finalCode, markers);
+      if (finalCode) handleChangeCode(finalCode, markers);
     }
     setShowEditor(!showEditor);
   }
 
   function renameLayer(layer: Layer, newName: string) {
-    return;
+    updateStyle(layer.id, undefined, 'metadata', 'name', newName, setStyleObj);
   }
 
   return (
@@ -202,7 +204,8 @@ function LayersStyle() {
             ?.filter((layer: Layer) => !layer?.id?.endsWith('-text-layer'))
             ?.map((layer: Layer) => {
               const { id, type, metadata } = layer;
-              const { name } = metadata as ILayerMetadata;
+              const { name = '' } =
+                (metadata as ILayerMetadata | undefined) ?? {};
 
               const open = openLayerID === id;
 

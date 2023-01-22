@@ -1,21 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import styled from 'styled-components';
 
 import MapirStyleEditor from '../dist';
 
+const token =
+  'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImQ4NjgxMjkwNmY1ODgxNTM5YjAyNWEzNDM0N2Y2MjQ2MGM0NDBmNjgxYjA2MjhmMjIzODM0MzY4ZGU2YzYyYTA4NGVlYjBkMDYyYjRjMGE5In0.eyJhdWQiOiIxIiwianRpIjoiZDg2ODEyOTA2ZjU4ODE1MzliMDI1YTM0MzQ3ZjYyNDYwYzQ0MGY2ODFiMDYyOGYyMjM4MzQzNjhkZTZjNjJhMDg0ZWViMGQwNjJiNGMwYTkiLCJpYXQiOjE2NzQzODczODEsIm5iZiI6MTY3NDM4NzM4MSwiZXhwIjoxNjc0MzkwOTgxLCJzdWIiOiI5YmY2NjkyOS0xOWMxLTRiOWUtODFiNS03Y2Y5OThiN2I0YjIiLCJzY29wZXMiOlsiYmFzaWMiLCJteTphZG1pbiJdfQ.sM3kfVXbv1Q2Ji0P3jU62v7f4WHXrmpomDhZVqLVk4IbOT2m4vp2SBul_9Qxn6s25DUbOQGOgjtLC9s4XQGCLU-AkCwUQz4J4EUX0meBxKb-z3QRTTD7CNLrcNYZnPG9wDtbU7K1Iq3Ziosnn8Yol_X99RtcDpLiQdC-VhoFW5wqCMN68K4MLJf7KRhr6fcoaHOvwudMGkAW6U0dWQgpylkc0r32_EWRwynf3KK_DpH6AH-QqZlg5xcpDYXyUnxnM7o3SZ5o6SanO3X6Cz2YYzbDFbghBaIlHYsE0hPqZZfSQd2WPb752kVJhKnJ76m51Ni7udjd3ZN0Ox6g49gAvw';
+
 function App() {
   return (
-    <main
-      style={{
-        width: '100vw',
-        height: '100vh',
-        padding: '1em',
-        overflow: 'hidden',
-      }}
-    >
+    <Container>
       <MapirStyleEditor
         map={{
           transformRequest: (url: string) => {
+            console.log('🚀 ~ file: index.tsx:16 ~ App ~ url', url);
             if (url.startsWith('https://map.ir')) {
               return {
                 url,
@@ -37,7 +35,7 @@ function App() {
           },
         }}
         // locale="en"
-        styleURL="https://my-dev.map.ir/share/fab8d10d-c32a-4da8-823f-43647a0997c5/api/mym/styles/data/style_9bf66929-19c1-4b9e-81b5-7cf998b7b4b2_afc78483-3eb5-4d8f-9a56-91374d46adc2.json"
+        styleURL="https://my-dev.map.ir/share/5c0eff51-549d-4784-878f-dcd26930e8d2/api/mym/styles/data/style_9bf66929-19c1-4b9e-81b5-7cf998b7b4b2_daf888b5-1d1b-4125-8d20-04030d52fa19.json"
         sprite="https://map.ir/vector/styles/main/sprite"
         title="تنظیمات استایل"
         columns={['num', 'city']}
@@ -67,7 +65,7 @@ function App() {
           console.log('🚀 ~ file: index.tsx ~ line 49 ~ App ~ style', style);
         }}
       />
-    </main>
+    </Container>
   );
 }
 
@@ -81,5 +79,9 @@ root.render(
   </React.StrictMode>
 );
 
-const token =
-  'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjhlNmVlMWIyNWYxOGZjODM4N2M5NGVlYWQ2YTI5OWZiNzg1ZDdjN2NkOWJlMzRhYjE4MzE5OTVhNWQzZmQxMTU1NDMwNmVjZjQ0M2NmNzY3In0.eyJhdWQiOiIxIiwianRpIjoiOGU2ZWUxYjI1ZjE4ZmM4Mzg3Yzk0ZWVhZDZhMjk5ZmI3ODVkN2M3Y2Q5YmUzNGFiMTgzMTk5NWE1ZDNmZDExNTU0MzA2ZWNmNDQzY2Y3NjciLCJpYXQiOjE2NzMzNDQ5MDUsIm5iZiI6MTY3MzM0NDkwNSwiZXhwIjoxNjczMzQ4NTA1LCJzdWIiOiI5YmY2NjkyOS0xOWMxLTRiOWUtODFiNS03Y2Y5OThiN2I0YjIiLCJzY29wZXMiOlsiYmFzaWMiLCJteTphZG1pbiJdfQ.sugTwOSh52nuMru5y0sJTL4mDaz2hMbR4cttk7--k-psHYFwV6dzMMNnXKN2F51bL4ic6_Zaq2kL3eS9Y8ASz8bfKhHERjgzAn2GU026wQ_NQCva7rZkpNY51idahAleR6TTO-FlDtgKwOt9Mlb6VOCfYuIgP0uW29YK4dISxT7q-8_al53W5jJFeoy0tc4iup4RDad8YyAm-rDp3hqZgsZ_YzaJ5e6OU11qHA4j9Y9EVkhrFTvH3fVSEHtSVo_KBoHBLRT9da5R4CxtPNcN2nyu1qq_QZ9xRwVBEYrEJNgAR30GrCE0yjhOQAEdI-cIhy2QuMF2cMsBzHqJhZGo1w';
+const Container = styled.main`
+  width: 100vw;
+  height: 100vh;
+  padding: 1em;
+  overflow: hidden;
+`;

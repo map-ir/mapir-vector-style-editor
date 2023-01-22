@@ -1,8 +1,8 @@
 import type { Style } from 'mapbox-gl';
-import type { MapProps } from 'types/map';
+import type { MapOptions } from 'types/map';
 
 interface IProps {
-  map: MapProps;
+  map: MapOptions;
   locale?: 'fa' | 'en';
   styleURL: string;
   sprite?: string;

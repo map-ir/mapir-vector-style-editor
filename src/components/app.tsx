@@ -5,12 +5,7 @@ import styled, { css, createGlobalStyle } from 'styled-components';
 import Map from '../common/map';
 import Layers from './layers';
 
-import {
-  mapPropsState,
-  styleURLState,
-  styleObjState,
-  spriteState,
-} from '../atoms/map';
+import { styleURLState, styleObjState, spriteState } from '../atoms/map';
 import { titleState, columnsState, distinctState } from '../atoms/general';
 
 import type { IProps } from 'types/general';
@@ -81,17 +76,12 @@ function App({
   onCancle,
   getDistinctValues,
 }: IProps) {
-  const setMapProp = useSetAtom(mapPropsState);
   const [styleURLAtom, setStyleURL] = useAtom(styleURLState);
   const setStyleObj = useSetAtom(styleObjState);
   const setTitle = useSetAtom(titleState);
   const setColumns = useSetAtom(columnsState);
   const setDistinctFunc = useSetAtom(distinctState);
   const setSprite = useSetAtom(spriteState);
-
-  useEffect(() => {
-    setMapProp(map);
-  }, [map]);
 
   useEffect(() => {
     setStyleURL(styleURL);
@@ -123,7 +113,7 @@ function App({
     <Wrapper locale={locale ?? 'en'}>
       <GlobalStyle />
       <Layers onSubmit={onSubmit} onCancle={onCancle} />
-      <Map />
+      <Map options={map} />
     </Wrapper>
   );
 }

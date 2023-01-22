@@ -1,28 +1,35 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useCallback, useState } from 'react';
 import styled, { css } from 'styled-components';
 
-import type { ForwardedRef, ChangeEvent } from 'react';
+import type { ForwardedRef, KeyboardEvent } from 'react';
 
 interface IProps {
   value: string;
-  onChange?: (value: string, event: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (value: string, event: KeyboardEvent<HTMLInputElement>) => void;
   placeholder?: string;
   className?: string;
   as?: React.ElementType;
 }
 
 const EditableInput = forwardRef(function EditableInput(
-  { className, as, onChange, ...props }: IProps,
+  { className, as, value, onChange, ...props }: IProps,
   ref?: ForwardedRef<HTMLInputElement> | null
 ) {
   const [editable, setEditable] = useState(false);
+
+  const onkeyup = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.code === 'Enter') {
+      onChange?.((e.target as HTMLInputElement).value, e);
+    }
+  }, []);
 
   return (
     <StyledInput
       ref={ref}
       className={className}
       editable={editable}
-      onChange={(e) => onChange?.(e.target.value, e)}
+      defaultValue={value}
+      onKeyUp={onkeyup}
       onFocus={setEditable.bind(null, true)}
       onBlur={setEditable.bind(null, false)}
       {...props}
