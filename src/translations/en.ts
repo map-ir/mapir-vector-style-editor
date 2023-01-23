@@ -39,4 +39,5 @@ export default {
   'no-value': 'No Value',
   value: 'Value',
   loading: 'Loading...',
+  layer_placeholder: 'Layer name',
 };

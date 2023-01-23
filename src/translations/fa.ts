@@ -40,4 +40,5 @@ export default {
   'no-value': 'بدون مقدار',
   value: 'مقدار',
   loading: 'در حال بارگذاری...',
+  layer_placeholder: 'عنوان لایه',
 };

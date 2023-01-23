@@ -42,14 +42,18 @@ export default EditableInput;
 const StyledInput = styled.input<{ editable: boolean }>`
   min-width: 2em;
   height: 2em;
-  /* border: 1px solid var(--SE-shade-3);
-  border-radius: var(--SE-radius-4); */
+  border-radius: var(--SE-radius-4);
   font-family: inherit;
+  padding-inline: 1ch;
 
   ${(p) =>
     !p.editable &&
     css`
       border: unset;
       outline: unset;
+
+      :hover {
+        background: var(--SE-light-2);
+      }
     `};
 `;

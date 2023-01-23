@@ -223,7 +223,9 @@ function LayersStyle() {
                           color={'var(--SE-color-primary)'}
                         />
                         <EditableInput
-                          placeholder="عنوان لایه"
+                          placeholder={intl.formatMessage({
+                            id: 'layer_placeholder',
+                          })}
                           value={name}
                           onChange={renameLayer.bind(null, layer)}
                         />

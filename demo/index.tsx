@@ -10,6 +10,7 @@ const token =
 function App() {
   return (
     <Container>
+      <Header></Header>
       <MapirStyleEditor
         map={{
           transformRequest: (url: string) => {
@@ -82,6 +83,12 @@ root.render(
 const Container = styled.main`
   width: 100vw;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
   padding: 1em;
   overflow: hidden;
+`;
+
+const Header = styled.main`
+  width: 100%;
 `;
