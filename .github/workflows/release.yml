@@ -14,7 +14,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 18
-      - name: Bundle 📦 and Build Demo 🔧
+      - name: Bundle 📦 and Build 🔧
         run: |
           npm ci
           npm run build

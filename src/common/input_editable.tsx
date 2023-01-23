@@ -1,11 +1,16 @@
 import React, { forwardRef, useCallback, useState } from 'react';
 import styled, { css } from 'styled-components';
 
-import type { ForwardedRef, KeyboardEvent } from 'react';
+import type {
+  ForwardedRef,
+  KeyboardEvent,
+  FocusEvent,
+  SyntheticEvent,
+} from 'react';
 
 interface IProps {
   value: string;
-  onChange?: (value: string, event: KeyboardEvent<HTMLInputElement>) => void;
+  onChange?: (value: string, event: SyntheticEvent<HTMLInputElement>) => void;
   placeholder?: string;
   className?: string;
   as?: React.ElementType;
@@ -17,11 +22,25 @@ const EditableInput = forwardRef(function EditableInput(
 ) {
   const [editable, setEditable] = useState(false);
 
-  const onkeyup = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.code === 'Enter') {
-      onChange?.((e.target as HTMLInputElement).value, e);
-    }
-  }, []);
+  const editAndBlur = useCallback(
+    (e: KeyboardEvent<HTMLInputElement> | FocusEvent<HTMLInputElement>) => {
+      const { type } = e;
+
+      if (
+        type === 'keyup' &&
+        (e as KeyboardEvent<HTMLInputElement>).code === 'Enter'
+      ) {
+        onChange?.((e.target as HTMLInputElement).value, e);
+      }
+
+      if (type === 'blur') {
+        onChange?.((e.target as HTMLInputElement).value, e);
+      }
+
+      setEditable.bind(null, false);
+    },
+    []
+  );
 
   return (
     <StyledInput
@@ -29,9 +48,9 @@ const EditableInput = forwardRef(function EditableInput(
       className={className}
       editable={editable}
       defaultValue={value}
-      onKeyUp={onkeyup}
       onFocus={setEditable.bind(null, true)}
-      onBlur={setEditable.bind(null, false)}
+      onKeyUp={editAndBlur}
+      onBlur={editAndBlur}
       {...props}
     />
   );
