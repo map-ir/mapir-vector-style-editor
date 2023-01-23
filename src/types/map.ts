@@ -1,8 +1,10 @@
 import type { MapboxOptions, TransformRequestFunction } from 'mapbox-gl';
 
-interface MapProps extends Partial<MapboxOptions> {
+interface MapOptions
+  extends Partial<Omit<MapboxOptions, 'attributionControl'>> {
   transformRequest: TransformRequestFunction;
 }
+
 type PointLayer = 'circle' | 'symbol' | 'cluster' | 'heatmap';
 type LayerType = PointLayer | 'line' | 'fill';
 
@@ -16,4 +18,4 @@ type Icon = Record<
   }
 >;
 
-export type { MapProps, PointLayer, LayerType, Icon };
+export type { MapOptions, PointLayer, LayerType, Icon };

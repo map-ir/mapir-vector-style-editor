@@ -3,14 +3,9 @@ import { useAtom, useSetAtom } from 'jotai';
 import styled, { css, createGlobalStyle } from 'styled-components';
 
 import Map from '../common/map';
-import Editor from './layers';
+import Layers from './layers';
 
-import {
-  mapPropsState,
-  styleURLState,
-  styleObjState,
-  spriteState,
-} from '../atoms/map';
+import { styleURLState, styleObjState, spriteState } from '../atoms/map';
 import { titleState, columnsState, distinctState } from '../atoms/general';
 
 import type { IProps } from 'types/general';
@@ -62,9 +57,17 @@ const GlobalStyle = createGlobalStyle`
     ${globalishStyle}
 `;
 
-const App = ({
+const fetchStyle = (url: string) => {
+  return fetch(url, {
+    method: 'GET',
+  })
+    .then((res) => res.json())
+    .then((res: Style) => res);
+};
+
+function App({
   map,
-  locale,
+  locale = 'fa',
   styleURL,
   sprite,
   title,
@@ -72,8 +75,7 @@ const App = ({
   onSubmit,
   onCancle,
   getDistinctValues,
-}: IProps) => {
-  const setMapProp = useSetAtom(mapPropsState);
+}: IProps) {
   const [styleURLAtom, setStyleURL] = useAtom(styleURLState);
   const setStyleObj = useSetAtom(styleObjState);
   const setTitle = useSetAtom(titleState);
@@ -81,10 +83,8 @@ const App = ({
   const setDistinctFunc = useSetAtom(distinctState);
   const setSprite = useSetAtom(spriteState);
 
-  setMapProp(map);
-
   useEffect(() => {
-    void setStyleURL(styleURL);
+    setStyleURL(styleURL);
   }, [styleURL]);
 
   useEffect(() => {
@@ -101,32 +101,23 @@ const App = ({
 
   useEffect(() => {
     if (getDistinctValues)
-      void setDistinctFunc(
-        () => (col_name: string) => getDistinctValues(col_name)
-      );
+      setDistinctFunc(() => (col_name: string) => getDistinctValues(col_name));
   }, [getDistinctValues]);
-
-  const fetchStyle = (url: string) => {
-    return fetch(url, {
-      method: 'GET',
-    })
-      .then((res) => res.json())
-      .then((res: Style) => res);
-  };
 
   useEffect(() => {
     if (styleURLAtom)
-      void fetchStyle(styleURLAtom).then((res) => setStyleObj(res));
-  }, [styleURLAtom, setStyleObj]);
+      fetchStyle(styleURLAtom).then(setStyleObj).catch(console.error);
+  }, [styleURLAtom]);
 
   return (
     <Wrapper locale={locale ?? 'en'}>
       <GlobalStyle />
-      <Editor onSubmit={onSubmit} onCancle={onCancle} />
-      <Map />
+      <Layers onSubmit={onSubmit} onCancle={onCancle} />
+      <Map options={map} />
     </Wrapper>
   );
-};
+}
+
 export default memo(App);
 
 const Wrapper = styled.div<{ locale: string }>`

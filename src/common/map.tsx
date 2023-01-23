@@ -7,23 +7,30 @@ import {
 } from 'mapbox-gl';
 import { useAtom, useAtomValue } from 'jotai';
 
-import {
-  mapState,
-  isMapLoadedState,
-  mapPropsState,
-  styleObjState,
-} from '../atoms/map';
+import { mapState, isMapLoadedState, styleObjState } from '../atoms/map';
 
-import type { ResourceType } from 'mapbox-gl';
+import type { MapOptions } from 'types/map';
 
 // import urlRTL from './../libs/mapbox-gl-rtl-text-v0.2.3.js';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-export default function Map() {
+if (getRTLTextPluginStatus() === 'unavailable')
+  setRTLTextPlugin(
+    'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js',
+    (err) => {
+      if (err) console.error(err);
+    },
+    true
+  );
+
+interface IProps {
+  options: MapOptions;
+}
+
+export default function Map({ options: mapOptions }: IProps) {
   const [map, setMap] = useAtom(mapState);
   const [isMapLoaded, setIsMapLoaded] = useAtom(isMapLoadedState);
-  const mapProps = useAtomValue(mapPropsState);
   const styleObj = useAtomValue(styleObjState);
 
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -32,31 +39,25 @@ export default function Map() {
   useEffect(() => {
     if (map) return;
 
-    if (getRTLTextPluginStatus() === 'unavailable')
-      setRTLTextPlugin(
-        'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js',
-        (err) => {
-          if (err) console.error(err);
-        },
-        true
-      );
+    const options = Object.assign(
+      /// default map options
+      {
+        style: 'https://map.ir/vector/styles/main/mapir-Dove-style.json',
+        center: [54.82, 31.77],
+        zoom: 5,
+        pitch: 0,
+        hash: true,
+        attributionControl: true,
+        customAttribution: `${
+          (mapOptions?.customAttribution ?? '') as string
+        } © Map.ir © Openstreetmap`,
+      },
+      mapOptions
+    );
 
     const futureMap = new MapGL({
-      ...mapProps,
       container: mapRef.current || '',
-      style:
-        mapProps?.style ??
-        'https://map.ir/vector/styles/main/mapir-Dove-style.json',
-      center: mapProps?.center ?? [54.82, 31.77],
-      zoom: mapProps?.zoom ?? 5,
-      pitch: mapProps?.pitch ?? 0,
-      hash: mapProps?.hash ?? true,
-      attributionControl: true,
-      customAttribution: `${
-        (mapProps?.customAttribution ?? '') as string
-      } © Map.ir © Openstreetmap`,
-      transformRequest: (url: string, resourceType: ResourceType) =>
-        mapProps?.transformRequest(url, resourceType),
+      ...options,
     });
 
     futureMap.on('load', () => {

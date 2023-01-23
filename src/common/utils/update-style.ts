@@ -11,13 +11,13 @@ import type {
 
 const updateStyle = (
   layer_id: string,
-  map: Map,
-  type: 'layout' | 'paint' | 'zoom',
+  map: Map | undefined,
+  type: 'layout' | 'paint' | 'zoom' | 'metadata',
   key: string | number,
   value: number | number[] | Expression | StyleFunction | string,
   setStyle: Dispatch<SetStateAction<Style | null>>
 ) => {
-  if (!layer_id || !map) return;
+  if (!layer_id && !map) return;
 
   switch (type) {
     case 'layout':
@@ -53,23 +53,38 @@ const updateStyle = (
     );
 
     const newLayers = ([] as AnyLayer[]).concat(curr_style.layers);
-    newLayers[indexOfSelectedLayer] = (
-      type === 'zoom'
-        ? {
-            ...selectedLayer[0],
-            minzoom: parseInt(key.toString()),
-            maxzoom: parseInt(value.toString()),
-          }
-        : {
-            ...selectedLayer[0],
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            [type]: {
-              // @ts-ignore line
-              ...selectedLayer[0][type],
-              [key]: value,
-            },
-          }
-    ) as AnyLayer;
+
+    switch (type) {
+      case 'zoom':
+        newLayers[indexOfSelectedLayer] = {
+          ...selectedLayer[0],
+          minzoom: parseInt(key.toString()),
+          maxzoom: parseInt(value.toString()),
+        } as AnyLayer;
+        break;
+      case 'metadata':
+        newLayers[indexOfSelectedLayer] = {
+          ...selectedLayer[0],
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          [type]: {
+            // @ts-ignore line
+            ...selectedLayer[0][type],
+            [key]: value,
+          },
+        } as AnyLayer;
+        break;
+      default:
+        newLayers[indexOfSelectedLayer] = {
+          ...selectedLayer[0],
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          [type]: {
+            // @ts-ignore line
+            ...selectedLayer[0][type],
+            [key]: value,
+          },
+        } as AnyLayer;
+        break;
+    }
 
     return {
       ...curr_style,

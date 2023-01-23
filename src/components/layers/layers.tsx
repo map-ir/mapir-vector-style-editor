@@ -4,7 +4,7 @@ import React, {
   MouseEvent,
   memo,
   useCallback,
-  useEffect,
+  useMemo,
 } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
 import { useIntl } from 'react-intl';
@@ -13,6 +13,8 @@ import Editor, { useMonaco } from '@monaco-editor/react';
 
 import { titleState } from 'atoms/general';
 import { styleObjState, selectedLayerIDState, mapState } from 'atoms/map';
+
+import EditableInput from 'common/input_editable';
 
 import GeoIcon from 'common/geo-icon';
 import Expandable from 'common/expandable';
@@ -24,7 +26,9 @@ import deleteLayer from 'common/utils/delete-layer';
 
 import useOutsideClickHandler from 'hooks/useOutsideClickHandler';
 
-import type { Layer } from 'mapbox-gl';
+import type { AnyLayer, Layer } from 'mapbox-gl';
+// import type { OnValidate } from '@monaco-editor/react/lib/types';
+import type { editor } from 'monaco-editor/esm/vs/editor/editor.api';
 import type { LayerType } from 'types/map';
 
 import { ReactComponent as Plus } from '../../assets/icons/plus.svg';
@@ -33,13 +37,22 @@ import { ReactComponent as Point } from '../../assets/icons/point.svg';
 import { ReactComponent as Line } from '../../assets/icons/line.svg';
 import { ReactComponent as Polygon } from '../../assets/icons/polygon.svg';
 import { ReactComponent as CodeIcon } from '../../assets/icons/code.svg';
+import updateStyle from 'common/utils/update-style';
+
+// type IMarker = Parameters<OnValidate>[0][0];
+type IMarker = editor.IMarker;
+type IEditor = editor.IStandaloneCodeEditor;
+
+interface ILayerMetadata {
+  name: string;
+}
 
 function LayersStyle() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const editorRef = useRef<any>();
+  const intl = useIntl();
   const monaco = useMonaco();
 
-  const intl = useIntl();
+  const editorRef = useRef<IEditor>();
+  const addLayerRef = useRef<HTMLDivElement>(null);
 
   const map = useAtomValue(mapState);
   const title = useAtomValue(titleState);
@@ -47,13 +60,14 @@ function LayersStyle() {
   const [openLayerID, setOpenLayerID] = useAtom(selectedLayerIDState);
 
   const [addLayer, isAdding] = useState(false);
-  const [changedValue, setChanged] = useState<string | undefined>(
-    JSON.stringify(styleObj?.layers) ?? ''
-  );
   const [showEditor, setShowEditor] = useState(false);
 
-  const addLayerRef = useRef<HTMLDivElement>(null);
   useOutsideClickHandler(addLayerRef, isAdding.bind(null, false));
+
+  const styleCode = useMemo(
+    () => JSON.stringify(styleObj?.layers) ?? '{}',
+    [styleObj?.layers]
+  );
 
   const toggleExpand = (layerID?: string) => {
     setOpenLayerID((currentid: string | undefined) =>
@@ -66,41 +80,43 @@ function LayersStyle() {
     isAdding(false);
   };
 
-  useEffect(() => {
-    // setChanged(JSON.stringify(styleObj?.layers) ?? '');
-    setTimeout(function () {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-      void editorRef?.current?.getAction('editor.action.formatDocument')?.run();
-    }, 1000);
-  }, [styleObj, editorRef]);
-
-  const handleChange = useCallback(
-    (value: string | undefined) => {
-      setTimeout(() => {
-        const markers = monaco?.editor?.getModelMarkers({ owner: 'json' });
-        if (!markers?.length) {
-          setStyleObj((curr) => {
-            if (curr)
-              return {
-                ...curr,
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                layers: JSON.parse(
-                  `${value ?? ''}`.replace(/[\n\r]+/g, '').replace(/\t/g, '')
-                ),
-              };
-            else return curr;
-          });
-        }
-      }, 1000);
+  const handleChangeCode = useCallback(
+    (value: string, markers?: IMarker[]) => {
+      if (!markers?.length) {
+        setStyleObj((curr) => {
+          if (curr)
+            return {
+              ...curr,
+              layers: JSON.parse(
+                value.replace(/[\n\r]+/g, '').replace(/\t/g, '')
+              ) as AnyLayer[],
+            };
+          else return curr;
+        });
+      }
     },
     [monaco, editorRef]
   );
 
-  useEffect(() => {
-    if (!showEditor && changedValue) {
-      handleChange(changedValue);
+  function formatDocument() {
+    void editorRef?.current?.getAction('editor.action.formatDocument')?.run();
+  }
+
+  function toggleEditor() {
+    if (showEditor) {
+      const finalCode = editorRef.current?.getValue();
+      const markers: IMarker[] | undefined = monaco?.editor?.getModelMarkers({
+        owner: 'json',
+      });
+
+      if (finalCode) handleChangeCode(finalCode, markers);
     }
-  }, [showEditor, changedValue]);
+    setShowEditor(!showEditor);
+  }
+
+  function renameLayer(layer: Layer, newName: string) {
+    updateStyle(layer.id, undefined, 'metadata', 'name', newName, setStyleObj);
+  }
 
   return (
     <Wrapper>
@@ -152,9 +168,10 @@ function LayersStyle() {
           <Editor
             height="90vh"
             defaultLanguage="json"
-            defaultValue={JSON.stringify(styleObj?.layers) ?? ''}
-            value={JSON.stringify(styleObj?.layers) ?? ''}
-            loading={intl.formatMessage({ id: 'loading' })}
+            defaultValue={styleCode}
+            loading={
+              <span dir="rtl">{intl.formatMessage({ id: 'loading' })}</span>
+            }
             options={{
               cursorStyle: 'line',
               formatOnPaste: true,
@@ -165,19 +182,19 @@ function LayersStyle() {
               },
               autoIndent: 'full',
               automaticLayout: true,
+              smoothScrolling: true,
+              contextmenu: false,
+              // cursorSmoothCaretAnimation: true,
             }}
-            onChange={(value) => {
-              setChanged(value);
-            }}
+            keepCurrentModel
             onMount={(editor) => {
               if (editor) editorRef.current = editor;
 
-              setTimeout(function () {
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-                void editorRef?.current
-                  ?.getAction('editor.action.formatDocument')
-                  .run();
-              }, 1000);
+              /// on first initialization
+              editor.onDidChangeModelLanguageConfiguration(formatDocument);
+
+              /// on every initialization after the first one (also the first one)
+              editor.onDidLayoutChange(formatDocument);
             }}
           />
         </EditorWrapper>
@@ -186,7 +203,10 @@ function LayersStyle() {
           {styleObj?.layers
             ?.filter((layer: Layer) => !layer?.id?.endsWith('-text-layer'))
             ?.map((layer: Layer) => {
-              const { id, type } = layer;
+              const { id, type, metadata } = layer;
+              const { name = '' } =
+                (metadata as ILayerMetadata | undefined) ?? {};
+
               const open = openLayerID === id;
 
               return (
@@ -196,11 +216,20 @@ function LayersStyle() {
                   onOpen={toggleExpand.bind(null, id)}
                   HeaderRenderer={() => (
                     <ExpandHeader>
-                      <GeoIcon
-                        // title={intl.formatMessage({ id: type })}
-                        data={type}
-                        color={'var(--SE-color-primary)'}
-                      />
+                      <LayerTitle>
+                        <GeoIcon
+                          // title={intl.formatMessage({ id: type })}
+                          data={type}
+                          color={'var(--SE-color-primary)'}
+                        />
+                        <EditableInput
+                          placeholder={intl.formatMessage({
+                            id: 'layer_placeholder',
+                          })}
+                          value={name}
+                          onChange={renameLayer.bind(null, layer)}
+                        />
+                      </LayerTitle>
                       <Delete
                         style={{ cursor: 'pointer' }}
                         color={'var(--SE-shade-3)'}
@@ -218,11 +247,10 @@ function LayersStyle() {
             })}
         </LayersContainer>
       )}
+
       <IconWrapper isRtl={intl.locale === 'fa'}>
         <CodeIcon
-          onClick={() => {
-            setShowEditor(!showEditor);
-          }}
+          onClick={toggleEditor}
           width={30}
           color={showEditor ? 'var(--SE-color-primary)' : 'var(--SE-shade-2)'}
         />
@@ -255,6 +283,15 @@ const Header = styled.div`
 `;
 
 const ExpandHeader = styled(Header)``;
+
+const LayerTitle = styled(Header)`
+  flex-grow: 2;
+  justify-content: flex-start;
+
+  input {
+    flex-grow: 2;
+  }
+`;
 
 const Title = styled.h2`
   margin: 0;

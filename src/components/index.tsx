@@ -14,33 +14,12 @@ const messages: Record<string, Record<string, string>> = {
   fa: messages_fa,
 };
 
-const MapirStyleEditor = ({
-  map,
-  locale = 'fa',
-  styleURL,
-  sprite,
-  title,
-  columns,
-  className,
-  onSubmit,
-  onCancle,
-  getDistinctValues,
-}: IProps) => {
+const MapirStyleEditor = (props: IProps) => {
+  const locale = props.locale ?? 'fa';
   return (
     <IntlProvider locale={locale} key={locale} messages={messages[locale]}>
       <Provider>
-        <App
-          className={className}
-          map={map}
-          locale={locale}
-          styleURL={styleURL}
-          title={title}
-          sprite={sprite}
-          columns={columns}
-          onSubmit={onSubmit}
-          onCancle={onCancle}
-          getDistinctValues={getDistinctValues}
-        />
+        <App {...props} />
       </Provider>
     </IntlProvider>
   );
