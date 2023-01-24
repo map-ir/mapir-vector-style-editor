@@ -8,7 +8,7 @@ import { editorComponents } from 'components/editor';
 
 import { symbolTabs, circleTabs, lineTabs, fillTabs } from './constants';
 
-import type { LayerType } from 'types/map';
+import type { LayerType } from '../types/map';
 import type { ITab } from './constants';
 
 interface IProps {

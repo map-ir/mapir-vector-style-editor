@@ -58,6 +58,7 @@ function App() {
               .then((res) => {
                 return res?.value?.map((v) => v?.[column_name]).filter(Boolean);
               });
+          else return Promise.resolve([]);
         }}
         onSubmit={(style) => {
           console.log('🚀 ~ file: index.tsx ~ line 46 ~ App ~ style', style);

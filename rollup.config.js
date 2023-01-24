@@ -36,8 +36,6 @@ export default {
     terser(),
     typescript({
       tsconfig: './tsconfig.build.json',
-      declaration: true,
-      declarationDir: './dist',
     }),
     babel({
       babelrc: true,

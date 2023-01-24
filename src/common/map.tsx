@@ -9,7 +9,7 @@ import { useAtom, useAtomValue } from 'jotai';
 
 import { mapState, isMapLoadedState, styleObjState } from '../atoms/map';
 
-import type { MapOptions } from 'types/map';
+import type { MapOptions } from '../types/map';
 
 // import urlRTL from './../libs/mapbox-gl-rtl-text-v0.2.3.js';
 

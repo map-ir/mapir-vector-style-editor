@@ -8,7 +8,7 @@ import Layers from './layers';
 import { styleURLState, styleObjState, spriteState } from '../atoms/map';
 import { titleState, columnsState, distinctState } from '../atoms/general';
 
-import type { IProps } from 'types/general';
+import type { IProps } from '../types/general';
 import type { Style } from 'mapbox-gl';
 
 const defaultColors = {
@@ -73,7 +73,7 @@ function App({
   title,
   columns,
   onSubmit,
-  onCancle,
+  onCancel,
   getDistinctValues,
 }: IProps) {
   const [styleURLAtom, setStyleURL] = useAtom(styleURLState);
@@ -112,7 +112,7 @@ function App({
   return (
     <Wrapper locale={locale ?? 'en'}>
       <GlobalStyle />
-      <Layers onSubmit={onSubmit} onCancle={onCancle} />
+      <Layers onSubmit={onSubmit} onCancel={onCancel} />
       <Map options={map} />
     </Wrapper>
   );

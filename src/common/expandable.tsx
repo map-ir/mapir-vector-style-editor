@@ -4,7 +4,7 @@ import styledMap from 'styled-map';
 
 import { ReactComponent as ArrowDownIcon } from '../assets/icons/arrow-down.svg';
 
-import type { Renderable } from 'types/general';
+import type { Renderable } from '../types/general';
 
 interface IExpandableProps {
   open: boolean;

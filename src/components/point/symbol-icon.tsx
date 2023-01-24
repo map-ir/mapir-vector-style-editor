@@ -23,7 +23,7 @@ import {
 } from 'atoms/map';
 
 import type { SymbolLayer } from 'mapbox-gl';
-import type { Icon } from 'types/map';
+import type { Icon } from '../../types/map';
 
 const SetIcon = () => {
   const map = useAtomValue(mapState);
