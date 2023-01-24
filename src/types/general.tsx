@@ -1,5 +1,5 @@
 import type { Style } from 'mapbox-gl';
-import type { MapOptions } from 'types/map';
+import type { MapOptions } from '../types/map';
 
 interface IProps {
   map: MapOptions;
@@ -10,7 +10,7 @@ interface IProps {
   columns?: string[];
   className?: string;
   onSubmit?: (arg: Style | null) => void;
-  onCancle?: (arg: Style | null) => void;
+  onCancel?: (arg: Style | null) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getDistinctValues?: (arg: string) => Promise<any>;
 }

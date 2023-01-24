@@ -29,7 +29,7 @@ import useOutsideClickHandler from 'hooks/useOutsideClickHandler';
 import type { AnyLayer, Layer } from 'mapbox-gl';
 // import type { OnValidate } from '@monaco-editor/react/lib/types';
 import type { editor } from 'monaco-editor/esm/vs/editor/editor.api';
-import type { LayerType } from 'types/map';
+import type { LayerType } from '../../types/map';
 
 import { ReactComponent as Plus } from '../../assets/icons/plus.svg';
 import { ReactComponent as Delete } from '../../assets/icons/delete.svg';

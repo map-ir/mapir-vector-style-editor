@@ -7,7 +7,7 @@ import App from './app';
 import messages_en from 'translations/en';
 import messages_fa from 'translations/fa';
 
-import type { IProps } from 'types/general';
+import type { IProps } from '../types/general';
 
 const messages: Record<string, Record<string, string>> = {
   en: messages_en,

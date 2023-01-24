@@ -13,18 +13,18 @@ import type { Style } from 'mapbox-gl';
 
 interface IProps {
   onSubmit?: (arg: Style | null) => void;
-  onCancle?: (arg: Style | null) => void;
+  onCancel?: (arg: Style | null) => void;
 }
 
-export default function LayersEditor({ onSubmit, onCancle }: IProps) {
+export default function LayersEditor({ onSubmit, onCancel }: IProps) {
   const styleObj = useAtomValue(styleObjState);
 
   return (
     <Wrapper>
       <LayersStyle />
       <ButtonWrapper>
-        {onCancle && (
-          <Button tertiary onClick={() => onCancle(styleObj)}>
+        {onCancel && (
+          <Button tertiary onClick={() => onCancel(styleObj)}>
             <FormattedMessage id="cancel" />
           </Button>
         )}
