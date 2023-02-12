@@ -21,7 +21,7 @@ export const symbolTabs: ITab<SymbolPageIdsType>[] = [
   },
 ];
 
-const circlePageIds = ['circle', 'circle-outline', 'title', 'other'] as const;
+const circlePageIds = ['circle', 'circle-outline', 'other'] as const;
 export type CirclePageIdsType = typeof circlePageIds[number];
 export const circleTabs: ITab<CirclePageIdsType>[] = [
   {
@@ -32,16 +32,12 @@ export const circleTabs: ITab<CirclePageIdsType>[] = [
     disabled: false,
   },
   {
-    id: 'title',
-    disabled: false,
-  },
-  {
     id: 'other',
     disabled: false,
   },
 ];
 
-const linePageIds = ['line', 'line-type', 'title', 'other'] as const;
+const linePageIds = ['line', 'line-type', 'other'] as const;
 export type LinePageIdsType = typeof linePageIds[number];
 export const lineTabs: ITab<LinePageIdsType>[] = [
   {
@@ -52,16 +48,12 @@ export const lineTabs: ITab<LinePageIdsType>[] = [
     disabled: false,
   },
   {
-    id: 'title',
-    disabled: false,
-  },
-  {
     id: 'other',
     disabled: false,
   },
 ];
 
-const fillPageIds = ['fill', 'fill-outline', 'title', 'other'] as const;
+const fillPageIds = ['fill', 'fill-outline', 'other'] as const;
 export type FillPageIdsType = typeof fillPageIds[number];
 export const fillTabs: ITab<FillPageIdsType>[] = [
   {
@@ -69,10 +61,6 @@ export const fillTabs: ITab<FillPageIdsType>[] = [
   },
   {
     id: 'fill-outline',
-    disabled: false,
-  },
-  {
-    id: 'title',
     disabled: false,
   },
   {
@@ -103,7 +91,7 @@ export const DefaultSymbolLayer: Partial<SymbolLayer> = {
 export const DefaultTextLayer: Partial<SymbolLayer> = {
   type: 'symbol',
   layout: {
-    'symbol-placement': 'line',
+    'symbol-placement': 'point',
     'symbol-spacing': 800,
     'text-field': '',
     'text-size': 16,

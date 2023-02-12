@@ -6,7 +6,6 @@ import {
   DefaultLineLayer,
   DefaultFillLayer,
   DefaultCircleLayer,
-  DefaultTextLayer,
 } from 'components/constants';
 
 import type { Layer, Style } from 'mapbox-gl';
@@ -17,7 +16,7 @@ export const addNewLayer = (
   layer_id?: string
 ) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-  const id: string = type === 'text' && layer_id ? layer_id : nanoid();
+  const id: string = layer_id ? layer_id : nanoid();
   const defaultStyle =
     type === 'fill'
       ? DefaultFillLayer
@@ -25,8 +24,6 @@ export const addNewLayer = (
       ? DefaultLineLayer
       : type === 'circle'
       ? DefaultCircleLayer
-      : type === 'text'
-      ? DefaultTextLayer
       : DefaultSymbolLayer;
 
   setStyle((curr_style) => {
