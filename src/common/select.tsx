@@ -48,7 +48,9 @@ const StyledViewport = styled(SelectPrimitive.Viewport)`
 function Content({ children, ...props }) {
   return (
     <SelectPrimitive.Portal>
-      <StyledContent {...props}>{children}</StyledContent>
+      <StyledContent position="popper" side="bottom" {...props}>
+        {children}
+      </StyledContent>
     </SelectPrimitive.Portal>
   );
 }

@@ -21,6 +21,7 @@ import {
 import InputNumber from 'common/input-number';
 // import Gradiant from 'common/gradiant';
 import ColorPicker from 'common/color-picker';
+import EditableInput from 'common/input_editable';
 
 import {
   Column,
@@ -167,9 +168,12 @@ const Conditional = ({ type, method, selectedCol }: IProps) => {
             <SelectTrigger
               aria-label={intl.formatMessage({ id: 'value_title' })}
             >
+              {/* <EditableInput value="" /> */}
               <SelectValue
                 placeholder={intl.formatMessage({ id: 'selection' })}
-              />
+              >
+                {/* <input /> */}
+              </SelectValue>
               <SelectIcon>
                 <Arrow />
               </SelectIcon>

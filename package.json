@@ -75,7 +75,7 @@
   "dependencies": {
     "@monaco-editor/react": "^4.4.6",
     "@popperjs/core": "^2.11.6",
-    "@radix-ui/react-select": "^1.0.0",
+    "@radix-ui/react-select": "^1.2.0",
     "@radix-ui/react-slider": "^1.0.0",
     "color": "^4.2.3",
     "jotai": "^1.8.4",

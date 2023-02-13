@@ -5,15 +5,14 @@ import styled from 'styled-components';
 import MapirStyleEditor from '../dist';
 
 const token =
-  'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjU1OGE2M2VkZDU4YjFjMGEwNzJiYjQyYzYwZWY0ODg5ZjhjM2Q0NTQ2OGM1ODNjNDI2OWJhOWZhYTA2OTUwNWYyOWZmZjJjYzRjMDUwNTEwIn0.eyJhdWQiOiIxIiwianRpIjoiNTU4YTYzZWRkNThiMWMwYTA3MmJiNDJjNjBlZjQ4ODlmOGMzZDQ1NDY4YzU4M2M0MjY5YmE5ZmFhMDY5NTA1ZjI5ZmZmMmNjNGMwNTA1MTAiLCJpYXQiOjE2NzYxOTI4NTgsIm5iZiI6MTY3NjE5Mjg1OCwiZXhwIjoxNjc2MTk2NDU4LCJzdWIiOiI5YmY2NjkyOS0xOWMxLTRiOWUtODFiNS03Y2Y5OThiN2I0YjIiLCJzY29wZXMiOlsiYmFzaWMiLCJteTphZG1pbiIsIm15OmNyZWF0b3IiXX0.O0eNrJnbOW1avJ9tzkgD5LKCfYzcys7GNdWpYrkBsMuilUz3e4kdtXqJ4OXl5OwnzsggtKY61cl95BAm9kxLLc3jc5-J0IfQOUavEiHwkukPOmdfx3MkAwB8WCz3zLLDp75FXs3MiSnsROx5B2cWMJosEFCCeX8-u6MWz-i6Iqju0s83HYAy2CTTX32c59M1LhSK2SpdCupxbbEEcIvj3Z8BxZc-hXfP7lmXzU8HFRJDKhU9UfhC7dfop4nGO--mcPKrxVIXXUZekFByBidjwL2eTmcMJeFmRBUogoX28o5hXiZovy8gPpzmLjxgFwgtFMtzKsVd-9WEQwbG4CWP0Q';
+  'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImIxZWFlZjg1ODBkMzgyZmZlM2ZjM2NkNzIzZWNmODAxMGJkYmIxZWYzMGZmMDU0ODNmZTg2ZDU5MjZhODNjMmY0ZmYyMGQ2ZWQ1YzZhNjA2In0.eyJhdWQiOiIxIiwianRpIjoiYjFlYWVmODU4MGQzODJmZmUzZmMzY2Q3MjNlY2Y4MDEwYmRiYjFlZjMwZmYwNTQ4M2ZlODZkNTkyNmE4M2MyZjRmZjIwZDZlZDVjNmE2MDYiLCJpYXQiOjE2NzYyODU0MzMsIm5iZiI6MTY3NjI4NTQzMywiZXhwIjoxNjc2Mjg5MDMzLCJzdWIiOiI5YmY2NjkyOS0xOWMxLTRiOWUtODFiNS03Y2Y5OThiN2I0YjIiLCJzY29wZXMiOlsiYmFzaWMiLCJteTphZG1pbiIsIm15OmNyZWF0b3IiXX0.oFwgPJurIe0NkVGu55nEtdOfYhauC_3rSSnA5JjVFQHclERpw-w6mBSZP9RMnTB9ITsS_oo2DynqGus_6zRybCfl17hUQMTIAH2Q-1PDTZ7GCWW_k8_4tOqbIU0kD6o45AKbF_Q-mZTAOkVyly5MI6QbbY4lOPg6Zqe0QkFqlTUnAstoDLuaxY3gkxekhMNiV7ke94dO1F1oIVkdCZn7nYsGtvosumHl4_-ZiN3NSNzeMRdW0DyuPWBK6FfTsWImuWO4b6zDYBU4a-cA9BpLu6sEgkEYrmYjehdOu_UcMk_cg0_uHc_lHZdg_-z0ePjunJE4IbLRCawiWnVmellavA';
 function App() {
   return (
     <Container>
-      <Header></Header>
+      <Header />
       <MapirStyleEditor
         map={{
           transformRequest: (url: string) => {
-            console.log('🚀 ~ file: index.tsx:16 ~ App ~ url', url);
             if (url.startsWith('https://map.ir')) {
               return {
                 url,
