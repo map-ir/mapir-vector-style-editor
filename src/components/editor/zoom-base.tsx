@@ -40,7 +40,9 @@ interface IProps {
     | 'stroke'
     | 'stroke-color'
     | 'stroke-size'
-    | 'stroke-opacity';
+    | 'stroke-opacity'
+    | 'weight'
+    | 'intensity';
 }
 
 const pageIds = ['linear', 'exponential', 'cubic-bezier'] as const;
@@ -295,8 +297,8 @@ const ZoomBase = ({ type }: IProps) => {
           {['color', 'stroke-color'].includes(type) ? (
             <Gradiant
               pairs={pairs}
-              min={layer?.minzoom ?? 1}
-              max={layer?.maxzoom ?? 20}
+              min={layer?.type === 'heatmap' ? 0 : layer?.minzoom ?? 1}
+              max={layer?.type === 'heatmap' ? 1 : layer?.maxzoom ?? 20}
               disabled
             />
           ) : (

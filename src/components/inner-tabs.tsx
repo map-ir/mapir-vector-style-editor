@@ -6,7 +6,13 @@ import { LayerComponent, EditorWrapper } from 'common/styles';
 
 import { editorComponents } from 'components/editor';
 
-import { symbolTabs, circleTabs, lineTabs, fillTabs } from './constants';
+import {
+  symbolTabs,
+  circleTabs,
+  lineTabs,
+  fillTabs,
+  heatmapTabs,
+} from './constants';
 
 import type { LayerType } from '../types/map';
 import type { ITab } from './constants';
@@ -18,7 +24,7 @@ interface IProps {
 const tabsComponent = {
   symbol: symbolTabs,
   circle: circleTabs,
-  heatmap: symbolTabs,
+  heatmap: heatmapTabs,
   cluster: symbolTabs,
   line: lineTabs,
   fill: fillTabs,

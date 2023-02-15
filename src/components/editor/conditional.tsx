@@ -21,7 +21,6 @@ import {
 import InputNumber from 'common/input-number';
 // import Gradiant from 'common/gradiant';
 import ColorPicker from 'common/color-picker';
-import EditableInput from 'common/input_editable';
 
 import {
   Column,
@@ -58,7 +57,9 @@ interface IProps {
     | 'stroke'
     | 'stroke-color'
     | 'stroke-size'
-    | 'stroke-opacity';
+    | 'stroke-opacity'
+    | 'weight'
+    | 'intensity';
   method: 'match' | 'step';
   selectedCol: string;
 }

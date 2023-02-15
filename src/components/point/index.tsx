@@ -18,7 +18,7 @@ import { addNewLayer } from 'common/utils/add-new-layer';
 import { ReactComponent as Circle } from '../../assets/icons/circle.svg';
 import { ReactComponent as Symbol } from '../../assets/icons/symbol.svg';
 import { ReactComponent as Heatmap } from '../../assets/icons/heatmap.svg';
-import { ReactComponent as Cluster } from '../../assets/icons/cluster.svg';
+// import { ReactComponent as Cluster } from '../../assets/icons/cluster.svg';
 
 interface IProps {
   type: PointLayer;
@@ -30,6 +30,9 @@ const PointEditor = ({ type }: IProps) => {
   const sprite = useAtomValue(spriteState);
 
   const [layerType, setLayerType] = useState(type);
+  const [isHoverSymbol, setIsHoverSymbol] = useState(false);
+  const [isHoverCircle, setIsHoverCircle] = useState(false);
+  const [isHoverHeat, setIsHoverSymbolHeat] = useState(false);
 
   const changeLayerType = (layer: PointLayer) => {
     if (!openLayerID || !map) return;
@@ -44,36 +47,46 @@ const PointEditor = ({ type }: IProps) => {
       <LayerType>
         {sprite && (
           <Symbol
+            style={{ cursor: 'pointer' }}
             onClick={() => changeLayerType('symbol')}
+            onMouseEnter={() => setIsHoverSymbol(true)}
+            onMouseLeave={() => setIsHoverSymbol(false)}
             color={
-              layerType === 'symbol'
+              layerType === 'symbol' || isHoverSymbol
                 ? 'var(--SE-color-primary)'
                 : 'var(--SE-shade-4)'
             }
           />
         )}
         <Circle
+          style={{ cursor: 'pointer' }}
           onClick={() => changeLayerType('circle')}
+          onMouseEnter={() => setIsHoverCircle(true)}
+          onMouseLeave={() => setIsHoverCircle(false)}
           color={
-            layerType === 'circle'
+            layerType === 'circle' || isHoverCircle
               ? 'var(--SE-color-primary)'
               : 'var(--SE-shade-4)'
           }
         />
         <Heatmap
+          style={{ cursor: 'pointer' }}
+          onClick={() => changeLayerType('heatmap')}
+          onMouseEnter={() => setIsHoverSymbolHeat(true)}
+          onMouseLeave={() => setIsHoverSymbolHeat(false)}
           color={
-            layerType === 'heatmap'
+            layerType === 'heatmap' || isHoverHeat
               ? 'var(--SE-color-primary)'
               : 'var(--SE-shade-4)'
           }
         />
-        <Cluster
+        {/* <Cluster
           color={
             layerType === 'cluster'
               ? 'var(--SE-color-primary)'
               : 'var(--SE-shade-4)'
           }
-        />
+        /> */}
       </LayerType>
       <InnerTabs type={layerType} />
     </Wrapper>

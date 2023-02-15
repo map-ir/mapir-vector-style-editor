@@ -1,4 +1,10 @@
-import type { CircleLayer, FillLayer, LineLayer, SymbolLayer } from 'mapbox-gl';
+import type {
+  CircleLayer,
+  FillLayer,
+  LineLayer,
+  SymbolLayer,
+  HeatmapLayer,
+} from 'mapbox-gl';
 
 export interface ITab<T> {
   id: T;
@@ -13,6 +19,22 @@ export const symbolTabs: ITab<SymbolPageIdsType>[] = [
   },
   {
     id: 'title',
+    disabled: false,
+  },
+  {
+    id: 'other',
+    disabled: false,
+  },
+];
+
+const heatmapPageIds = ['heatmap', 'heatmap-weight', 'other'] as const;
+export type HeatmapPageIdsType = typeof heatmapPageIds[number];
+export const heatmapTabs: ITab<HeatmapPageIdsType>[] = [
+  {
+    id: 'heatmap',
+  },
+  {
+    id: 'heatmap-weight',
     disabled: false,
   },
   {
@@ -88,21 +110,6 @@ export const DefaultSymbolLayer: Partial<SymbolLayer> = {
   },
 };
 
-export const DefaultTextLayer: Partial<SymbolLayer> = {
-  type: 'symbol',
-  layout: {
-    'symbol-placement': 'point',
-    'symbol-spacing': 800,
-    'text-field': '',
-    'text-size': 16,
-    'text-font': ['IranSans-Noto'],
-    'text-anchor': 'top',
-    'text-allow-overlap': false,
-    'text-ignore-placement': false,
-    'text-max-width': 30,
-  },
-};
-
 export const DefaultCircleLayer: Partial<CircleLayer> = {
   type: 'circle',
   paint: {
@@ -110,6 +117,33 @@ export const DefaultCircleLayer: Partial<CircleLayer> = {
     'circle-stroke-width': 1,
     'circle-color': '#E71566',
     'circle-opacity': 0.5,
+  },
+};
+
+export const DefaultHeatmapLayer: Partial<HeatmapLayer> = {
+  type: 'heatmap',
+  paint: {
+    'heatmap-weight': 1,
+    'heatmap-intensity': 1,
+    'heatmap-color': [
+      'interpolate',
+      ['linear'],
+      ['heatmap-density'],
+      0,
+      'rgba(33,102,172,0)',
+      0.2,
+      'rgb(103,169,207)',
+      0.4,
+      'rgb(209,229,240)',
+      0.6,
+      'rgb(253,219,199)',
+      0.8,
+      'rgb(239,138,98)',
+      1,
+      'rgb(178,24,43)',
+    ],
+    'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 2, 9, 20],
+    'heatmap-opacity': 1,
   },
 };
 

@@ -19,6 +19,18 @@ export const editorComponents: Record<string, JSX.Element> = {
       <BaseOn type="color" />
     </>
   ),
+  heatmap: (
+    <>
+      <BaseOn type="size" />
+      <BaseOn type="color" />
+    </>
+  ),
+  'heatmap-weight': (
+    <>
+      <BaseOn type="weight" />
+      <BaseOn type="intensity" />
+    </>
+  ),
   line: (
     <>
       <BaseOn type="size" />

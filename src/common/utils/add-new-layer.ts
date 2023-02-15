@@ -6,6 +6,7 @@ import {
   DefaultLineLayer,
   DefaultFillLayer,
   DefaultCircleLayer,
+  DefaultHeatmapLayer,
 } from 'components/constants';
 
 import type { Layer, Style } from 'mapbox-gl';
@@ -24,6 +25,8 @@ export const addNewLayer = (
       ? DefaultLineLayer
       : type === 'circle'
       ? DefaultCircleLayer
+      : type === 'heatmap'
+      ? DefaultHeatmapLayer
       : DefaultSymbolLayer;
 
   setStyle((curr_style) => {

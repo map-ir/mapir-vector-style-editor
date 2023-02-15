@@ -47,7 +47,9 @@ interface IProps {
     | 'stroke'
     | 'stroke-color'
     | 'stroke-size'
-    | 'stroke-opacity';
+    | 'stroke-opacity'
+    | 'weight'
+    | 'intensity';
 }
 
 const BaseOn = ({ type }: IProps) => {
@@ -197,6 +199,10 @@ const BaseOn = ({ type }: IProps) => {
               id={
                 ['color', 'stroke-color'].includes(type)
                   ? 'color_base_on'
+                  : type === 'weight'
+                  ? 'weight_base_on'
+                  : type === 'intensity'
+                  ? 'intensity_base_on'
                   : 'size_base_on'
               }
             />

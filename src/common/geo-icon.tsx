@@ -18,6 +18,8 @@ const GeoIcon = ({ data, color }: IProps) => {
       return <PointIcon color={color} />;
     case 'multipoint':
       return <PointIcon color={color} />;
+    case 'heatmap':
+      return <PointIcon color={color} />;
     case 'linestring':
       return <LineIcon color={color} />;
     case 'line':
