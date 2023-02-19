@@ -359,8 +359,8 @@ const ZoomBase = ({ type }: IProps) => {
               {/* value or color */}
               :
               <InputNumber
-                min={layer?.minzoom ?? 1}
-                max={layer?.maxzoom ?? 20}
+                min={layer?.type === 'heatmap' ? 0 : layer?.minzoom ?? 1}
+                max={layer?.type === 'heatmap' ? 1 : layer?.maxzoom ?? 20}
                 value={pair?.[0]}
                 onChange={(value) => {
                   const temp = [...pairs];
