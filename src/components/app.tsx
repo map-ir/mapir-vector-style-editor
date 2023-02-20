@@ -9,7 +9,7 @@ import { styleURLState, styleObjState, spriteState } from '../atoms/map';
 import { titleState, columnsState, distinctState } from '../atoms/general';
 
 import type { IProps } from '../types/general';
-import type { Style } from 'mapbox-gl';
+import type { StyleSpecification } from 'maplibre-gl';
 
 const defaultColors = {
   primary: '#ea4c89',
@@ -62,7 +62,7 @@ const fetchStyle = (url: string) => {
     method: 'GET',
   })
     .then((res) => res.json())
-    .then((res: Style) => res);
+    .then((res: StyleSpecification) => res);
 };
 
 function App({

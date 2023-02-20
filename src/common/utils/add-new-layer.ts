@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/indent */
 import { Dispatch, SetStateAction } from 'react';
 import { nanoid } from 'nanoid';
@@ -9,11 +12,11 @@ import {
   DefaultHeatmapLayer,
 } from 'components/constants';
 
-import type { Layer, Style } from 'mapbox-gl';
+import type { StyleSpecification } from 'maplibre-gl';
 
 export const addNewLayer = (
   type: string,
-  setStyle: Dispatch<SetStateAction<Style | null>>,
+  setStyle: Dispatch<SetStateAction<StyleSpecification | null>>,
   layer_id?: string
 ) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
@@ -40,11 +43,11 @@ export const addNewLayer = (
         ...temp.layers,
         {
           id: id,
-          source: (temp?.layers as Layer[])?.[0]?.source,
-          'source-layer': (temp?.layers as Layer[])?.[0]?.['source-layer'],
+          source: (temp?.layers?.[0] as any)?.source,
+          'source-layer': (temp?.layers?.[0] as any)?.['source-layer'],
           ...defaultStyle,
         },
       ],
-    } as Style;
+    } as StyleSpecification;
   });
 };

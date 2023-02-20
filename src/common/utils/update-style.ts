@@ -2,20 +2,19 @@
 import { Dispatch, SetStateAction } from 'react';
 
 import type {
-  Expression,
+  DataDrivenPropertyValueSpecification,
   Map,
-  Style,
-  StyleFunction,
-  AnyLayer,
-} from 'mapbox-gl';
+  StyleSpecification,
+  LayerSpecification,
+} from 'maplibre-gl';
 
 const updateStyle = (
   layer_id: string,
   map: Map | undefined,
   type: 'layout' | 'paint' | 'zoom' | 'metadata',
   key: string | number,
-  value: number | number[] | Expression | StyleFunction | string,
-  setStyle: Dispatch<SetStateAction<Style | null>>
+  value: DataDrivenPropertyValueSpecification<number[] | number | string>,
+  setStyle: Dispatch<SetStateAction<StyleSpecification | null>>
 ) => {
   if (!layer_id && !map) return;
 
@@ -52,7 +51,7 @@ const updateStyle = (
       (i) => i.id === selectedLayer[0].id
     );
 
-    const newLayers = ([] as AnyLayer[]).concat(curr_style.layers);
+    const newLayers = ([] as LayerSpecification[]).concat(curr_style.layers);
 
     switch (type) {
       case 'zoom':
@@ -60,7 +59,7 @@ const updateStyle = (
           ...selectedLayer[0],
           minzoom: parseInt(key.toString()),
           maxzoom: parseInt(value.toString()),
-        } as AnyLayer;
+        } as LayerSpecification;
         break;
       case 'metadata':
         newLayers[indexOfSelectedLayer] = {
@@ -71,7 +70,7 @@ const updateStyle = (
             ...selectedLayer[0][type],
             [key]: value,
           },
-        } as AnyLayer;
+        } as LayerSpecification;
         break;
       default:
         newLayers[indexOfSelectedLayer] = {
@@ -82,7 +81,7 @@ const updateStyle = (
             ...selectedLayer[0][type],
             [key]: value,
           },
-        } as AnyLayer;
+        } as LayerSpecification;
         break;
     }
 

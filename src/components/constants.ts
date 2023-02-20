@@ -1,10 +1,10 @@
 import type {
-  CircleLayer,
-  FillLayer,
-  LineLayer,
-  SymbolLayer,
-  HeatmapLayer,
-} from 'mapbox-gl';
+  CircleLayerSpecification,
+  FillLayerSpecification,
+  LineLayerSpecification,
+  SymbolLayerSpecification,
+  HeatmapLayerSpecification,
+} from 'maplibre-gl';
 
 export interface ITab<T> {
   id: T;
@@ -91,7 +91,7 @@ export const fillTabs: ITab<FillPageIdsType>[] = [
   },
 ];
 
-export const DefaultSymbolLayer: Partial<SymbolLayer> = {
+export const DefaultSymbolLayer: Partial<SymbolLayerSpecification> = {
   type: 'symbol',
   layout: {
     'symbol-placement': 'point',
@@ -110,7 +110,7 @@ export const DefaultSymbolLayer: Partial<SymbolLayer> = {
   },
 };
 
-export const DefaultCircleLayer: Partial<CircleLayer> = {
+export const DefaultCircleLayer: Partial<CircleLayerSpecification> = {
   type: 'circle',
   paint: {
     'circle-stroke-color': '#2E0767',
@@ -120,7 +120,7 @@ export const DefaultCircleLayer: Partial<CircleLayer> = {
   },
 };
 
-export const DefaultHeatmapLayer: Partial<HeatmapLayer> = {
+export const DefaultHeatmapLayer: Partial<HeatmapLayerSpecification> = {
   type: 'heatmap',
   paint: {
     'heatmap-weight': 1,
@@ -147,7 +147,7 @@ export const DefaultHeatmapLayer: Partial<HeatmapLayer> = {
   },
 };
 
-export const DefaultLineLayer: Partial<LineLayer> = {
+export const DefaultLineLayer: Partial<LineLayerSpecification> = {
   type: 'line',
   layout: {
     'line-cap': 'round',
@@ -160,7 +160,7 @@ export const DefaultLineLayer: Partial<LineLayer> = {
   },
 };
 
-export const DefaultFillLayer: Partial<FillLayer> = {
+export const DefaultFillLayer: Partial<FillLayerSpecification> = {
   type: 'fill',
   paint: {
     'fill-outline-color': '#2E0767',
