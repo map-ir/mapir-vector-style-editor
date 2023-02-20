@@ -31,7 +31,7 @@ import {
 import { ReactComponent as Plus } from '../../assets/icons/plus.svg';
 import { ReactComponent as Delete } from '../../assets/icons/delete.svg';
 
-import type { Expression, StyleFunction } from 'mapbox-gl';
+import type { DataDrivenPropertyValueSpecification } from 'maplibre-gl';
 
 interface IProps {
   type:
@@ -91,7 +91,9 @@ const ZoomBase = ({ type }: IProps) => {
   );
 
   useEffect(() => {
-    const arg = styleValue(pairs) as number | Expression | StyleFunction;
+    const arg = styleValue(
+      pairs
+    ) as DataDrivenPropertyValueSpecification<number>;
     applyStyles(arg);
   }, [activePageId]);
 
@@ -159,7 +161,7 @@ const ZoomBase = ({ type }: IProps) => {
   );
 
   const applyStyles = useCallback(
-    (value: number | Expression | StyleFunction) => {
+    (value: DataDrivenPropertyValueSpecification<number>) => {
       if (openLayerID && map && property && styleKey && pairs.length > 0) {
         updateStyle(openLayerID, map, styleKey, property, value, setStyleObj);
       }
@@ -198,10 +200,9 @@ const ZoomBase = ({ type }: IProps) => {
                   step={0.1}
                   value={expoPower}
                   onChange={(value) => {
-                    const arg = stylePowerValue(value) as
-                      | number
-                      | Expression
-                      | StyleFunction;
+                    const arg = stylePowerValue(
+                      value
+                    ) as DataDrivenPropertyValueSpecification<number>;
                     applyStyles(arg);
                   }}
                 />
@@ -231,7 +232,7 @@ const ZoomBase = ({ type }: IProps) => {
                     const arg = styleCubicValue([
                       [value, cubicPoints[0][1]],
                       cubicPoints[1],
-                    ]) as number | Expression | StyleFunction;
+                    ]) as DataDrivenPropertyValueSpecification<number>;
                     applyStyles(arg);
                   }}
                 />
@@ -245,7 +246,7 @@ const ZoomBase = ({ type }: IProps) => {
                     const arg = styleCubicValue([
                       [cubicPoints[0][0], value],
                       cubicPoints[1],
-                    ]) as number | Expression | StyleFunction;
+                    ]) as DataDrivenPropertyValueSpecification<number>;
                     applyStyles(arg);
                   }}
                 />
@@ -265,7 +266,7 @@ const ZoomBase = ({ type }: IProps) => {
                     const arg = styleCubicValue([
                       cubicPoints[0],
                       [value, cubicPoints[1][1]],
-                    ]) as number | Expression | StyleFunction;
+                    ]) as DataDrivenPropertyValueSpecification<number>;
                     applyStyles(arg);
                   }}
                 />
@@ -283,7 +284,7 @@ const ZoomBase = ({ type }: IProps) => {
                     const arg = styleCubicValue([
                       cubicPoints[0],
                       [cubicPoints[1][0], value],
-                    ]) as number | Expression | StyleFunction;
+                    ]) as DataDrivenPropertyValueSpecification<number>;
                     applyStyles(arg);
                   }}
                 />
@@ -320,7 +321,7 @@ const ZoomBase = ({ type }: IProps) => {
               ]);
               const arg = styleValue(
                 temp.sort((a, b) => (a[0] as number) - (b[0] as number))
-              ) as number | Expression | StyleFunction;
+              ) as DataDrivenPropertyValueSpecification<number>;
               applyStyles(arg);
             }}
           />
@@ -335,10 +336,9 @@ const ZoomBase = ({ type }: IProps) => {
                   onChange={(color) => {
                     const temp = [...pairs];
                     temp[index] = [temp[index][0], color.toUpperCase()];
-                    const arg = styleValue(temp) as
-                      | number
-                      | Expression
-                      | StyleFunction;
+                    const arg = styleValue(
+                      temp
+                    ) as DataDrivenPropertyValueSpecification<number>;
                     applyStyles(arg);
                   }}
                 />
@@ -348,10 +348,9 @@ const ZoomBase = ({ type }: IProps) => {
                   onChange={(value) => {
                     const temp = [...pairs];
                     temp[index] = [temp[index][0], value];
-                    const arg = styleValue(temp) as
-                      | number
-                      | Expression
-                      | StyleFunction;
+                    const arg = styleValue(
+                      temp
+                    ) as DataDrivenPropertyValueSpecification<number>;
                     applyStyles(arg);
                   }}
                 />
@@ -365,10 +364,9 @@ const ZoomBase = ({ type }: IProps) => {
                 onChange={(value) => {
                   const temp = [...pairs];
                   temp[index] = [value, temp[index][1]];
-                  const arg = styleValue(temp) as
-                    | number
-                    | Expression
-                    | StyleFunction;
+                  const arg = styleValue(
+                    temp
+                  ) as DataDrivenPropertyValueSpecification<number>;
                   applyStyles(arg);
                 }}
               />{' '}
@@ -384,10 +382,9 @@ const ZoomBase = ({ type }: IProps) => {
               onClick={() => {
                 if (pairs.length < 3) return;
                 const temp = pairs?.filter((c, index2) => index !== index2);
-                const arg = styleValue(temp) as
-                  | number
-                  | Expression
-                  | StyleFunction;
+                const arg = styleValue(
+                  temp
+                ) as DataDrivenPropertyValueSpecification<number>;
                 applyStyles(arg);
               }}
             />

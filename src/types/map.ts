@@ -1,8 +1,9 @@
-import type { MapboxOptions, TransformRequestFunction } from 'mapbox-gl';
+/* eslint-disable @typescript-eslint/indent */
+import type { CompleteMapOptions, RequestTransformFunction } from 'maplibre-gl';
 
 interface MapOptions
-  extends Partial<Omit<MapboxOptions, 'attributionControl'>> {
-  transformRequest: TransformRequestFunction;
+  extends Partial<Omit<CompleteMapOptions, 'attributionControl'>> {
+  transformRequest: RequestTransformFunction;
 }
 
 type PointLayer = 'circle' | 'symbol' | 'cluster' | 'heatmap';

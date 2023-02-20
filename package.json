@@ -80,15 +80,14 @@
     "@radix-ui/react-slider": "^1.0.0",
     "color": "^4.2.3",
     "jotai": "^1.8.4",
+    "maplibre-gl": "^2.4.0",
     "nanoid": "^4.0.0",
     "styled-map": "^3.3.0"
   },
   "peerDependencies": {
     "@types/color": "^3.0.3",
-    "@types/mapbox-gl": "^2.7.5",
     "@types/react-dom": "18.0.6",
     "@types/styled-components": "5.1.26",
-    "mapbox-gl": "1.13.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intl": "^6.1.2",

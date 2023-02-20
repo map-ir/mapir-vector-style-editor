@@ -22,7 +22,7 @@ import {
   layerState,
 } from 'atoms/map';
 
-import type { SymbolLayer } from 'mapbox-gl';
+import type { SymbolLayerSpecification } from 'maplibre-gl';
 import type { Icon } from '../../types/map';
 
 const SetIcon = () => {
@@ -67,7 +67,7 @@ const SetIcon = () => {
 
   useEffect(() => {
     setIconName(
-      ((layer as SymbolLayer)?.layout?.['icon-image'] ??
+      ((layer as SymbolLayerSpecification)?.layout?.['icon-image'] ??
         'empty-e71566') as string
     );
   }, [layer]);
@@ -130,7 +130,7 @@ const SetIcon = () => {
               <FormattedMessage id="no-value" />
             </Wrap>
             {Object.entries(icons)?.map(([key, icon]) => (
-              <Wrap selected={iconName === key}>
+              <Wrap key={key} selected={iconName === key}>
                 <Sample
                   key={key}
                   img={`${sprite}.png`}
