@@ -5,16 +5,14 @@ import styled from 'styled-components';
 import MapirStyleEditor from '../dist';
 
 const token =
-  'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImQ4NjgxMjkwNmY1ODgxNTM5YjAyNWEzNDM0N2Y2MjQ2MGM0NDBmNjgxYjA2MjhmMjIzODM0MzY4ZGU2YzYyYTA4NGVlYjBkMDYyYjRjMGE5In0.eyJhdWQiOiIxIiwianRpIjoiZDg2ODEyOTA2ZjU4ODE1MzliMDI1YTM0MzQ3ZjYyNDYwYzQ0MGY2ODFiMDYyOGYyMjM4MzQzNjhkZTZjNjJhMDg0ZWViMGQwNjJiNGMwYTkiLCJpYXQiOjE2NzQzODczODEsIm5iZiI6MTY3NDM4NzM4MSwiZXhwIjoxNjc0MzkwOTgxLCJzdWIiOiI5YmY2NjkyOS0xOWMxLTRiOWUtODFiNS03Y2Y5OThiN2I0YjIiLCJzY29wZXMiOlsiYmFzaWMiLCJteTphZG1pbiJdfQ.sM3kfVXbv1Q2Ji0P3jU62v7f4WHXrmpomDhZVqLVk4IbOT2m4vp2SBul_9Qxn6s25DUbOQGOgjtLC9s4XQGCLU-AkCwUQz4J4EUX0meBxKb-z3QRTTD7CNLrcNYZnPG9wDtbU7K1Iq3Ziosnn8Yol_X99RtcDpLiQdC-VhoFW5wqCMN68K4MLJf7KRhr6fcoaHOvwudMGkAW6U0dWQgpylkc0r32_EWRwynf3KK_DpH6AH-QqZlg5xcpDYXyUnxnM7o3SZ5o6SanO3X6Cz2YYzbDFbghBaIlHYsE0hPqZZfSQd2WPb752kVJhKnJ76m51Ni7udjd3ZN0Ox6g49gAvw';
-
+  'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjQyNDZlYjYxZjNkYzBmYWIyZWFmMjkwNzcxZWVhNWQ3YThhNzlhMjM4ZjlkNDU0YzQ2OWU2Y2UwMWMzYjNkODFkZjhlMzdmMGY3YWVjZTllIn0.eyJhdWQiOiIxIiwianRpIjoiNDI0NmViNjFmM2RjMGZhYjJlYWYyOTA3NzFlZWE1ZDdhOGE3OWEyMzhmOWQ0NTRjNDY5ZTZjZTAxYzNiM2Q4MWRmOGUzN2YwZjdhZWNlOWUiLCJpYXQiOjE2NzY4OTAyOTQsIm5iZiI6MTY3Njg5MDI5NCwiZXhwIjoxNjc2ODkzODk0LCJzdWIiOiI5YmY2NjkyOS0xOWMxLTRiOWUtODFiNS03Y2Y5OThiN2I0YjIiLCJzY29wZXMiOlsiYmFzaWMiLCJteTphZG1pbiIsIm15OmNyZWF0b3IiXX0.bt918CKrLcRK06os43Jn74nKsueh7H_FkQ6GKV0tzCktsTsJ_UtisgsXqcxsLqknmpA_pCWqXMDduA6EcqPe55HqCCmRbjJ7hqU3BGq2PCp-yP41Rxu-olF46TVKcUCITg_uJmHRfHpiQoHakqW1JDm5IU8uXt84Eubail037attGtU9yqLsKk6gyZ2NO0lU8Y_qWMFjbB1dOWU2krG01m26UnIgH3CjGgiuXeDAgP21YXXr_DTIEaX4YlW6r39l5cUDTU1M31ni3Z2XLc_rcvTBIXPxHJinBlVO0JM5m6TzWQW83hRb3ZpPTcRSUsrLqMGlU7Ox0dcwvnN42R2uDA';
 function App() {
   return (
     <Container>
-      <Header></Header>
+      <Header />
       <MapirStyleEditor
         map={{
           transformRequest: (url: string) => {
-            console.log('🚀 ~ file: index.tsx:16 ~ App ~ url', url);
             if (url.startsWith('https://map.ir')) {
               return {
                 url,

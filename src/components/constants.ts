@@ -1,4 +1,10 @@
-import type { CircleLayer, FillLayer, LineLayer, SymbolLayer } from 'mapbox-gl';
+import type {
+  CircleLayerSpecification,
+  FillLayerSpecification,
+  LineLayerSpecification,
+  SymbolLayerSpecification,
+  HeatmapLayerSpecification,
+} from 'maplibre-gl';
 
 export interface ITab<T> {
   id: T;
@@ -21,7 +27,23 @@ export const symbolTabs: ITab<SymbolPageIdsType>[] = [
   },
 ];
 
-const circlePageIds = ['circle', 'circle-outline', 'title', 'other'] as const;
+const heatmapPageIds = ['heatmap', 'heatmap-weight', 'other'] as const;
+export type HeatmapPageIdsType = typeof heatmapPageIds[number];
+export const heatmapTabs: ITab<HeatmapPageIdsType>[] = [
+  {
+    id: 'heatmap',
+  },
+  {
+    id: 'heatmap-weight',
+    disabled: false,
+  },
+  {
+    id: 'other',
+    disabled: false,
+  },
+];
+
+const circlePageIds = ['circle', 'circle-outline', 'other'] as const;
 export type CirclePageIdsType = typeof circlePageIds[number];
 export const circleTabs: ITab<CirclePageIdsType>[] = [
   {
@@ -32,16 +54,12 @@ export const circleTabs: ITab<CirclePageIdsType>[] = [
     disabled: false,
   },
   {
-    id: 'title',
-    disabled: false,
-  },
-  {
     id: 'other',
     disabled: false,
   },
 ];
 
-const linePageIds = ['line', 'line-type', 'title', 'other'] as const;
+const linePageIds = ['line', 'line-type', 'other'] as const;
 export type LinePageIdsType = typeof linePageIds[number];
 export const lineTabs: ITab<LinePageIdsType>[] = [
   {
@@ -52,16 +70,12 @@ export const lineTabs: ITab<LinePageIdsType>[] = [
     disabled: false,
   },
   {
-    id: 'title',
-    disabled: false,
-  },
-  {
     id: 'other',
     disabled: false,
   },
 ];
 
-const fillPageIds = ['fill', 'fill-outline', 'title', 'other'] as const;
+const fillPageIds = ['fill', 'fill-outline', 'other'] as const;
 export type FillPageIdsType = typeof fillPageIds[number];
 export const fillTabs: ITab<FillPageIdsType>[] = [
   {
@@ -72,16 +86,12 @@ export const fillTabs: ITab<FillPageIdsType>[] = [
     disabled: false,
   },
   {
-    id: 'title',
-    disabled: false,
-  },
-  {
     id: 'other',
     disabled: false,
   },
 ];
 
-export const DefaultSymbolLayer: Partial<SymbolLayer> = {
+export const DefaultSymbolLayer: Partial<SymbolLayerSpecification> = {
   type: 'symbol',
   layout: {
     'symbol-placement': 'point',
@@ -100,22 +110,7 @@ export const DefaultSymbolLayer: Partial<SymbolLayer> = {
   },
 };
 
-export const DefaultTextLayer: Partial<SymbolLayer> = {
-  type: 'symbol',
-  layout: {
-    'symbol-placement': 'line',
-    'symbol-spacing': 800,
-    'text-field': '',
-    'text-size': 16,
-    'text-font': ['IranSans-Noto'],
-    'text-anchor': 'top',
-    'text-allow-overlap': false,
-    'text-ignore-placement': false,
-    'text-max-width': 30,
-  },
-};
-
-export const DefaultCircleLayer: Partial<CircleLayer> = {
+export const DefaultCircleLayer: Partial<CircleLayerSpecification> = {
   type: 'circle',
   paint: {
     'circle-stroke-color': '#2E0767',
@@ -125,7 +120,34 @@ export const DefaultCircleLayer: Partial<CircleLayer> = {
   },
 };
 
-export const DefaultLineLayer: Partial<LineLayer> = {
+export const DefaultHeatmapLayer: Partial<HeatmapLayerSpecification> = {
+  type: 'heatmap',
+  paint: {
+    'heatmap-weight': 1,
+    'heatmap-intensity': 1,
+    'heatmap-color': [
+      'interpolate',
+      ['linear'],
+      ['heatmap-density'],
+      0,
+      'rgba(33,102,172,0)',
+      0.2,
+      'rgb(103,169,207)',
+      0.4,
+      'rgb(209,229,240)',
+      0.6,
+      'rgb(253,219,199)',
+      0.8,
+      'rgb(239,138,98)',
+      1,
+      'rgb(178,24,43)',
+    ],
+    'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 2, 9, 20],
+    'heatmap-opacity': 1,
+  },
+};
+
+export const DefaultLineLayer: Partial<LineLayerSpecification> = {
   type: 'line',
   layout: {
     'line-cap': 'round',
@@ -138,7 +160,7 @@ export const DefaultLineLayer: Partial<LineLayer> = {
   },
 };
 
-export const DefaultFillLayer: Partial<FillLayer> = {
+export const DefaultFillLayer: Partial<FillLayerSpecification> = {
   type: 'fill',
   paint: {
     'fill-outline-color': '#2E0767',

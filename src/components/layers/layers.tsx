@@ -26,7 +26,7 @@ import deleteLayer from 'common/utils/delete-layer';
 
 import useOutsideClickHandler from 'hooks/useOutsideClickHandler';
 
-import type { AnyLayer, Layer } from 'mapbox-gl';
+import type { LayerSpecification } from 'maplibre-gl';
 // import type { OnValidate } from '@monaco-editor/react/lib/types';
 import type { editor } from 'monaco-editor/esm/vs/editor/editor.api';
 import type { LayerType } from '../../types/map';
@@ -89,7 +89,7 @@ function LayersStyle() {
               ...curr,
               layers: JSON.parse(
                 value.replace(/[\n\r]+/g, '').replace(/\t/g, '')
-              ) as AnyLayer[],
+              ) as LayerSpecification[],
             };
           else return curr;
         });
@@ -114,7 +114,7 @@ function LayersStyle() {
     setShowEditor(!showEditor);
   }
 
-  function renameLayer(layer: Layer, newName: string) {
+  function renameLayer(layer: LayerSpecification, newName: string) {
     updateStyle(layer.id, undefined, 'metadata', 'name', newName, setStyleObj);
   }
 
@@ -201,8 +201,10 @@ function LayersStyle() {
       ) : (
         <LayersContainer>
           {styleObj?.layers
-            ?.filter((layer: Layer) => !layer?.id?.endsWith('-text-layer'))
-            ?.map((layer: Layer) => {
+            ?.filter(
+              (layer: LayerSpecification) => !layer?.id?.endsWith('-text-layer')
+            )
+            ?.map((layer: LayerSpecification) => {
               const { id, type, metadata } = layer;
               const { name = '' } =
                 (metadata as ILayerMetadata | undefined) ?? {};

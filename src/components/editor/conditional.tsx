@@ -48,7 +48,7 @@ import {
 } from 'atoms/map';
 import { columnsState, distinctState } from 'atoms/general';
 
-import type { Expression, ExpressionName, StyleFunction } from 'mapbox-gl';
+import type { DataDrivenPropertyValueSpecification } from 'maplibre-gl';
 
 interface IProps {
   type:
@@ -57,7 +57,9 @@ interface IProps {
     | 'stroke'
     | 'stroke-color'
     | 'stroke-size'
-    | 'stroke-opacity';
+    | 'stroke-opacity'
+    | 'weight'
+    | 'intensity';
   method: 'match' | 'step';
   selectedCol: string;
 }
@@ -74,7 +76,8 @@ const Conditional = ({ type, method, selectedCol }: IProps) => {
 
   const { styleKey, property } = useGetStyleKey(type);
 
-  const [conditionType, setCondition] = useState<ExpressionName>(method);
+  const [conditionType, setCondition] =
+    useState<DataDrivenPropertyValueSpecification<number | string>>(method);
   const [pairs, setPairs] = useState<(number | string)[][]>([]); // Pairs of zoom/value or zoom/color
   const [colName, setColName] = useState<string>(selectedCol);
   const [distinctValues, setDistincts] = useState<string[]>([]);
@@ -127,7 +130,7 @@ const Conditional = ({ type, method, selectedCol }: IProps) => {
   );
 
   const applyStyles = useCallback(
-    (value: number | Expression | StyleFunction) => {
+    (value: DataDrivenPropertyValueSpecification<number>) => {
       if (openLayerID && map && property && styleKey && value) {
         updateStyle(openLayerID, map, styleKey, property, value, setStyleObj);
       }
@@ -139,13 +142,17 @@ const Conditional = ({ type, method, selectedCol }: IProps) => {
     if (colName)
       void distinctFunc?.(colName).then((res: string[]) => {
         setDistincts(res);
-        const arg = styleValue(pairs) as number | Expression | StyleFunction;
+        const arg = styleValue(
+          pairs
+        ) as DataDrivenPropertyValueSpecification<number>;
         applyStyles(arg);
       });
   }, [colName]);
 
   useEffect(() => {
-    const arg = styleValue(pairs) as number | Expression | StyleFunction;
+    const arg = styleValue(
+      pairs
+    ) as DataDrivenPropertyValueSpecification<number>;
     applyStyles(arg);
   }, [conditionType]);
 
@@ -167,9 +174,12 @@ const Conditional = ({ type, method, selectedCol }: IProps) => {
             <SelectTrigger
               aria-label={intl.formatMessage({ id: 'value_title' })}
             >
+              {/* <EditableInput value="" /> */}
               <SelectValue
                 placeholder={intl.formatMessage({ id: 'selection' })}
-              />
+              >
+                {/* <input /> */}
+              </SelectValue>
               <SelectIcon>
                 <Arrow />
               </SelectIcon>
@@ -241,10 +251,9 @@ const Conditional = ({ type, method, selectedCol }: IProps) => {
                 'asas',
                 ['color', 'stroke-color'].includes(type) ? '#FFB800' : 1,
               ]);
-              const arg = styleValue(temp) as
-                | number
-                | Expression
-                | StyleFunction;
+              const arg = styleValue(
+                temp
+              ) as DataDrivenPropertyValueSpecification<number>;
               applyStyles(arg);
             }}
           />
@@ -261,10 +270,9 @@ const Conditional = ({ type, method, selectedCol }: IProps) => {
                     temp[index] = !pair?.[1]
                       ? [color.toUpperCase()]
                       : [temp[index][0], color.toUpperCase()];
-                    const arg = styleValue(temp) as
-                      | number
-                      | Expression
-                      | StyleFunction;
+                    const arg = styleValue(
+                      temp
+                    ) as DataDrivenPropertyValueSpecification<number>;
                     applyStyles(arg);
                   }}
                 />
@@ -276,10 +284,9 @@ const Conditional = ({ type, method, selectedCol }: IProps) => {
                     temp[index] = !pair?.[1]
                       ? [value]
                       : [temp[index][0], value];
-                    const arg = styleValue(temp) as
-                      | number
-                      | Expression
-                      | StyleFunction;
+                    const arg = styleValue(
+                      temp
+                    ) as DataDrivenPropertyValueSpecification<number>;
                     applyStyles(arg);
                   }}
                 />
@@ -297,10 +304,9 @@ const Conditional = ({ type, method, selectedCol }: IProps) => {
                   onValueChange={(value) => {
                     const temp = [...pairs];
                     temp[index] = [value, temp[index][1]];
-                    const arg = styleValue(temp) as
-                      | number
-                      | Expression
-                      | StyleFunction;
+                    const arg = styleValue(
+                      temp
+                    ) as DataDrivenPropertyValueSpecification<number>;
                     applyStyles(arg);
                   }}
                 >
@@ -341,10 +347,9 @@ const Conditional = ({ type, method, selectedCol }: IProps) => {
                 onClick={() => {
                   if (pairs.length < 3) return;
                   const temp = pairs?.filter((c, index2) => index !== index2);
-                  const arg = styleValue(temp) as
-                    | number
-                    | Expression
-                    | StyleFunction;
+                  const arg = styleValue(
+                    temp
+                  ) as DataDrivenPropertyValueSpecification<number>;
                   applyStyles(arg);
                 }}
               />

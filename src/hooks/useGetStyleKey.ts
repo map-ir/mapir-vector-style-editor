@@ -22,6 +22,11 @@ function useGetStyleKey(type: string) {
     | 'circle-stroke-width'
     | 'circle-stroke-color'
     | 'circle-stroke-opacity'
+    | 'heatmap-color'
+    | 'heatmap-opacity'
+    | 'heatmap-radius'
+    | 'heatmap-weight'
+    | 'heatmap-intensity'
   >();
 
   const [styleKey, setStyleKey] = useState<'layout' | 'zoom' | 'paint'>();
@@ -40,6 +45,9 @@ function useGetStyleKey(type: string) {
           break;
         case 'fill':
           setProperty('fill-opacity');
+          break;
+        case 'heatmap':
+          setProperty('heatmap-opacity');
           break;
       }
     } else if (type === 'stroke-color') {
@@ -71,6 +79,9 @@ function useGetStyleKey(type: string) {
         case 'circle':
           setProperty('circle-radius');
           break;
+        case 'heatmap':
+          setProperty('heatmap-radius');
+          break;
         case 'line':
           setProperty('line-width');
           break;
@@ -85,6 +96,21 @@ function useGetStyleKey(type: string) {
           break;
         case 'line':
           setProperty('line-color');
+          break;
+        case 'heatmap':
+          setProperty('heatmap-color');
+          break;
+      }
+    } else if (type === 'weight') {
+      switch (layer?.type) {
+        case 'heatmap':
+          setProperty('heatmap-weight');
+          break;
+      }
+    } else if (type === 'intensity') {
+      switch (layer?.type) {
+        case 'heatmap':
+          setProperty('heatmap-intensity');
           break;
       }
     }

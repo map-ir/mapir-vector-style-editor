@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useAtomValue } from 'jotai';
 import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
@@ -9,11 +9,11 @@ import LayersStyle from './layers';
 
 import { styleObjState } from 'atoms/map';
 
-import type { Style } from 'mapbox-gl';
+import type { StyleSpecification } from 'maplibre-gl';
 
 interface IProps {
-  onSubmit?: (arg: Style | null) => void;
-  onCancel?: (arg: Style | null) => void;
+  onSubmit?: (arg: StyleSpecification | null) => void;
+  onCancel?: (arg: StyleSpecification | null) => void;
 }
 
 export default function LayersEditor({ onSubmit, onCancel }: IProps) {

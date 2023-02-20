@@ -1,22 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import {
-  Map as MapGL,
-  getRTLTextPluginStatus,
-  setRTLTextPlugin,
-} from 'mapbox-gl';
+import maplibre from 'maplibre-gl';
 import { useAtom, useAtomValue } from 'jotai';
 
 import { mapState, isMapLoadedState, styleObjState } from '../atoms/map';
 
 import type { MapOptions } from '../types/map';
 
-// import urlRTL from './../libs/mapbox-gl-rtl-text-v0.2.3.js';
+// import urlRTL from './../libs/maplibre-gl-rtl-text-v0.2.3.js';
 
-import 'mapbox-gl/dist/mapbox-gl.css';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
-if (getRTLTextPluginStatus() === 'unavailable')
-  setRTLTextPlugin(
+if (maplibre.getRTLTextPluginStatus() === 'unavailable')
+  maplibre.setRTLTextPlugin(
     'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js',
     (err) => {
       if (err) console.error(err);
@@ -55,7 +51,7 @@ export default function Map({ options: mapOptions }: IProps) {
       mapOptions
     );
 
-    const futureMap = new MapGL({
+    const futureMap = new maplibre.Map({
       container: mapRef.current || '',
       ...options,
     });

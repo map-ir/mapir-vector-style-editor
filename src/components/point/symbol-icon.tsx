@@ -5,7 +5,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { usePopper } from 'react-popper';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 
 import Sample from 'common/sample';
@@ -22,7 +22,7 @@ import {
   layerState,
 } from 'atoms/map';
 
-import type { SymbolLayer } from 'mapbox-gl';
+import type { SymbolLayerSpecification } from 'maplibre-gl';
 import type { Icon } from '../../types/map';
 
 const SetIcon = () => {
@@ -67,7 +67,7 @@ const SetIcon = () => {
 
   useEffect(() => {
     setIconName(
-      ((layer as SymbolLayer)?.layout?.['icon-image'] ??
+      ((layer as SymbolLayerSpecification)?.layout?.['icon-image'] ??
         'empty-e71566') as string
     );
   }, [layer]);
@@ -82,7 +82,7 @@ const SetIcon = () => {
   return (
     <Row>
       <FormattedMessage id="symbol_type" />
-      {iconName && (
+      {iconName ? (
         <Sample
           title={iconName}
           ref={(el) => setIconRef(el)}
@@ -92,6 +92,11 @@ const SetIcon = () => {
           y={icons?.[iconName]?.y}
           width={icons?.[iconName]?.width}
           height={icons?.[iconName]?.height}
+        />
+      ) : (
+        <Sample
+          ref={(el) => setIconRef(el)}
+          onClick={setIconsOpen.bind(null, !isIconsOpen)}
         />
       )}
       {icons && isIconsOpen && (
@@ -103,27 +108,50 @@ const SetIcon = () => {
             style={styles.popper}
             {...attributes.popper}
           >
+            <Wrap
+              style={{
+                gridColumn: '1 / 5',
+                width: '100%',
+                textAlign: 'center',
+              }}
+              selected={iconName === ''}
+              onClick={() => {
+                if (openLayerID && map)
+                  updateStyle(
+                    openLayerID,
+                    map,
+                    'layout',
+                    'icon-image',
+                    '',
+                    setStyleObj
+                  );
+              }}
+            >
+              <FormattedMessage id="no-value" />
+            </Wrap>
             {Object.entries(icons)?.map(([key, icon]) => (
-              <Sample
-                key={key}
-                img={`${sprite}.png`}
-                x={icon.x}
-                y={icon.y}
-                width={icon.width}
-                height={icon.height}
-                title={key}
-                onClick={() => {
-                  if (openLayerID && map)
-                    updateStyle(
-                      openLayerID,
-                      map,
-                      'layout',
-                      'icon-image',
-                      `${key}`,
-                      setStyleObj
-                    );
-                }}
-              />
+              <Wrap key={key} selected={iconName === key}>
+                <Sample
+                  key={key}
+                  img={`${sprite}.png`}
+                  x={icon.x}
+                  y={icon.y}
+                  width={icon.width}
+                  height={icon.height}
+                  title={key}
+                  onClick={() => {
+                    if (openLayerID && map)
+                      updateStyle(
+                        openLayerID,
+                        map,
+                        'layout',
+                        'icon-image',
+                        `${key}`,
+                        setStyleObj
+                      );
+                  }}
+                />
+              </Wrap>
             ))}
           </IconWrapper>
         </Portal>
@@ -148,4 +176,19 @@ const IconWrapper = styled.div`
   overflow: hidden;
   overflow-y: auto;
   z-index: 1000;
+`;
+
+const Wrap = styled.div<{ selected?: boolean }>`
+  cursor: pointer;
+  padding: 0.5em;
+  border-radius: var(--SE-radius-4);
+  font-family: var(--SE-font-family);
+  ${(p) =>
+    p.selected &&
+    css`
+      background-color: var(--SE-color-primary-20);
+    `}
+  &:hover {
+    background-color: var(--SE-color-primary-20);
+  }
 `;

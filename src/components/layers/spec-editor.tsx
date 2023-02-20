@@ -13,6 +13,8 @@ const SpecEditor = ({ type }: IProps) => {
       return <PointEditor type={type} />;
     case 'circle':
       return <PointEditor type={type} />;
+    case 'heatmap':
+      return <PointEditor type={type} />;
     default:
       return <InnerTabs type={type} />;
   }

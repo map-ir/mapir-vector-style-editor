@@ -1,10 +1,10 @@
-import type { Map, Style } from 'mapbox-gl';
+import type { Map, StyleSpecification } from 'maplibre-gl';
 import type { Dispatch, SetStateAction } from 'react';
 
 const deleteLayer = (
   layer_id: string,
   map: Map,
-  setStyle: Dispatch<SetStateAction<Style | null>>
+  setStyle: Dispatch<SetStateAction<StyleSpecification | null>>
 ) => {
   if (!layer_id || !map) return;
   setStyle((curr_style) => {
@@ -20,7 +20,7 @@ const deleteLayer = (
     return {
       ...temp,
       layers: [...temp.layers.filter((l) => l.id !== layer_id)],
-    } as Style;
+    } as StyleSpecification;
   });
 };
 

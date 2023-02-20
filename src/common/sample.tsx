@@ -29,6 +29,7 @@ const Sample = (props: IProps, ref: ForwardedRef<HTMLDivElement> | null) => {
 export default forwardRef(Sample);
 
 export const Container = styled.div<IProps>`
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,7 +38,6 @@ export const Container = styled.div<IProps>`
   height: 2em;
   border-radius: 5px;
   border: 1px solid var(--light-3);
-  background: var(--SE-light-1);
 
   ${(p) =>
     p.img &&
