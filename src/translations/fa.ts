@@ -11,6 +11,7 @@ export default {
   circle: 'دایره',
   heatmap: 'هیت مپ',
   'heatmap-weight': 'وزن',
+  'heatmap-density': 'چگالی',
   outline: 'حاشیه',
   'fill-outline': 'حاشیه',
   'circle-outline': 'حاشیه',

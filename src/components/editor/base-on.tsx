@@ -37,7 +37,13 @@ import { Row, Column, Selector, Label } from 'common/styles';
 import { ReactComponent as Arrow } from '../../assets/icons/arrow-down.svg';
 import { ReactComponent as Check } from '../../assets/icons/tick.svg';
 
-const options = ['static', 'dynamic', 'zoom', 'conditional'] as const;
+const options = [
+  'static',
+  'dynamic',
+  'zoom',
+  'conditional',
+  'heatmap-density',
+] as const;
 type OptionsType = typeof options[number];
 
 interface IProps {
@@ -81,13 +87,17 @@ const BaseOn = ({ type }: IProps) => {
       setMethod('conditional');
       setMethodType(expression?.[0]);
       setSelectedCol(expression?.[1]?.[1]);
-    } else if (expression?.[0] === 'interpolate') setMethod('zoom');
-    else if (expression?.[0] === 'get') setMethod('dynamic');
+    } else if (expression?.[0] === 'interpolate') {
+      if (expression?.[2]?.[0] === 'heatmap-density')
+        setMethod('heatmap-density');
+      else setMethod('zoom');
+    } else if (expression?.[0] === 'get') setMethod('dynamic');
     else setMethod('static');
 
     if (['color', 'stroke-color'].includes(type))
       setColor(expression ?? '#C11010');
-    if (['size', 'stroke-size'].includes(type)) setSize(expression ?? 1);
+    if (['size', 'stroke-size', 'weight', 'intensity'].includes(type))
+      setSize(expression ?? 1);
   }, [layer, styleKey, property]);
 
   const component = useMemo(() => {
@@ -171,6 +181,7 @@ const BaseOn = ({ type }: IProps) => {
         </Selector>
       ),
       zoom: property && <ZoomBase type={type} />,
+      'heatmap-density': property && <ZoomBase type={type} />,
       conditional: property && (
         <Conditional
           type={type}
@@ -237,7 +248,23 @@ const BaseOn = ({ type }: IProps) => {
                       return !['dynamic', 'conditional'].includes(o);
                     else if (columns && !distinctFunc)
                       return !['conditional'].includes(o);
-                    else return true;
+                    else if (method === 'heatmap-density')
+                      return ![
+                        'static',
+                        'dynamic',
+                        'zoom',
+                        'conditional',
+                      ].includes(o);
+                    else if (
+                      type === 'intensity' ||
+                      (type === 'size' && layer?.type === 'symbol')
+                    )
+                      return ![
+                        'dynamic',
+                        'conditional',
+                        'heatmap-density',
+                      ].includes(o);
+                    else return !['heatmap-density'].includes(o);
                   })
                   ?.map((option) => (
                     <SelectItem key={option} value={option}>
