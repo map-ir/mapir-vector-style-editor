@@ -76,6 +76,7 @@ const ZoomBase = ({ type }: IProps) => {
     [1, 1],
     [1, 1],
   ]);
+  const [method, setMethod] = useState<string>('zoom');
 
   const [activePageId, setActivePageId] = useState<PageIds>(
     () => tabs?.filter((i) => !i.disabled).slice(0)[0].id as PageIds
@@ -112,6 +113,7 @@ const ZoomBase = ({ type }: IProps) => {
           splitArray((expression as string[][])[1]?.slice(1), 2) as number[][]
         );
       }
+      setMethod((expression as string[])?.[2][0]);
       setActivePageId((expression as string[])?.[1][0] as PageIds);
       setPairs(splitArray((expression as string[])?.slice(3), 2));
     } else {
@@ -134,20 +136,20 @@ const ZoomBase = ({ type }: IProps) => {
         : activePageId === 'exponential'
         ? ([activePageId] as (number | string)[]).concat([expoPower])
         : [activePageId],
-      ['zoom'],
+      [method],
       ...value.flat(),
     ],
-    [activePageId, cubicPoints, expoPower]
+    [activePageId, cubicPoints, expoPower, method]
   );
 
   const stylePowerValue = useCallback(
     (expo: number) => [
       'interpolate',
       ([activePageId] as (number | string)[]).concat([expo]),
-      ['zoom'],
+      [method],
       ...pairs.flat(),
     ],
-    [activePageId, pairs]
+    [activePageId, pairs, method]
   );
 
   const styleCubicValue = useCallback(

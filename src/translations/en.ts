@@ -10,6 +10,7 @@ export default {
   symbol: 'Symbol',
   circle: 'Circle',
   heatmap: 'Heatmap',
+  'heatmap-density': 'Density',
   'heatmap-weight': 'Weight',
   outline: 'Outline',
   'fill-outline': 'Outline',
