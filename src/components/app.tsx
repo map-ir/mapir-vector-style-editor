@@ -67,7 +67,7 @@ const fetchStyle = (url: string) => {
 
 function App({
   map,
-  locale = 'fa',
+  locale = 'en',
   styleURL,
   sprite,
   title,

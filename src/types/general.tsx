@@ -2,7 +2,7 @@ import type { StyleSpecification } from 'maplibre-gl';
 import type { MapOptions } from '../types/map';
 
 interface IProps {
-  map: MapOptions;
+  map?: MapOptions;
   locale?: 'fa' | 'en';
   styleURL: string;
   sprite?: string;

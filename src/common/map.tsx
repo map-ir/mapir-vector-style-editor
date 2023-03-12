@@ -21,7 +21,7 @@ if (maplibre.getRTLTextPluginStatus() === 'unavailable')
   );
 
 interface IProps {
-  options: MapOptions;
+  options?: MapOptions;
 }
 
 export default function Map({ options: mapOptions }: IProps) {
